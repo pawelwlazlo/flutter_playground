@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/application/pages/title/widgets/title_center.dart';
-import 'package:flutter_playground/application/pages/title/widgets/title_down.dart';
+import 'package:flutter_playground/application/pages/title/widgets/bottom_section.dart';
+import 'package:flutter_playground/application/pages/title/widgets/center_section.dart';
 
-class TitlePage extends StatelessWidget {
-  const TitlePage({super.key});
+class BankPage extends StatelessWidget {
+  const BankPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +14,8 @@ class TitlePage extends StatelessWidget {
         body: const Center(
           child: Column(children: <Widget>[
             Expanded(child: Center(child: Text("Pierwszy wiersz"))),
-            Expanded(child: TitleCenter()),
-            Expanded(child: TitleDown()),
+            Expanded(child: BankCenterSection()),
+            Expanded(child: BankBottomSection()),
           ]),
         ));
   }

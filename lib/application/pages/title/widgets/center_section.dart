@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class TitleDown extends StatelessWidget {
-  const TitleDown({Key? key}) : super(key: key);
+class BankCenterSection extends StatelessWidget {
+  const BankCenterSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
