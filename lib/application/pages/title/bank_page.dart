@@ -6,10 +6,12 @@ class BankPage extends StatelessWidget {
   const BankPage({super.key});
   @override
   Widget build(BuildContext context) {
+    var themeData = Theme.of(context);
     return Scaffold(
         backgroundColor: Colors.blue,
         appBar: AppBar(
           title: const Text("Easy Bank"),
+          titleTextStyle: themeData.textTheme.displaySmall,
         ),
         body: const Center(
           child: Column(children: <Widget>[
