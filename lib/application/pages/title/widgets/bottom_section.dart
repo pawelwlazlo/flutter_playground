@@ -7,14 +7,13 @@ class BankBottomSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageView(
-      children: <Widget>[
-        const Center(
-          child: Text("Drugi wiersz"),
-        ),
+      children: const <Widget>[
         Center(
-          child: ElevatedButton(
-            onPressed: () {},
-            child: const CustomButton(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomButton(),
+            ],
           ),
         ),
       ],

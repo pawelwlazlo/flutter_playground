@@ -9,24 +9,20 @@ class CustomButton extends StatelessWidget {
     return InkResponse(
       onTap: () {},
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(1.0),
         child: Material(
           elevation: 20,
-          borderRadius: const BorderRadius.all(Radius.circular(100)),
+          borderRadius: const BorderRadius.all(Radius.circular(150)),
           child: Container(
-/*
               decoration: BoxDecoration(
                 color: theme.colorScheme.secondary,
                 borderRadius: const BorderRadius.all(Radius.circular(100)),
               ),
-*/
               child: const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-          )),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 10, vertical: 15),
+                    child: Text('Blik'),
+              )),
         ),
       ),
     );
