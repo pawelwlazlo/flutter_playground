@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/application/pages/title/widgets/command.dart';
 import 'package:flutter_playground/application/pages/title/widgets/custom_button.dart';
 
 class BankBottomSection extends StatelessWidget {
@@ -8,14 +9,8 @@ class BankBottomSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView(
       children: const <Widget>[
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomButton(),
-            ],
-          ),
-        ),
+        Command(buttonText:"raz"),
+        Command(buttonText: "dwa",)
       ],
     );
   }
