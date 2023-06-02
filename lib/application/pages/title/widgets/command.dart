@@ -8,17 +8,25 @@ class Command extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
             onPressed: () {},
-            child: Text(buttonText),
             style: ElevatedButton.styleFrom(
-              shape: const CircleBorder(),
+              shape: const CircleBorder(
+                side: BorderSide(
+                  color: Colors.black54,
+                  width: 4
+                )
+              ),
               padding: const EdgeInsets.all(54),
             ),
+            child: Text(buttonText, style: TextStyle(
+              color: Colors.black54, fontSize: themeData.textTheme.displayLarge?.fontSize
+            ),),
           ),
         ],
       ),
