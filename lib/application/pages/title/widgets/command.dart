@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'custom_button.dart';
 
 class Command extends StatelessWidget {
   final String buttonText;
@@ -13,7 +12,14 @@ class Command extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CustomButton(buttonText: buttonText),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text(buttonText),
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(54),
+            ),
+          ),
         ],
       ),
     );
