@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/application/pages/title/widgets/custom_button.dart';
 
 class BankBottomSection extends StatelessWidget {
   const BankBottomSection({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class BankBottomSection extends StatelessWidget {
         Center(
           child: ElevatedButton(
             onPressed: () {},
-            child: const Text("Przycisk"),
+            child: const CustomButton(),
           ),
         ),
       ],
