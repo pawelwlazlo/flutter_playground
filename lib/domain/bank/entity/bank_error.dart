@@ -3,4 +3,6 @@ class BankError {
   final String message;
 
   BankError({required this.errorCode, required this.message});
+
+
 }

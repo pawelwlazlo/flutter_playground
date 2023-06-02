@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../model/bank_error.dart';
+import '../../../../domain/bank/entity/bank_error.dart';
 
 part 'bank_event.dart';
 
