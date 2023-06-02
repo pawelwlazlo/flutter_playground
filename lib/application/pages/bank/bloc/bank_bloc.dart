@@ -16,5 +16,12 @@ class BankBloc extends Bloc<BankEvent, BankState> {
       debugPrint('Otrzymano kod blik');
       emit(BankStateBlikReceived(blikNumber: 123456));
     });
+    on<PrzelewRequestedEvent>((event, emit) async {
+      emit(BankStatePrzelewRequested());
+      debugPrint('Zlecono przelew');
+      await Future.delayed(const Duration(seconds: 3), () {});
+      debugPrint('Otrzymano kod blik');
+      emit(BankStatePrzelewSended(kwota: 123));
+    });
   }
 }
