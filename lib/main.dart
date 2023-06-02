@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/application/pages/title/bank_page.dart';
+import 'package:flutter_playground/application/pages/bank/bank_page.dart';
 import 'package:flutter_playground/theme.dart';
 import 'package:provider/provider.dart';
 

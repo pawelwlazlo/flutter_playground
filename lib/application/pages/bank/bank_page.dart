@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/application/core/services/theme_service.dart';
-import 'package:flutter_playground/application/pages/title/widgets/bottom_section.dart';
-import 'package:flutter_playground/application/pages/title/widgets/center_section.dart';
+import 'package:flutter_playground/application/pages/bank/widgets/bottom_section.dart';
+import 'package:flutter_playground/application/pages/bank/widgets/center_section.dart';
 import 'package:provider/provider.dart';
 
 class BankPage extends StatelessWidget {

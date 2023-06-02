@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/application/pages/title/widgets/command.dart';
+import 'package:flutter_playground/application/pages/bank/widgets/command.dart';
 
 class BankBottomSection extends StatelessWidget {
   const BankBottomSection({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class BankBottomSection extends StatelessWidget {
     return PageView(
       children: const <Widget>[
         Command(buttonText:"BLIK"),
-        Command(buttonText: "dwa",)
+        Command(buttonText: "Przelew",)
       ],
     );
   }
