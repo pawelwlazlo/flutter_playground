@@ -27,9 +27,3 @@ class BankStatePrzelewSended extends BankCubitState {
   @override
   List<Object?> get props => [kwota];
 }
-
-class BankStateBlikError extends BankCubitState {
-  final BankError error;
-
-  const BankStateBlikError(this.error);
-}

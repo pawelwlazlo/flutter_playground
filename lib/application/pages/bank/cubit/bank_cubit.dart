@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../domain/bank/entity/bank_error.dart';
+import '../../../../domain/bank/usecases/get_bank_accounts_use_case.dart';
 
 part 'bank_cubit_state.dart';
 
 class BankCubit extends Cubit<BankCubitState> {
-  BankCubit() : super(BankInitial());
+  final GetBankAccountsUseCase _getBankAccountsUseCase;
+  BankCubit(this._getBankAccountsUseCase) : super(BankInitial());
   Future<void> generateBlik() async {
     emit(BankStateBlikRequested());
     debugPrint('Otrzymano zapytanie o BLIK');

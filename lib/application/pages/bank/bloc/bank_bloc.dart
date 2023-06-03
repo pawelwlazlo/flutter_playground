@@ -2,10 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../domain/bank/entity/bank_error.dart';
-
 part 'bank_event.dart';
-
 part 'bank_state.dart';
 
 class BankBloc extends Bloc<BankEvent, BankState> {
