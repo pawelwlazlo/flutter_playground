@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/application/pages/bank/bloc/bank_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
 import 'package:flutter_playground/application/pages/bank/widgets/bank_action_button.dart';
 
 class BankBottomSection extends StatelessWidget {
@@ -7,27 +8,21 @@ class BankBottomSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final blocProvider = BlocProvider.of<BankCubit>(context);
     return PageView(
       children: <Widget>[
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BankActionButton(
-                bankEvent: BlikRequestedEvent(), buttonText: 'BLIK')
+                bankEvent: () => blocProvider.generateBlik(), buttonText: 'BLIK')
           ],
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BankActionButton(
-                bankEvent: PrzelewRequestedEvent(), buttonText: 'Przelew')
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BankActionButton(
-                bankEvent: BlikRequestedEvent(), buttonText: 'Przelew')
+                bankEvent: () => blocProvider.makePrzelew(), buttonText: 'Przelew')
           ],
         ),
       ],

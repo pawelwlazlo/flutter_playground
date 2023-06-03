@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/bank_bloc.dart';
 
 class BankActionButton extends StatelessWidget {
-  final BankEvent bankEvent;
+  // final BankEvent bankEvent;
   final String buttonText;
+  final Function bankEvent;
 
   const BankActionButton({super.key, required this.bankEvent, required this.buttonText});
 
@@ -14,7 +12,8 @@ class BankActionButton extends StatelessWidget {
     final ThemeData themeData = Theme.of(context);
     return ElevatedButton(
       onPressed: () {
-        BlocProvider.of<BankBloc>(context).add(bankEvent);
+        // BlocProvider.of<BankBloc>(context).add(bankEvent);
+        bankEvent();
       },
       style: ElevatedButton.styleFrom(
         shape: const CircleBorder(

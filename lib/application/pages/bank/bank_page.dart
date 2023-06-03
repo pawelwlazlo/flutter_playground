@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/core/services/theme_service.dart';
-import 'package:flutter_playground/application/pages/bank/bloc/bank_bloc.dart';
+import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
 import 'package:flutter_playground/application/pages/bank/widgets/bottom_section.dart';
 import 'package:flutter_playground/application/pages/bank/widgets/center_section.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +11,7 @@ class BankPageWrapperProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => BankBloc(),
+        create: (context) => BankCubit(),
         child: const BankPage());
   }
 }
