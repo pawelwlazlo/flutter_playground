@@ -29,12 +29,13 @@ class BankTopSection extends StatelessWidget {
         );
       } else {
         return PageView.builder(
-          itemCount: state.bankAccounts.length,
+          itemCount: state.stateModel.bankAccounts.length,
           onPageChanged: (index) {
             blocProvider.changeBankPage(index);
           },
           itemBuilder: (context, index) {
-            final bankAccount = state.bankAccounts[index];
+            final bankAccount = state.stateModel.bankAccounts[index];
+
             return Container(
               color: bankAccount.bank.backgroundColor,
               child: Column(

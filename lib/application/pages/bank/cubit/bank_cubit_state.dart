@@ -1,105 +1,165 @@
 part of 'bank_cubit.dart';
 
-abstract class BankCubitState extends Equatable {
+class BankStateModel {
   final List<BankAccount> bankAccounts;
   final BankAccount? activeBank;
-  const BankCubitState.initial()
-      : bankAccounts = const [],
-        activeBank = null;
+  final int? blikNumber;
+  final Decimal? kwota;
+  final Failure? failure;
+
+  BankStateModel({
+    required this.bankAccounts,
+    required this.activeBank,
+    this.blikNumber,
+    this.kwota,
+    this.failure,
+  });
+
+  BankStateModel copyWith({
+    List<BankAccount>? bankAccounts,
+    BankAccount? activeBank,
+    int? blikNumber,
+    Decimal? kwota,
+    Failure? failure,
+  }) {
+    return BankStateModel(
+      bankAccounts: bankAccounts ?? this.bankAccounts,
+      activeBank: activeBank ?? this.activeBank,
+      blikNumber: blikNumber ?? this.blikNumber,
+      kwota: kwota ?? this.kwota,
+      failure: failure ?? this.failure,
+    );
+  }
+}
+
+abstract class BankCubitState<X> extends Equatable {
+  final BankStateModel stateModel;
 
   const BankCubitState({
-    required this.bankAccounts,
-    this.activeBank,
+    required this.stateModel,
   });
 
   @override
-  List<Object?> get props => [bankAccounts, activeBank];
+  List<Object?> get props => [stateModel];
+
+  X copyWith({required BankStateModel newModel});
 }
 
-class BankInitial extends BankCubitState {
-  const BankInitial.initial() : super.initial();
-}
-
-class BankStateBlikRequested extends BankListLoaded {
-  const BankStateBlikRequested(
-      {required super.bankAccounts, required super.activeBank});
-}
-
-class BankStatePrzelewRequested extends BankCubitState {
-  const BankStatePrzelewRequested(
-      {required super.bankAccounts, required super.activeBank});
-}
-
-class BankStateBlikReceived extends BankListLoaded {
-  final int blikNumber;
-
-  const BankStateBlikReceived({
-    required this.blikNumber,
-    required List<BankAccount> bankAccounts,
-    BankAccount? activeBank,
-  }) : super(
-          bankAccounts: bankAccounts,
-          activeBank: activeBank,
-        );
+class BankInitial extends BankCubitState<BankInitial> {
+  BankInitial()
+      : super(stateModel: BankStateModel(bankAccounts: [], activeBank: null));
 
   @override
-  List<Object?> get props => [...super.props, blikNumber];
-}
-
-class BankStatePrzelewSended extends BankCubitState {
-  final int kwota;
-
-  const BankStatePrzelewSended({
-    required this.kwota,
-    required List<BankAccount> bankAccounts,
-    BankAccount? activeBank,
-  }) : super(
-          bankAccounts: bankAccounts,
-          activeBank: activeBank,
-        );
-
-  @override
-  List<Object?> get props => [...super.props, kwota];
-}
-
-class BankStateError extends BankCubitState {
-  final Failure failure;
-
-  const BankStateError({
-    required this.failure,
-    required List<BankAccount> bankAccounts,
-    BankAccount? activeBank,
-  }) : super(
-          bankAccounts: bankAccounts,
-          activeBank: activeBank,
-        );
-
-  @override
-  List<Object?> get props => [...super.props, failure];
+  BankInitial copyWith({
+    required BankStateModel newModel,
+  }) {
+    return BankInitial()
+      ..stateModel.copyWith(
+          bankAccounts: newModel.bankAccounts, activeBank: newModel.activeBank);
+  }
 }
 
 class BankListLoaded extends BankCubitState {
   const BankListLoaded({
-    required super.bankAccounts,
-    required super.activeBank,
-  });
+    required BankStateModel stateModel,
+  }) : super(stateModel: stateModel);
 
   @override
-  List<Object?> get props => [...super.props, bankAccounts];
+  BankListLoaded copyWith({
+    required BankStateModel newModel,
+  }) {
+    return BankListLoaded(
+      stateModel: stateModel.copyWith(
+        bankAccounts: newModel.bankAccounts,
+        activeBank: newModel.activeBank,
+      ),
+    );
+  }
+
+  @override
+  List<Object?> get props => [...super.props, stateModel.bankAccounts];
 }
 
-class BankPageChanged extends BankCubitState {
-  final int index;
-
-  BankPageChanged({
-    required this.index,
-    required List<BankAccount> bankAccounts,
-    BankAccount? activeBank,
-  }) : super(
-          bankAccounts: bankAccounts,
-          activeBank: bankAccounts.isNotEmpty ? bankAccounts[index] : null,
-        );
+class BankStateBlikRequested extends BankCubitState {
+  const BankStateBlikRequested({
+    required BankStateModel stateModel,
+  }) : super(stateModel: stateModel);
 
   @override
-  List<Object?> get props => [...super.props, index];
+  BankStateBlikRequested copyWith({
+    required BankStateModel newModel,
+  }) {
+    return BankStateBlikRequested(
+      stateModel: newModel.copyWith(
+        blikNumber: newModel.blikNumber,
+      ),
+    );
+  }
+}
+
+class BankStatePrzelewRequested extends BankCubitState {
+  const BankStatePrzelewRequested({
+    required BankStateModel stateModel,
+  }) : super(stateModel: stateModel);
+
+  @override
+  BankStatePrzelewRequested copyWith({
+    required BankStateModel newModel,
+  }) {
+    return BankStatePrzelewRequested(
+      stateModel: stateModel.copyWith(
+        kwota: newModel.kwota,
+      ),
+    );
+  }
+}
+
+class BankStateBlikReceived extends BankCubitState {
+  const BankStateBlikReceived({
+    required BankStateModel stateModel,
+  }) : super(stateModel: stateModel);
+
+  @override
+  BankStateBlikReceived copyWith({
+    required BankStateModel newModel,
+  }) {
+    return BankStateBlikReceived(
+      stateModel: stateModel.copyWith(
+        blikNumber: newModel.blikNumber,
+      ),
+    );
+  }
+}
+
+class BankStatePrzelewSended extends BankCubitState {
+  const BankStatePrzelewSended({required BankStateModel stateModel})
+      : super(stateModel: stateModel);
+
+  @override
+  BankStatePrzelewSended copyWith({
+    required BankStateModel newModel,
+  }) {
+    return BankStatePrzelewSended(
+      stateModel: stateModel.copyWith(
+        activeBank: newModel.activeBank,
+        kwota: Decimal.zero,
+      ),
+    );
+  }
+}
+
+class BankStateError extends BankCubitState {
+  const BankStateError({required BankStateModel stateModel})
+      : super(stateModel: stateModel);
+
+  @override
+  BankStateError copyWith({
+    required BankStateModel newModel,
+  }) {
+    return BankStateError(
+      stateModel: stateModel.copyWith(
+        failure: newModel.failure,
+      ),
+    );
+  }
 }

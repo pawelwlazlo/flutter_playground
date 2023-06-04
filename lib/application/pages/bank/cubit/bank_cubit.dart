@@ -11,41 +11,56 @@ part 'bank_cubit_state.dart';
 class BankCubit extends Cubit<BankCubitState> {
   final GetBankAccountsUseCase _getBankAccountsUseCase;
 
-  BankCubit(this._getBankAccountsUseCase) : super(const BankInitial.initial()) {
+  BankCubit(this._getBankAccountsUseCase) : super(BankInitial()) {
     _getBankAccountsUseCase.call().then((bankAccounts) {
-      bankAccounts.fold(
-          (l) => emit(
-              BankStateError(failure: l, bankAccounts: state.bankAccounts)),
-          (r) => emit(BankListLoaded(
-              bankAccounts: r, activeBank: r.isNotEmpty ? r.first : null)));
+      bankAccounts.fold((l) => updateState(failure: l),
+          (r) => updateState(bankAccounts: r, activeBank: r.first));
     });
   }
 
+  void selectBankAccount(BankAccount bank) {
+    updateState(activeBank: bank);
+  }
+
   Future<void> generateBlik() async {
-    emit(BankStateBlikRequested(
-        bankAccounts: state.bankAccounts, activeBank: state.activeBank));
+    updateState(blikNumber: null);
+    emit(BankStateBlikRequested(stateModel: state.stateModel));
     debugPrint('Otrzymano zapytanie o BLIK');
     await Future.delayed(const Duration(seconds: 3), () {});
     debugPrint('Otrzymano kod blik');
-    emit(BankStateBlikReceived(
-        blikNumber: 321453,
-        bankAccounts: state.bankAccounts,
-        activeBank: state.activeBank));
+    updateState(blikNumber: 321453);
+    emit(BankStateBlikReceived(stateModel: state.stateModel));
   }
 
   Future<void> makePrzelew(Decimal kwota) async {
-    emit(BankStatePrzelewRequested(
-        bankAccounts: state.bankAccounts, activeBank: state.activeBank));
+    updateState(kwota: kwota);
     await Future.delayed(const Duration(seconds: 3), () {});
-    debugPrint('Wysłano przelew z konta ${state.activeBank?.accountNumber}');
-    emit(BankStatePrzelewSended(
-        kwota: 321453,
-        bankAccounts: state.bankAccounts,
-        activeBank: state.activeBank));
+    debugPrint(
+        'Wysłano przelew z konta ${state.stateModel.activeBank?.accountNumber}');
+    updateState(kwota: Decimal.zero);
   }
 
   void changeBankPage(int index) {
     debugPrint('zmieniam bank na $index');
-    emit(BankPageChanged(index: index, bankAccounts: state.bankAccounts));
+    updateState(activeBank: state.stateModel.bankAccounts[index]);
+  }
+
+  void updateState({
+    List<BankAccount>? bankAccounts,
+    BankAccount? activeBank,
+    int? blikNumber,
+    Decimal? kwota,
+    Failure? failure,
+  }) {
+    final currentStateModel = state.stateModel;
+    final newStateModel = currentStateModel.copyWith(
+      bankAccounts: bankAccounts,
+      activeBank: activeBank ?? currentStateModel.activeBank,
+      blikNumber: blikNumber ?? currentStateModel.blikNumber,
+      kwota: kwota ?? currentStateModel.kwota,
+      failure: failure ?? currentStateModel.failure,
+    );
+    final newState = state.copyWith(newModel: newStateModel);
+    emit(newState);
   }
 }
