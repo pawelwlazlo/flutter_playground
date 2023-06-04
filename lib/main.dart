@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/application/pages/title/bank_page.dart';
+import 'package:flutter_playground/application/pages/bank/bank_page.dart';
 import 'package:flutter_playground/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'application/core/services/theme_service.dart';
+import 'injection.dart' as di;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   runApp(ChangeNotifierProvider(
     create: (context) => ThemeService(),
     child: const MyApp(),
@@ -21,7 +24,7 @@ class MyApp extends StatelessWidget {
         themeMode: themeService.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        home: const BankPage(),
+        home: const BankPageWrapperProvider(),
       );
     });
   }

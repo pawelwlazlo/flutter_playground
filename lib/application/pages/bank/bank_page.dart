@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/core/services/theme_service.dart';
-import 'package:flutter_playground/application/pages/title/widgets/bottom_section.dart';
-import 'package:flutter_playground/application/pages/title/widgets/center_section.dart';
+import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
+import 'package:flutter_playground/application/pages/bank/widgets/bottom_section.dart';
+import 'package:flutter_playground/application/pages/bank/widgets/center_section.dart';
+import 'package:flutter_playground/application/pages/bank/widgets/top_section.dart';
 import 'package:provider/provider.dart';
+
+import '../../../injection.dart';
+
+class BankPageWrapperProvider extends StatelessWidget {
+  const BankPageWrapperProvider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => sl<BankCubit>(), child: const BankPage());
+  }
+}
 
 class BankPage extends StatelessWidget {
   const BankPage({super.key});
@@ -25,7 +40,7 @@ class BankPage extends StatelessWidget {
         ),
         body: const Center(
           child: Column(children: <Widget>[
-            Expanded(child: Center(child: Text("Pierwszy wiersz"))),
+            Expanded(child: BankTopSection()),
             Expanded(child: BankCenterSection()),
             Expanded(child: BankBottomSection()),
           ]),
