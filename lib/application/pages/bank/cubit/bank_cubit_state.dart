@@ -8,7 +8,9 @@ abstract class BankCubitState extends Equatable {
 }
 
 class BankInitial extends BankCubitState {}
+
 class BankStateBlikRequested extends BankCubitState {}
+
 class BankStatePrzelewRequested extends BankCubitState {}
 
 class BankStateBlikReceived extends BankCubitState {
@@ -26,4 +28,31 @@ class BankStatePrzelewSended extends BankCubitState {
   const BankStatePrzelewSended({required this.kwota});
   @override
   List<Object?> get props => [kwota];
+}
+
+class BankStateError extends BankCubitState {
+  final Failure failure;
+
+  const BankStateError({required this.failure});
+
+  @override
+  List<Object?> get props => [failure];
+}
+
+class BankListLoaded extends BankCubitState {
+  final List<BankAccount> bankAccounts;
+
+  const BankListLoaded({required this.bankAccounts});
+
+  @override
+  List<Object?> get props => [bankAccounts];
+}
+
+class BankPageChanged extends BankCubitState {
+  final int index;
+
+  const BankPageChanged({required this.index});
+
+  @override
+  List<Object?> get props => [index];
 }
