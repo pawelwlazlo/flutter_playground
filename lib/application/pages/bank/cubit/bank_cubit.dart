@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,13 +33,11 @@ class BankCubit extends Cubit<BankCubitState> {
         activeBank: state.activeBank));
   }
 
-  Future<void> makePrzelew() async {
-    emit(BankStateBlikRequested(
+  Future<void> makePrzelew(Decimal kwota) async {
+    emit(BankStatePrzelewRequested(
         bankAccounts: state.bankAccounts, activeBank: state.activeBank));
-    debugPrint('Otrzymano zapytanie o BLIK');
     await Future.delayed(const Duration(seconds: 3), () {});
-    debugPrint(
-        'Otrzymano kod blik dla konta ${state.activeBank?.accountNumber}');
+    debugPrint('Wysłano przelew z konta ${state.activeBank?.accountNumber}');
     emit(BankStatePrzelewSended(
         kwota: 321453,
         bankAccounts: state.bankAccounts,

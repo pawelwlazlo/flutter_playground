@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
@@ -15,14 +16,17 @@ class BankBottomSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BankActionButton(
-                bankEvent: () => blocProvider.generateBlik(), buttonText: 'BLIK')
+                bankEvent: () =>
+                    blocProvider.makePrzelew(Decimal.parse('300.89')),
+                buttonText: 'Przelew')
           ],
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BankActionButton(
-                bankEvent: () => blocProvider.makePrzelew(), buttonText: 'Przelew')
+                bankEvent: () => blocProvider.generateBlik(),
+                buttonText: 'BLIK')
           ],
         ),
       ],
