@@ -26,7 +26,7 @@ class BankTopSection extends StatelessWidget {
             )
           ],
         );
-      } else if (state is BankListLoaded) {
+      } else {
         return PageView.builder(
           itemCount: state.bankAccounts.length,
           onPageChanged: (index) {
@@ -42,8 +42,6 @@ class BankTopSection extends StatelessWidget {
             );
           },
         );
-      } else {
-        return const SizedBox();
       }
     });
   }

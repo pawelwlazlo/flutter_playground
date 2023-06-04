@@ -10,31 +10,43 @@ part 'bank_cubit_state.dart';
 class BankCubit extends Cubit<BankCubitState> {
   final GetBankAccountsUseCase _getBankAccountsUseCase;
 
-  BankCubit(this._getBankAccountsUseCase) : super(BankInitial()) {
+  BankCubit(this._getBankAccountsUseCase) : super(const BankInitial.initial()) {
     _getBankAccountsUseCase.call().then((bankAccounts) {
-      bankAccounts.fold((l) => emit(BankStateError(failure: l)),
-          (r) => emit(BankListLoaded(bankAccounts: r)));
+      bankAccounts.fold(
+          (l) => emit(
+              BankStateError(failure: l, bankAccounts: state.bankAccounts)),
+          (r) => emit(BankListLoaded(
+              bankAccounts: r, activeBank: r.isNotEmpty ? r.first : null)));
     });
   }
 
   Future<void> generateBlik() async {
-    emit(BankStateBlikRequested());
+    emit(BankStateBlikRequested(
+        bankAccounts: state.bankAccounts, activeBank: state.activeBank));
     debugPrint('Otrzymano zapytanie o BLIK');
     await Future.delayed(const Duration(seconds: 3), () {});
     debugPrint('Otrzymano kod blik');
-    emit(const BankStateBlikReceived(blikNumber: 321453));
+    emit(BankStateBlikReceived(
+        blikNumber: 321453,
+        bankAccounts: state.bankAccounts,
+        activeBank: state.activeBank));
   }
 
   Future<void> makePrzelew() async {
-    emit(BankStateBlikRequested());
+    emit(BankStateBlikRequested(
+        bankAccounts: state.bankAccounts, activeBank: state.activeBank));
     debugPrint('Otrzymano zapytanie o BLIK');
     await Future.delayed(const Duration(seconds: 3), () {});
-    debugPrint('Otrzymano kod blik');
-    emit(const BankStatePrzelewSended(kwota: 321453));
+    debugPrint(
+        'Otrzymano kod blik dla konta ${state.activeBank?.accountNumber}');
+    emit(BankStatePrzelewSended(
+        kwota: 321453,
+        bankAccounts: state.bankAccounts,
+        activeBank: state.activeBank));
   }
 
   void changeBankPage(int index) {
     debugPrint('zmieniam bank na $index');
-    emit(BankPageChanged(index: index));
+    emit(BankPageChanged(index: index, bankAccounts: state.bankAccounts));
   }
 }

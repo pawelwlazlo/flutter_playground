@@ -14,18 +14,24 @@ class BankCenterSection extends StatelessWidget {
       children: [
         Expanded(
           child: Center(
-            child: BlocBuilder<BankCubit, BankCubitState>(builder: (context, state) {
+            child: BlocBuilder<BankCubit, BankCubitState>(
+                builder: (context, state) {
               if (state is BankInitial) {
                 return const Text('Bank jest ok');
-              } else if (state is BankStateBlikRequested || state is BankStatePrzelewRequested) {
+              } else if (state is BankStateBlikRequested ||
+                  state is BankStatePrzelewRequested) {
                 return CircularProgressIndicator(
                   color: themeData.colorScheme.secondary,
                 );
               } else if (state is BankStatePrzelewSended) {
                 return Text('Wysłano przelew na kwotę: ${state.kwota}');
-              }
-              else if (state is BankStateBlikReceived) {
-                return Text('Otrzymano kod blik: ${state.blikNumber}');
+              } else if (state is BankStateBlikReceived) {
+                return Column(
+                  children: [
+                    Text('Otrzymano kod blik: ${state.blikNumber}'),
+                    Text('Dla konta: ${state.activeBank?.cardNumber}'),
+                  ],
+                );
               }
               return const SizedBox();
             }),
