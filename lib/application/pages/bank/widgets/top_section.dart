@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../domain/bank/entities/bank_account.dart';
 import '../cubit/bank_cubit.dart';
 
 class BankTopSection extends StatelessWidget {
@@ -11,6 +10,7 @@ class BankTopSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final blocProvider = BlocProvider.of<BankCubit>(context);
     return BlocBuilder<BankCubit, BankCubitState>(builder: (context, state) {
+      final stateModel = state.bankStateModel;
       if (state is BankInitial) {
         return const Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,12 +29,12 @@ class BankTopSection extends StatelessWidget {
         );
       } else {
         return PageView.builder(
-          itemCount: state.bankAccounts.length,
+          itemCount: stateModel.bankAccounts.length,
           onPageChanged: (index) {
             blocProvider.changeBankPage(index);
           },
           itemBuilder: (context, index) {
-            final bankAccount = state.bankAccounts[index];
+            final bankAccount = stateModel.bankAccounts[index];
             return Container(
               color: bankAccount.bank.backgroundColor,
               child: Column(
@@ -62,7 +62,7 @@ class BankTopSection extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Saldo: ${bankAccount.balance} PLN',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16 * 1.2, // Ustawiamy czcionkę o 20% większą
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
@@ -73,7 +73,7 @@ class BankTopSection extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Karta: ${bankAccount.cardNumber}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: Colors.white,

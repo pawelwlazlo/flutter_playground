@@ -5,7 +5,7 @@ import '../../../../domain/core/failure.dart';
 
 class BankStateModel {
   final List<BankAccount> bankAccounts;
-  final BankAccount activeBank;
+  final BankAccount? activeBank;
   final int? blikNumber;
   final Decimal? kwota;
   final Failure? failure;
@@ -17,6 +17,13 @@ class BankStateModel {
     this.kwota,
     this.failure,
   });
+
+  factory BankStateModel.initial() {
+    return BankStateModel(
+      bankAccounts: [],
+      activeBank: null,
+    );
+  }
 
   BankStateModel copyWith({
     List<BankAccount>? bankAccounts,
