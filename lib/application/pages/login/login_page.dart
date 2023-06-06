@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/core/widgets/custom_app_bar.dart';
+import 'package:flutter_playground/application/pages/bank/bank_page.dart';
 
 import 'package:flutter_playground/injection.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
@@ -20,6 +21,8 @@ class BankLoginWidget extends StatelessWidget {
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _pinController = TextEditingController();
+
+  BankLoginWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +107,13 @@ class BankLoginWidget extends StatelessWidget {
                 login: state.bankLoginStateModel.login!,
                 fullName: state.bankLoginStateModel.fullName!,
                 context: context);
+            Future.delayed(Duration(milliseconds: 500), () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const BankPageWrapperProvider()),
+              );
+            });
           } else if (state is BankPinError) {
             return Scaffold(
               appBar: const CustomAppBar(),

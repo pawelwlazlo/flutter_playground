@@ -13,10 +13,9 @@ abstract class BankCubitState extends Equatable {
 
 class BankInitial extends BankCubitState {
   BankInitial.initial() : super(bankStateModel: BankStateModel.initial());
-  BankInitial({required BankStateModel newModel, required BuildContext context})
-      : super(bankStateModel: newModel) {
-    // Navigator.of(context).pushNamed('/bank');
-  }
+  const BankInitial(
+      {required BankStateModel newModel, required BuildContext context})
+      : super(bankStateModel: newModel);
 }
 
 class BankListLoaded extends BankCubitState {
