@@ -13,6 +13,10 @@ abstract class BankCubitState extends Equatable {
 
 class BankInitial extends BankCubitState {
   BankInitial.initial() : super(bankStateModel: BankStateModel.initial());
+  BankInitial({required BankStateModel newModel, required BuildContext context})
+      : super(bankStateModel: newModel) {
+    // Navigator.of(context).pushNamed('/bank');
+  }
 }
 
 class BankListLoaded extends BankCubitState {
@@ -76,4 +80,27 @@ class BankPageChanged extends BankCubitState {
 
   @override
   List<Object?> get props => [...super.props, bankStateModel.activeBank];
+}
+
+class BankStateLoginRequested extends BankCubitState {
+  const BankStateLoginRequested({
+    required BankStateModel newModel,
+  }) : super(
+          bankStateModel: newModel,
+        );
+}
+
+class BankStateLoginSuccess extends BankCubitState {
+  const BankStateLoginSuccess({
+    required BankStateModel newModel,
+  }) : super(
+          bankStateModel: newModel,
+        );
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        bankStateModel.login,
+        bankStateModel.fullName,
+      ];
 }

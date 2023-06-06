@@ -7,6 +7,7 @@ class BankLoginStateModel extends Equatable {
   final bool? isLoginButtonEnabled;
   final String? error;
   final String? pin;
+  final String? fullName;
 
   const BankLoginStateModel({
     this.login,
@@ -14,6 +15,7 @@ class BankLoginStateModel extends Equatable {
     this.isLoginButtonEnabled,
     this.error,
     this.pin,
+    this.fullName,
   });
 
   @override
@@ -31,6 +33,7 @@ class BankLoginStateModel extends Equatable {
     bool? isLoginButtonEnabled,
     String? error,
     String? pin,
+    String? fullName,
   }) {
     return BankLoginStateModel(
       login: login ?? this.login,
@@ -38,6 +41,7 @@ class BankLoginStateModel extends Equatable {
       isLoginButtonEnabled: isLoginButtonEnabled ?? this.isLoginButtonEnabled,
       error: error ?? this.error,
       pin: pin ?? this.pin,
+      fullName: fullName ?? this.fullName,
     );
   }
 }

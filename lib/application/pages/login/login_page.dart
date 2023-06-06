@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/core/widgets/custom_app_bar.dart';
-import 'package:provider/provider.dart';
 
-import '../../../injection.dart';
-import '../../core/services/theme_service.dart';
+import 'package:flutter_playground/injection.dart';
+import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
 import 'cubit/bank_login_cubit.dart';
 
 class BankLoginWidgetProvider extends StatelessWidget {
@@ -21,6 +20,7 @@ class BankLoginWidget extends StatelessWidget {
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _pinController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -71,9 +71,7 @@ class BankLoginWidget extends StatelessWidget {
             );
           } else if (state is BankLoginSuccess) {
             return Scaffold(
-              appBar: AppBar(
-                title: Text('Wpisz PIN'),
-              ),
+              appBar: const CustomAppBar(),
               body: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -95,15 +93,53 @@ class BankLoginWidget extends StatelessWidget {
                         final String pin = _pinController.text;
                         context.read<BankLoginCubit>().submitPin(pin);
                       },
-                      child: Text('Zaloguj'),
+                      child: const Text('Zaloguj'),
                     ),
                   ],
                 ),
               ),
             );
-          } else {
-            return const Center(child: CircularProgressIndicator());
+          } else if (state is BankPinSuccess) {
+            sl<BankCubit>().logIn(
+                login: state.bankLoginStateModel.login!,
+                fullName: state.bankLoginStateModel.fullName!,
+                context: context);
+          } else if (state is BankPinError) {
+            return Scaffold(
+              appBar: const CustomAppBar(),
+              body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextField(
+                      controller: _pinController,
+                      decoration: InputDecoration(
+                        labelText: 'PIN',
+                        errorText: state is BankLoginError
+                            ? 'Nieprawidłowy PIN'
+                            : null,
+                      ),
+                      obscureText: true,
+                    ),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        final String pin = _pinController.text;
+                        context.read<BankLoginCubit>().submitPin(pin);
+                      },
+                      child: const Text('Zaloguj'),
+                    ),
+                  ],
+                ),
+              ),
+            );
           }
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         },
       ),
     );

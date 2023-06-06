@@ -39,3 +39,11 @@ class BankPinSuccess extends BankLoginState {
   @override
   List<Object?> get props => [...super.props, bankLoginStateModel];
 }
+
+class BankPinError extends BankLoginState {
+  const BankPinError({required BankLoginStateModel newStateModel})
+      : super(bankLoginStateModel: newStateModel);
+
+  @override
+  List<Object?> get props => [...super.props, bankLoginStateModel];
+}

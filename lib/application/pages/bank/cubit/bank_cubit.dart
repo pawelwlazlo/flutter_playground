@@ -14,13 +14,22 @@ class BankCubit extends Cubit<BankCubitState> {
   BankCubit(this._getBankAccountsUseCase) : super(BankInitial.initial()) {
     _getBankAccountsUseCase.call().then((bankAccounts) {
       bankAccounts.fold(
-          (l) => emit(
-              BankStateError(newModel: state.bankStateModel.copyWith(failure: l))),
+          (l) => emit(BankStateError(
+              newModel: state.bankStateModel.copyWith(failure: l))),
           (r) => emit(BankListLoaded(
-              newModel: state.bankStateModel.copyWith(
-                  bankAccounts: r,
-                  activeBank: r.first))));
+              newModel: state.bankStateModel
+                  .copyWith(bankAccounts: r, activeBank: r.first))));
     });
+  }
+  Future<void> logIn(
+      {required String login,
+      required String fullName,
+      required BuildContext context}) async {
+    debugPrint('Zalogowano');
+    emit(BankInitial(
+        newModel:
+            state.bankStateModel.copyWith(login: login, fullName: fullName),
+        context: context));
   }
 
   Future<void> generateBlik() async {
@@ -39,7 +48,8 @@ class BankCubit extends Cubit<BankCubitState> {
       newModel: state.bankStateModel.copyWith(),
     ));
     await Future.delayed(const Duration(seconds: 3), () {});
-    debugPrint('Wysłano przelew z konta ${state..bankStateModel.activeBank?.accountNumber}');
+    debugPrint(
+        'Wysłano przelew z konta ${state..bankStateModel.activeBank?.accountNumber}');
     emit(BankStatePrzelewSended(
         newModel: state.bankStateModel.copyWith(kwota: kwota)));
   }
@@ -47,8 +57,8 @@ class BankCubit extends Cubit<BankCubitState> {
   void changeBankPage(int index) {
     debugPrint('zmieniam bank na $index');
     emit(BankPageChanged(
-      newModel: state.bankStateModel.copyWith(
-          activeBank: state.bankStateModel.bankAccounts[index]),
+      newModel: state.bankStateModel
+          .copyWith(activeBank: state.bankStateModel.bankAccounts[index]),
     ));
   }
 }

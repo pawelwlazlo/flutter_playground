@@ -9,6 +9,8 @@ class BankStateModel {
   final int? blikNumber;
   final Decimal? kwota;
   final Failure? failure;
+  final String? login;
+  final String? fullName;
 
   BankStateModel({
     required this.bankAccounts,
@@ -16,6 +18,8 @@ class BankStateModel {
     this.blikNumber,
     this.kwota,
     this.failure,
+    this.login,
+    this.fullName,
   });
 
   factory BankStateModel.initial() {
@@ -31,6 +35,8 @@ class BankStateModel {
     int? blikNumber,
     Decimal? kwota,
     Failure? failure,
+    String? login,
+    String? fullName,
   }) {
     return BankStateModel(
       bankAccounts: bankAccounts ?? this.bankAccounts,
@@ -38,6 +44,8 @@ class BankStateModel {
       blikNumber: blikNumber ?? this.blikNumber,
       kwota: kwota ?? this.kwota,
       failure: failure ?? this.failure,
+      login: login ?? this.login,
+      fullName: fullName ?? this.fullName,
     );
   }
 }

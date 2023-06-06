@@ -18,6 +18,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeService>(builder: (context, themeService, child) {
@@ -25,8 +26,23 @@ class MyApp extends StatelessWidget {
         themeMode: themeService.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        home: const BankLoginWidgetProvider(),
+        // home: const BankLoginWidgetProvider(),
         // home: const BankPageWrapperProvider(),
+
+        initialRoute: '/',
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/':
+              return MaterialPageRoute(
+                  builder: (context) => const BankLoginWidgetProvider());
+            case '/bank':
+              return MaterialPageRoute(
+                  builder: (context) => const BankPageWrapperProvider());
+            default:
+              return MaterialPageRoute(
+                  builder: (context) => const BankLoginWidgetProvider());
+          }
+        },
       );
     });
   }
