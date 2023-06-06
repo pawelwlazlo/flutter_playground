@@ -5,6 +5,7 @@ import 'package:flutter_playground/application/pages/bank/bank_page.dart';
 
 import 'package:flutter_playground/injection.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
+import '../../../theme.dart';
 import 'cubit/bank_login_cubit.dart';
 
 class BankLoginWidgetProvider extends StatelessWidget {
@@ -26,14 +27,14 @@ class BankLoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = Theme.of(context);
+    final theme = AppTheme.getThemeForBank("ING", false);
     return BlocProvider<BankLoginCubit>(
       create: (context) => BankLoginCubit(),
       child: BlocBuilder<BankLoginCubit, BankLoginState>(
         builder: (context, state) {
           if (state is BankLoginInitial || state is BankLoginError) {
             return Scaffold(
-              backgroundColor: Colors.blue,
+              backgroundColor: theme.scaffoldBackgroundColor,
               appBar: const CustomAppBar(),
               body: Padding(
                 padding: const EdgeInsets.all(16.0),

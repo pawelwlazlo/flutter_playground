@@ -9,6 +9,7 @@ class BankTopSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final blocProvider = BlocProvider.of<BankCubit>(context);
+    final ThemeData themeData = Theme.of(context);
     return BlocBuilder<BankCubit, BankCubitState>(builder: (context, state) {
       final stateModel = state.bankStateModel;
       if (state is BankInitial) {
@@ -36,7 +37,7 @@ class BankTopSection extends StatelessWidget {
           itemBuilder: (context, index) {
             final bankAccount = stateModel.bankAccounts[index];
             return Container(
-              color: bankAccount.bank.backgroundColor,
+              color: themeData.scaffoldBackgroundColor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
