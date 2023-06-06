@@ -24,4 +24,20 @@ class BankLoginStateModel extends Equatable {
         error,
         pin,
       ];
+
+  copyWith({
+    String? login,
+    String? password,
+    bool? isLoginButtonEnabled,
+    String? error,
+    String? pin,
+  }) {
+    return BankLoginStateModel(
+      login: login ?? this.login,
+      password: password ?? this.password,
+      isLoginButtonEnabled: isLoginButtonEnabled ?? this.isLoginButtonEnabled,
+      error: error ?? this.error,
+      pin: pin ?? this.pin,
+    );
+  }
 }

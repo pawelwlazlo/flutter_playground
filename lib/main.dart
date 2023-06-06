@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/application/pages/bank/bank_page.dart';
+import 'package:flutter_playground/application/pages/login/login_page.dart';
 import 'package:flutter_playground/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         themeMode: themeService.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        home: const BankPageWrapperProvider(),
+        home: const BankLoginWidgetProvider(),
+        // home: const BankPageWrapperProvider(),
       );
     });
   }

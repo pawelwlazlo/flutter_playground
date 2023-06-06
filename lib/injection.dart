@@ -1,3 +1,4 @@
+import 'package:flutter_playground/application/pages/login/cubit/bank_login_cubit.dart';
 import 'package:flutter_playground/data/bank/datasources/bank_data_source.dart';
 import 'package:flutter_playground/data/bank/repositiories/bank_account_repository_impl.dart';
 import 'package:flutter_playground/domain/bank/repositories/bank_account_repository.dart';
@@ -12,7 +13,9 @@ Future<void> init() async {
 // ! application Layer
 // ! Blocs
   sl.registerFactory(() => BankCubit(sl()));
-  sl.registerFactory(() =>  GetBankAccountsUseCase(sl()));
-  sl.registerFactory<BankAccountRepository>(() => BankAccountRepositoryImpl(bankAccountDataSource: sl()));
+  sl.registerFactory(() => GetBankAccountsUseCase(sl()));
+  sl.registerFactory<BankAccountRepository>(
+      () => BankAccountRepositoryImpl(bankAccountDataSource: sl()));
   sl.registerFactory<BankAccountDataSource>(() => BankAccountDataSourceImpl());
+  sl.registerFactory(() => BankLoginCubit());
 }
