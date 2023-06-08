@@ -5,7 +5,6 @@ import 'package:flutter_playground/application/pages/bank/bank_page.dart';
 
 import 'package:flutter_playground/injection.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
-import '../../../theme.dart';
 import 'cubit/bank_login_cubit.dart';
 
 class BankLoginWidgetProvider extends StatelessWidget {
