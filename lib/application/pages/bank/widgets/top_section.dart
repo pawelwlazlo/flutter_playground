@@ -13,20 +13,23 @@ class BankTopSection extends StatelessWidget {
     return BlocBuilder<BankCubit, BankCubitState>(builder: (context, state) {
       final stateModel = state.bankStateModel;
       if (state is BankInitial) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Ładuję listę banków'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircularProgressIndicator(
-                color: themeData.colorScheme.background,
+        return Container(
+          color: themeData.colorScheme.secondary,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Ładuję listę banków'),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(
+                  color: themeData.colorScheme.background,
+                ),
+              )
+            ],
+          ),
         );
       } else {
         return PageView.builder(
@@ -37,7 +40,7 @@ class BankTopSection extends StatelessWidget {
           itemBuilder: (context, index) {
             final bankAccount = stateModel.bankAccounts[index];
             return Container(
-              color: themeData.scaffoldBackgroundColor,
+              color: themeData.colorScheme.primary,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -45,10 +48,9 @@ class BankTopSection extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       bankAccount.bank.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: themeData.colorScheme.onPrimary,
                       ),
                     ),
                   ),
@@ -63,10 +65,10 @@ class BankTopSection extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Saldo: ${bankAccount.balance} PLN',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16 * 1.2, // Ustawiamy czcionkę o 20% większą
                         fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                        color: themeData.colorScheme.onPrimary,
                       ),
                     ),
                   ),
@@ -74,10 +76,10 @@ class BankTopSection extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Karta: ${bankAccount.cardNumber}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                        color: themeData.colorScheme.onPrimary,
                       ),
                     ),
                   ),

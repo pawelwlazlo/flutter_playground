@@ -28,9 +28,14 @@ class BankCenterSection extends StatelessWidget {
                 return Text('Wysłano przelew na kwotę: ${stateModel.kwota}');
               } else if (state is BankStateBlikReceived) {
                 return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Otrzymano kod blik: ${stateModel.blikNumber}'),
-                    Text('Dla konta: ${stateModel.activeBank?.cardNumber}'),
+                    Column(
+                      children: [
+                        Text('Otrzymano kod blik: ${stateModel.blikNumber}'),
+                        Text('Dla konta: ${stateModel.activeBank?.cardNumber}'),
+                      ],
+                    ),
                   ],
                 );
               }
