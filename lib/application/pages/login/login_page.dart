@@ -19,8 +19,6 @@ class BankLoginWidgetProvider extends StatelessWidget {
 }
 
 class BankLoginWidget extends StatelessWidget {
-  final TextEditingController _pinController = TextEditingController();
-
   BankLoginWidget({super.key});
 
   @override
@@ -33,41 +31,13 @@ class BankLoginWidget extends StatelessWidget {
           if (state is BankLoginInitial || state is BankLoginError) {
             return LoginWidget(state: state, theme: theme);
           } else if (state is BankLoginSuccess) {
-            return Scaffold(
-              appBar: const CustomAppBar(),
-              body: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextField(
-                      controller: _pinController,
-                      decoration: InputDecoration(
-                        labelText: 'PIN',
-                        errorText: state is BankLoginError
-                            ? 'Nieprawidłowy PIN'
-                            : null,
-                      ),
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        final String pin = _pinController.text;
-                        context.read<BankLoginCubit>().submitPin(pin);
-                      },
-                      child: const Text('Zaloguj'),
-                    ),
-                  ],
-                ),
-              ),
-            );
+            return PinWidget(state: state, theme: theme);
           } else if (state is BankPinSuccess) {
             sl<BankCubit>().logIn(
                 login: state.bankLoginStateModel.login!,
                 fullName: state.bankLoginStateModel.fullName!,
                 context: context);
-            Future.delayed(Duration(milliseconds: 500), () {
+            Future.delayed(const Duration(milliseconds: 500), () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -75,35 +45,7 @@ class BankLoginWidget extends StatelessWidget {
               );
             });
           } else if (state is BankPinError) {
-            return Scaffold(
-              appBar: const CustomAppBar(),
-              body: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextField(
-                      controller: _pinController,
-                      decoration: InputDecoration(
-                        labelText: 'PIN',
-                        errorText: state is BankLoginError
-                            ? 'Nieprawidłowy PIN'
-                            : null,
-                      ),
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        final String pin = _pinController.text;
-                        context.read<BankLoginCubit>().submitPin(pin);
-                      },
-                      child: const Text('Zaloguj'),
-                    ),
-                  ],
-                ),
-              ),
-            );
+            return PinWidget(state: state, theme: theme);
           }
           return const Scaffold(
             body: Center(
@@ -158,6 +100,45 @@ class LoginWidget extends StatelessWidget {
                 final String login = _loginController.text;
                 final String password = _passwordController.text;
                 context.read<BankLoginCubit>().logIn(login, password);
+              },
+              child: const Text('Zaloguj'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PinWidget extends StatelessWidget {
+  const PinWidget({super.key, required this.state, required this.theme});
+
+  final BankLoginState state;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController _pinController = TextEditingController();
+    return Scaffold(
+      appBar: const CustomAppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _pinController,
+              decoration: InputDecoration(
+                labelText: 'PIN',
+                errorText: state is BankLoginError ? 'Nieprawidłowy PIN' : null,
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                final String pin = _pinController.text;
+                context.read<BankLoginCubit>().submitPin(pin);
               },
               child: const Text('Zaloguj'),
             ),
