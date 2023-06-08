@@ -37,7 +37,7 @@ class BankLoginWidget extends StatelessWidget {
                 fullName: state.bankLoginStateModel.fullName!,
                 context: context);
             Future.delayed(const Duration(milliseconds: 500), () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => const BankPageWrapperProvider()),
