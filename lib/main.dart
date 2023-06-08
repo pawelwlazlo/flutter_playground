@@ -5,7 +5,6 @@ import 'package:flutter_playground/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'application/core/services/theme_service.dart';
-import 'color_schemes.g.dart';
 import 'injection.dart' as di;
 
 void main() async {
@@ -22,11 +21,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Consumer<ThemeService>(builder: (context, themeService, child) {
       return MaterialApp(
         themeMode: themeService.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-        theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
         initialRoute: '/',
         onGenerateRoute: (settings) {
           switch (settings.name) {
