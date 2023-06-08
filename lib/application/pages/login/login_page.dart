@@ -27,7 +27,7 @@ class BankLoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.getThemeForBank("ING", false);
+    final theme = Theme.of(context);
     return BlocProvider<BankLoginCubit>(
       create: (context) => BankLoginCubit(),
       child: BlocBuilder<BankLoginCubit, BankLoginState>(

@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
     return Consumer<ThemeService>(builder: (context, themeService, child) {
       return MaterialApp(
         themeMode: themeService.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-        theme: AppTheme.getThemeForBank("ING", themeService.isDarkModeOn),
-        darkTheme: AppTheme.getThemeForBank("ING", themeService.isDarkModeOn),
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
         // home: const BankLoginWidgetProvider(),
         // home: const BankPageWrapperProvider(),
 

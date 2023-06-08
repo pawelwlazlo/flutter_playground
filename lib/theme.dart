@@ -6,7 +6,7 @@ class AppTheme {
   // *****************
   // static colors
   // *****************
-  static final Color _lightPrimaryColor = Colors.blueGrey.shade50;
+  static final Color _lightPrimaryColor = Colors.blueGrey.shade200;
   static final Color _lightPrimaryVariantColor = Colors.blueGrey.shade800;
   static final Color _lightOnPrimaryColor = Colors.blueGrey.shade200;
   static const Color _lightTextColorPrimary = Colors.black;
@@ -21,13 +21,6 @@ class AppTheme {
   static const Color _iconColor = Colors.white;
 
   static const Color _accentColor = Color.fromRGBO(74, 217, 217, 1);
-
-  // *****************
-  // Colors for banks
-  // *****************
-  static const Color _ingBackgroundColor = Color(0xFFFF6200);
-  static const Color _bnpParibasBackgroundColor = Colors.red;
-  static const Color _aliorBankBackgroundColor = Colors.green;
 
   // *****************
   // Text Style - light
@@ -68,93 +61,31 @@ class AppTheme {
   // Theme light/dark
   // *****************
 
-  static ThemeData getThemeForBank(String bankName, bool isDarkMode) {
-    Color primaryColor;
-    Color primaryVariantColor;
-    Color onPrimaryColor;
-    Color textColorPrimary;
-    Color appbarColor;
-    Color background;
+  static final ThemeData lightTheme = ThemeData(
+      scaffoldBackgroundColor: _lightPrimaryColor,
+      appBarTheme: const AppBarTheme(
+          color: _appbarColorLight,
+          iconTheme: IconThemeData(color: _iconColor)),
+      colorScheme: ColorScheme.light(
+        primary: _lightPrimaryColor,
+        onPrimary: _lightOnPrimaryColor,
+        secondary: _accentColor,
+        primaryContainer: _lightPrimaryVariantColor,
+      ),
+      textTheme: _lightTextTheme,
+      bottomAppBarTheme: const BottomAppBarTheme(color: _appbarColorLight));
 
-    switch (bankName) {
-      case 'ING':
-        background = isDarkMode
-            ? _ingBackgroundColor.withOpacity(1)
-            : _ingBackgroundColor.withOpacity(0.7);
-        primaryColor =
-            isDarkMode ? Colors.blueGrey.shade900 : _ingBackgroundColor;
-        primaryVariantColor =
-            isDarkMode ? _darkPrimaryVariantColor : _lightPrimaryVariantColor;
-        onPrimaryColor =
-            isDarkMode ? _darkOnPrimaryColor : _lightOnPrimaryColor;
-        textColorPrimary =
-            isDarkMode ? _darkTextColorPrimary : _lightTextColorPrimary;
-        appbarColor = isDarkMode ? _appbarColorDark : _appbarColorLight;
-        break;
-      case 'Bnp Paribas':
-        background = isDarkMode
-            ? _bnpParibasBackgroundColor.withOpacity(0.7)
-            : _bnpParibasBackgroundColor.withOpacity(0.3);
-        primaryColor =
-            isDarkMode ? Colors.blueGrey.shade900 : _bnpParibasBackgroundColor;
-        primaryVariantColor =
-            isDarkMode ? _darkPrimaryVariantColor : _lightPrimaryVariantColor;
-        onPrimaryColor =
-            isDarkMode ? _darkOnPrimaryColor : _lightOnPrimaryColor;
-        textColorPrimary =
-            isDarkMode ? _darkTextColorPrimary : _lightTextColorPrimary;
-        appbarColor = isDarkMode ? _appbarColorDark : _appbarColorLight;
-        break;
-      case 'AliorBank':
-        background = isDarkMode
-            ? _aliorBankBackgroundColor.withOpacity(0.7)
-            : _aliorBankBackgroundColor.withOpacity(0.3);
-        primaryColor =
-            isDarkMode ? Colors.blueGrey.shade900 : _aliorBankBackgroundColor;
-        primaryVariantColor =
-            isDarkMode ? _darkPrimaryVariantColor : _lightPrimaryVariantColor;
-        onPrimaryColor =
-            isDarkMode ? _darkOnPrimaryColor : _lightOnPrimaryColor;
-        textColorPrimary =
-            isDarkMode ? _darkTextColorPrimary : _lightTextColorPrimary;
-        appbarColor = isDarkMode ? _appbarColorDark : _appbarColorLight;
-        break;
-      default:
-        background = isDarkMode
-            ? _darkPrimaryColor
-            : _lightPrimaryColor.withOpacity(0.3);
-        primaryColor = isDarkMode ? _darkPrimaryColor : _lightPrimaryColor;
-        primaryVariantColor =
-            isDarkMode ? _darkPrimaryVariantColor : _lightPrimaryVariantColor;
-        onPrimaryColor =
-            isDarkMode ? _darkOnPrimaryColor : _lightOnPrimaryColor;
-        textColorPrimary =
-            isDarkMode ? _darkTextColorPrimary : _lightTextColorPrimary;
-        appbarColor = isDarkMode ? _appbarColorDark : _appbarColorLight;
-        break;
-    }
-
-    return ThemeData(
-      useMaterial3: true,
-      scaffoldBackgroundColor: background,
+  static final ThemeData darkTheme = ThemeData(
+      scaffoldBackgroundColor: _darkPrimaryColor,
       appBarTheme: AppBarTheme(
-        color: appbarColor,
-        iconTheme: const IconThemeData(color: _iconColor),
+          color: _appbarColorDark,
+          iconTheme: const IconThemeData(color: _iconColor)),
+      colorScheme: ColorScheme.dark(
+        primary: _darkPrimaryColor,
+        secondary: _accentColor,
+        onPrimary: _darkOnPrimaryColor,
+        primaryContainer: _darkPrimaryVariantColor,
       ),
-      colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: Colors.blueGrey,
-        primaryColorDark: primaryColor,
-        accentColor: _accentColor,
-        backgroundColor: background,
-        cardColor: primaryVariantColor,
-        errorColor: Colors.redAccent,
-        brightness: isDarkMode ? Brightness.dark : Brightness.light,
-      ).copyWith(
-        onPrimary: onPrimaryColor,
-        primaryContainer: primaryVariantColor,
-      ),
-      textTheme: isDarkMode ? _darkTextTheme : _lightTextTheme,
-      bottomAppBarTheme: BottomAppBarTheme(color: appbarColor),
-    );
-  }
+      textTheme: _darkTextTheme,
+      bottomAppBarTheme: BottomAppBarTheme(color: _appbarColorDark));
 }
