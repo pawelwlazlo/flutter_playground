@@ -12,6 +12,9 @@ class BankBottomSection extends StatelessWidget {
     final blocProvider = BlocProvider.of<BankCubit>(context);
     final theme = Theme.of(context);
     return PageView(
+      onPageChanged: (index) {
+        blocProvider.changeCommandPage(index);
+      },
       children: <Widget>[
         Container(
           color: theme.colorScheme.primary,

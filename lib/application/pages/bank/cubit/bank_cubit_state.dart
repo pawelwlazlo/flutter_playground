@@ -103,3 +103,17 @@ class BankStateLoginSuccess extends BankCubitState {
         bankStateModel.fullName,
       ];
 }
+
+class BankStateCommandPageChanged extends BankCubitState {
+  const BankStateCommandPageChanged({
+    required BankStateModel newModel,
+  }) : super(
+          bankStateModel: newModel,
+        );
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        bankStateModel.activeCommand,
+      ];
+}

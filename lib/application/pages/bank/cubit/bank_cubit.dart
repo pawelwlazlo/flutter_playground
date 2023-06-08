@@ -61,4 +61,11 @@ class BankCubit extends Cubit<BankCubitState> {
           .copyWith(activeBank: state.bankStateModel.bankAccounts[index]),
     ));
   }
+
+  void changeCommandPage(int index) {
+    debugPrint('zmieniam komendę na $index');
+    emit(BankStateCommandPageChanged(
+      newModel: state.bankStateModel.copyWith(activeCommand: index),
+    ));
+  }
 }

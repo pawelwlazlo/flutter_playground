@@ -11,16 +11,17 @@ class BankStateModel {
   final Failure? failure;
   final String? login;
   final String? fullName;
+  final int? activeCommand;
 
-  BankStateModel({
-    required this.bankAccounts,
-    required this.activeBank,
-    this.blikNumber,
-    this.kwota,
-    this.failure,
-    this.login,
-    this.fullName,
-  });
+  BankStateModel(
+      {required this.bankAccounts,
+      required this.activeBank,
+      this.blikNumber,
+      this.kwota,
+      this.failure,
+      this.login,
+      this.fullName,
+      this.activeCommand});
 
   factory BankStateModel.initial() {
     return BankStateModel(
@@ -37,6 +38,7 @@ class BankStateModel {
     Failure? failure,
     String? login,
     String? fullName,
+    int? activeCommand,
   }) {
     return BankStateModel(
       bankAccounts: bankAccounts ?? this.bankAccounts,
@@ -46,6 +48,7 @@ class BankStateModel {
       failure: failure ?? this.failure,
       login: login ?? this.login,
       fullName: fullName ?? this.fullName,
+      activeCommand: activeCommand ?? this.activeCommand,
     );
   }
 }

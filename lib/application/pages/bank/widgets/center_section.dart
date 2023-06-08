@@ -38,8 +38,11 @@ class BankCenterSection extends StatelessWidget {
                     ),
                   ],
                 );
+              } else if (state is BankStateCommandPageChanged) {
+                return const SizedBox();
+              } else {
+                return const Text('Bank jest ok');
               }
-              return const SizedBox();
             }),
           ),
         )
