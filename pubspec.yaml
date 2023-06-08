@@ -21,6 +21,9 @@ dependencies:
   http: ^1.0.0
   decimal: ^2.3.2
   flex_color_scheme: ^7.1.2
+  font_awesome_flutter: ^10.4.0
+  flutter_secure_storage: ^8.0.0
+  flutter_svg: ^2.0.6
 
 dev_dependencies:
   flutter_test:

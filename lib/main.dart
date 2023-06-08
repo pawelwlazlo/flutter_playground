@@ -5,6 +5,7 @@ import 'package:flutter_playground/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'application/core/services/theme_service.dart';
+import 'color_schemes.g.dart';
 import 'injection.dart' as di;
 
 void main() async {
@@ -24,11 +25,8 @@ class MyApp extends StatelessWidget {
     return Consumer<ThemeService>(builder: (context, themeService, child) {
       return MaterialApp(
         themeMode: themeService.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        // home: const BankLoginWidgetProvider(),
-        // home: const BankPageWrapperProvider(),
-
+        theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
         initialRoute: '/',
         onGenerateRoute: (settings) {
           switch (settings.name) {
