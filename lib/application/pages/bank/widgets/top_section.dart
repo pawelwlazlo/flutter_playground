@@ -13,17 +13,17 @@ class BankTopSection extends StatelessWidget {
     return BlocBuilder<BankCubit, BankCubitState>(builder: (context, state) {
       final stateModel = state.bankStateModel;
       if (state is BankInitial) {
-        return const Column(
+        return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text('Ładuję listę banków'),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: CircularProgressIndicator(
-                color: Colors.blueGrey,
+                color: themeData.colorScheme.background,
               ),
             )
           ],

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/application/core/services/theme_service.dart';
+import 'package:flutter_playground/application/core/widgets/custom_app_bar.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
 import 'package:flutter_playground/application/pages/bank/widgets/bottom_section.dart';
 import 'package:flutter_playground/application/pages/bank/widgets/center_section.dart';
 import 'package:flutter_playground/application/pages/bank/widgets/top_section.dart';
-import 'package:provider/provider.dart';
 
 import '../../../injection.dart';
 
@@ -25,19 +24,8 @@ class BankPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
-        backgroundColor: Colors.blue,
-        appBar: AppBar(
-          title: const Text("Easy Bank"),
-          titleTextStyle: themeData.textTheme.displaySmall,
-          actions: [
-            Switch(
-                value: Provider.of<ThemeService>(context).isDarkModeOn,
-                onChanged: (_) {
-                  Provider.of<ThemeService>(context, listen: false)
-                      .toggleTheme();
-                }),
-          ],
-        ),
+        backgroundColor: themeData.colorScheme.onPrimary,
+        appBar: const CustomAppBar(),
         body: const Center(
           child: Column(children: <Widget>[
             Expanded(child: BankTopSection()),

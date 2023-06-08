@@ -10,8 +10,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return AppBar(
-      title: const Text("Easy Bank"),
-      titleTextStyle: themeData.textTheme.displaySmall,
+      title: Text(
+        "Easy Bank",
+        style: TextStyle(color: themeData.colorScheme.onPrimary),
+      ),
+      titleTextStyle: themeData.textTheme.displayMedium,
+      backgroundColor: themeData.colorScheme.primary,
       actions: [
         Switch(
             value: Provider.of<ThemeService>(context).isDarkModeOn,
