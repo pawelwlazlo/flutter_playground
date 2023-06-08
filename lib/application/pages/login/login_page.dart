@@ -19,8 +19,6 @@ class BankLoginWidgetProvider extends StatelessWidget {
 }
 
 class BankLoginWidget extends StatelessWidget {
-  final TextEditingController _loginController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _pinController = TextEditingController();
 
   BankLoginWidget({super.key});
@@ -33,46 +31,7 @@ class BankLoginWidget extends StatelessWidget {
       child: BlocBuilder<BankLoginCubit, BankLoginState>(
         builder: (context, state) {
           if (state is BankLoginInitial || state is BankLoginError) {
-            return Scaffold(
-              backgroundColor: theme.scaffoldBackgroundColor,
-              appBar: const CustomAppBar(),
-              body: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextField(
-                      controller: _loginController,
-                      decoration: InputDecoration(
-                        labelText: 'Login',
-                        errorText: state is BankLoginError
-                            ? 'Nieprawidłowy login'
-                            : null,
-                      ),
-                    ),
-                    TextField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Hasło',
-                        errorText: state is BankLoginError
-                            ? 'Nieprawidłowe hasło'
-                            : null,
-                      ),
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        final String login = _loginController.text;
-                        final String password = _passwordController.text;
-                        context.read<BankLoginCubit>().logIn(login, password);
-                      },
-                      child: const Text('Zaloguj'),
-                    ),
-                  ],
-                ),
-              ),
-            );
+            return LoginWidget(state: state, theme: theme);
           } else if (state is BankLoginSuccess) {
             return Scaffold(
               appBar: const CustomAppBar(),
@@ -152,6 +111,58 @@ class BankLoginWidget extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class LoginWidget extends StatelessWidget {
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final BankLoginState state;
+  final ThemeData theme;
+
+  LoginWidget({super.key, required this.state, required this.theme});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      appBar: const CustomAppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _loginController,
+              decoration: InputDecoration(
+                labelText: 'Login',
+                errorText:
+                    state is BankLoginError ? 'Nieprawidłowy login' : null,
+              ),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: 'Hasło',
+                errorText:
+                    state is BankLoginError ? 'Nieprawidłowe hasło' : null,
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                final String login = _loginController.text;
+                final String password = _passwordController.text;
+                context.read<BankLoginCubit>().logIn(login, password);
+              },
+              child: const Text('Zaloguj'),
+            ),
+          ],
+        ),
       ),
     );
   }
