@@ -20,6 +20,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         Switch(
             activeColor: themeData.colorScheme.primary,
             activeTrackColor: themeData.colorScheme.onPrimary,
+            inactiveThumbColor: themeData.colorScheme.onPrimary,
+            inactiveTrackColor: themeData.colorScheme.primary,
             value: Provider.of<ThemeService>(context).isDarkModeOn,
             onChanged: (_) {
               Provider.of<ThemeService>(context, listen: false).toggleTheme();
