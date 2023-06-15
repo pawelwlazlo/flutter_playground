@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/bank_cubit.dart';
@@ -9,7 +10,6 @@ class BankCenterSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-
     return Column(
       children: [
         Expanded(
@@ -18,7 +18,7 @@ class BankCenterSection extends StatelessWidget {
                 builder: (context, state) {
               final stateModel = state.bankStateModel;
               if (state is BankInitial) {
-                return const Text('Bank jest ok');
+                return const KwotaPrompt();
               } else if (state is BankStateBlikRequested ||
                   state is BankStatePrzelewRequested) {
                 return CircularProgressIndicator(
@@ -39,14 +39,50 @@ class BankCenterSection extends StatelessWidget {
                   ],
                 );
               } else if (state is BankStateCommandPageChanged) {
-                return const SizedBox();
+                return const KwotaPrompt();
               } else {
-                return const Text('Bank jest ok');
+                return const KwotaPrompt();
               }
             }),
           ),
         )
       ],
+    );
+  }
+}
+
+class KwotaPrompt extends StatelessWidget {
+  const KwotaPrompt({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController amountController = TextEditingController();
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'Wprowadź kwotę:',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: amountController,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d*,?\d*')),
+            ],
+            decoration: InputDecoration(
+              labelText: 'Kwota',
+              border: OutlineInputBorder(),
+              prefixIcon: Icon(Icons.attach_money),
+            ),
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }
