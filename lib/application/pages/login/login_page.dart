@@ -112,6 +112,12 @@ class LoginWidget extends StatelessWidget {
                       final String password = _passwordController.text;
                       context.read<BankLoginCubit>().logIn(login, password);
                     },
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(
+                          side: BorderSide(
+                              color: theme.colorScheme.primary, width: 4)),
+                      padding: const EdgeInsets.all(54),
+                    ),
                     child: const Text('Zaloguj'),
                   ),
                 ],
@@ -132,7 +138,7 @@ class PinWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _pinController = TextEditingController();
+    final TextEditingController pinController = TextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: const CustomAppBar(),
@@ -141,21 +147,42 @@ class PinWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: _pinController,
-              decoration: InputDecoration(
-                labelText: 'PIN',
-                errorText: state is BankLoginError ? 'Nieprawidłowy PIN' : null,
+            Expanded(
+                child: Text("Witaj ${state.bankLoginStateModel.fullName}")),
+            Expanded(
+              child: Column(
+                children: [
+                  TextField(
+                    controller: pinController,
+                    decoration: InputDecoration(
+                      labelText: 'PIN',
+                      errorText:
+                          state is BankLoginError ? 'Nieprawidłowy PIN' : null,
+                    ),
+                    obscureText: true,
+                  ),
+                ],
               ),
-              obscureText: true,
             ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                final String pin = _pinController.text;
-                context.read<BankLoginCubit>().submitPin(pin);
-              },
-              child: const Text('Zaloguj'),
+            Expanded(
+              child: Column(
+                children: [
+                  const SizedBox(height: 16.0),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(
+                          side: BorderSide(
+                              color: theme.colorScheme.primary, width: 4)),
+                      padding: const EdgeInsets.all(54),
+                    ),
+                    onPressed: () {
+                      final String pin = pinController.text;
+                      context.read<BankLoginCubit>().submitPin(pin);
+                    },
+                    child: const Text('Zaloguj'),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
