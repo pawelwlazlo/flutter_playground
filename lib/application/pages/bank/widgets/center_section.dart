@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../cubit/bank_cubit.dart';
 
@@ -56,6 +57,7 @@ class KwotaPrompt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final TextEditingController amountController = TextEditingController();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -75,8 +77,16 @@ class KwotaPrompt extends StatelessWidget {
             ],
             decoration: InputDecoration(
               labelText: 'Kwota',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.attach_money),
+              border: const OutlineInputBorder(),
+              prefixIconConstraints: BoxConstraints(),
+              prefixIcon: Padding(
+                padding: const EdgeInsets.all(8),
+                child: FaIcon(
+                  FontAwesomeIcons.buildingColumns,
+                  size: 14,
+                  color: theme.colorScheme.primary,
+                ), // Icon(Icons.attach_money),
+              ),
             ),
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

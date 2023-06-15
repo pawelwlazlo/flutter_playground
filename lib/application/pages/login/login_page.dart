@@ -79,7 +79,7 @@ class LoginWidget extends StatelessWidget {
           children: [
             Expanded(
               child: Image.asset(
-                'assets/alior_logo.png',
+                'assets/eb.png',
                 fit: BoxFit.contain,
               ),
             ),
