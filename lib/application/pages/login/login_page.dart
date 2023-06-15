@@ -18,7 +18,7 @@ class BankLoginWidgetProvider extends StatelessWidget {
 }
 
 class BankLoginWidget extends StatelessWidget {
-  BankLoginWidget({super.key});
+  const BankLoginWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
