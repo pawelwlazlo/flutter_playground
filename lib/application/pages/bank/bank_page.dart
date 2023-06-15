@@ -24,6 +24,7 @@ class BankPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: themeData.colorScheme.onPrimary,
         appBar: const CustomAppBar(),
         body: const Center(

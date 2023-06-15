@@ -69,6 +69,7 @@ class LoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: const CustomAppBar(),
       body: Padding(
@@ -76,31 +77,45 @@ class LoginWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: _loginController,
-              decoration: InputDecoration(
-                labelText: 'Login',
-                errorText:
-                    state is BankLoginError ? 'Nieprawidłowy login' : null,
+            Expanded(
+              child: Image.asset(
+                'assets/alior_logo.png',
+                fit: BoxFit.contain,
               ),
             ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                labelText: 'Hasło',
-                errorText:
-                    state is BankLoginError ? 'Nieprawidłowe hasło' : null,
+            Expanded(
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _loginController,
+                    decoration: const InputDecoration(
+                      labelText: 'Login',
+                    ),
+                  ),
+                  TextField(
+                    controller: _passwordController,
+                    decoration: const InputDecoration(
+                      labelText: 'Hasło',
+                    ),
+                    obscureText: true,
+                  ),
+                ],
               ),
-              obscureText: true,
             ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                final String login = _loginController.text;
-                final String password = _passwordController.text;
-                context.read<BankLoginCubit>().logIn(login, password);
-              },
-              child: const Text('Zaloguj'),
+            Expanded(
+              child: Column(
+                children: [
+                  const SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      final String login = _loginController.text;
+                      final String password = _passwordController.text;
+                      context.read<BankLoginCubit>().logIn(login, password);
+                    },
+                    child: const Text('Zaloguj'),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -119,6 +134,7 @@ class PinWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController _pinController = TextEditingController();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
