@@ -19,7 +19,7 @@ Future<void> init() async {
 // ! Blocs
   sl.registerFactory(() => BankCubit(sl()));
   sl.registerFactory(() => BankLoginCubit());
-  sl.registerFactory(() => BankTransferCubit());
+  sl.registerFactory(() => BankTransferCubit(bankCubit: sl()));
 
 // ! Domain Layer
 //
