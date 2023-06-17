@@ -26,7 +26,7 @@ class BankPage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: themeData.colorScheme.onPrimary,
-        appBar: const CustomAppBar(),
+        appBar: const CustomAppBar(title: 'Easy Bank'),
         body: const Center(
           child: Column(children: <Widget>[
             Expanded(child: BankTopSection()),

@@ -72,7 +72,7 @@ class LoginWidget extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: const CustomAppBar(),
+      appBar:  const CustomAppBar(title: 'Easy Bank Login',),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -142,7 +142,7 @@ class PinWidget extends StatelessWidget {
     final TextEditingController pinController = TextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(title: 'Easy Bank Login',),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -9,11 +9,11 @@ class BankBottomSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blocProvider = BlocProvider.of<BankCubit>(context);
+    final bankCubit = BlocProvider.of<BankCubit>(context);
     final theme = Theme.of(context);
     return PageView(
       onPageChanged: (index) {
-        blocProvider.changeCommandPage(index);
+        bankCubit.changeCommandPage(index);
       },
       children: <Widget>[
         Container(
@@ -22,8 +22,9 @@ class BankBottomSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               BankActionButton(
-                  bankEvent: () =>
-                      blocProvider.makePrzelew(Decimal.parse('300.89')),
+                  bankEvent: () {
+                    return bankCubit.makePrzelew(Decimal.parse('300.89'));
+                  },
                   buttonText: 'Przelew')
             ],
           ),
@@ -34,7 +35,7 @@ class BankBottomSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               BankActionButton(
-                  bankEvent: () => blocProvider.generateBlik(),
+                  bankEvent: () => bankCubit.generateBlik(),
                   buttonText: 'BLIK')
             ],
           ),

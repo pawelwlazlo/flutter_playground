@@ -4,14 +4,15 @@ import 'package:provider/provider.dart';
 import '../services/theme_service.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  final String title;
+  const CustomAppBar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return AppBar(
       title: Text(
-        "Easy Bank",
+        title,
         style: TextStyle(color: themeData.colorScheme.onPrimary),
       ),
       titleTextStyle: themeData.textTheme.displayMedium,
