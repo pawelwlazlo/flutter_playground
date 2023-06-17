@@ -1,25 +1,25 @@
 import 'package:equatable/equatable.dart';
 
-class Przelew extends Equatable {
+class BankTransfer extends Equatable {
   final int transferId;
-  final String odbiorca;
-  final String tytulPrzelewu;
-  final DateTime data;
-  final DateTime dataKsiegowania;
-  final String nrRachunku;
+  final String accountHolderName;
+  final String title;
+  final DateTime accountingDate;
+  final DateTime transferDate;
+  final String accountNumber;
   final int bankId;
 
-  const Przelew({
+  const BankTransfer({
     required this.transferId,
-    required this.odbiorca,
-    required this.tytulPrzelewu,
-    required this.data,
-    required this.dataKsiegowania,
-    required this.nrRachunku,
+    required this.accountHolderName,
+    required this.title,
+    required this.accountingDate,
+    required this.transferDate,
+    required this.accountNumber,
     required this.bankId,
   });
 
-  Przelew copyWith({
+  BankTransfer copyWith({
     int? transferId,
     String? odbiorca,
     String? tytulPrzelewu,
@@ -28,13 +28,13 @@ class Przelew extends Equatable {
     String? nrRachunku,
     int? bankId,
   }) {
-    return Przelew(
+    return BankTransfer(
       transferId: transferId ?? this.transferId,
-      odbiorca: odbiorca ?? this.odbiorca,
-      tytulPrzelewu: tytulPrzelewu ?? this.tytulPrzelewu,
-      data: data ?? this.data,
-      dataKsiegowania: dataKsiegowania ?? this.dataKsiegowania,
-      nrRachunku: nrRachunku ?? this.nrRachunku,
+      accountHolderName: odbiorca ?? accountHolderName,
+      title: tytulPrzelewu ?? title,
+      accountingDate: data ?? accountingDate,
+      transferDate: dataKsiegowania ?? transferDate,
+      accountNumber: nrRachunku ?? accountNumber,
       bankId: bankId ?? this.bankId,
     );
   }
@@ -42,30 +42,38 @@ class Przelew extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'transferId': transferId,
-      'odbiorca': odbiorca,
-      'tytulPrzelewu': tytulPrzelewu,
-      'data': data,
-      'dataKsiegowania': dataKsiegowania,
-      'nrRachunku': nrRachunku,
+      'odbiorca': accountHolderName,
+      'tytulPrzelewu': title,
+      'data': accountingDate,
+      'dataKsiegowania': transferDate,
+      'nrRachunku': accountNumber,
       'bankId': bankId,
     };
   }
 
-  factory Przelew.fromMap(Map<String, dynamic> map) {
-    return Przelew(
+  factory BankTransfer.fromMap(Map<String, dynamic> map) {
+    return BankTransfer(
       transferId: map['transferId'] as int,
-      odbiorca: map['odbiorca'] as String,
-      tytulPrzelewu: map['tytulPrzelewu'] as String,
-      data: map['data'] as DateTime,
-      dataKsiegowania: map['dataKsiegowania'] as DateTime,
-      nrRachunku: map['nrRachunku'] as String,
+      accountHolderName: map['odbiorca'] as String,
+      title: map['tytulPrzelewu'] as String,
+      accountingDate: map['data'] as DateTime,
+      transferDate: map['dataKsiegowania'] as DateTime,
+      accountNumber: map['nrRachunku'] as String,
       bankId: map['bankId'] as int,
     );
   }
 
   @override
-  List<Object?> get props => [transferId, odbiorca, tytulPrzelewu, data, dataKsiegowania, nrRachunku, bankId];
-
+  List<Object> get props =>
+      [
+        transferId,
+        accountHolderName,
+        title,
+        accountingDate,
+        transferDate,
+        accountNumber,
+        bankId,
+      ];
 
 }
 
