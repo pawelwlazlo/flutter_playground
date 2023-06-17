@@ -1,3 +1,4 @@
+import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
 import 'package:flutter_playground/application/pages/login/cubit/bank_login_cubit.dart';
 import 'package:flutter_playground/data/bank/datasources/bank_data_source.dart';
 import 'package:flutter_playground/data/bank/repositiories/bank_account_repository_impl.dart';
@@ -18,6 +19,7 @@ Future<void> init() async {
 // ! Blocs
   sl.registerFactory(() => BankCubit(sl()));
   sl.registerFactory(() => BankLoginCubit());
+  sl.registerFactory(() => BankTransferCubit());
 
 // ! Domain Layer
 //
