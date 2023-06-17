@@ -13,9 +13,19 @@ Future<void> init() async {
 // ! application Layer
 // ! Blocs
   sl.registerFactory(() => BankCubit(sl()));
+  sl.registerFactory(() => BankLoginCubit());
+
+// ! Domain Layer
+//
+// ! Use Cases
   sl.registerFactory(() => GetBankAccountsUseCase(sl()));
+
+// ! Repositories
   sl.registerFactory<BankAccountRepository>(
       () => BankAccountRepositoryImpl(bankAccountDataSource: sl()));
+
+// ! Data Layer
   sl.registerFactory<BankAccountDataSource>(() => BankAccountDataSourceImpl());
-  sl.registerFactory(() => BankLoginCubit());
+
+
 }

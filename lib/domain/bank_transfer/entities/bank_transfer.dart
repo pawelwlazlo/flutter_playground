@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 
 class BankTransfer extends Equatable {
@@ -8,60 +9,7 @@ class BankTransfer extends Equatable {
   final DateTime transferDate;
   final String accountNumber;
   final int bankId;
-
-  const BankTransfer({
-    required this.transferId,
-    required this.accountHolderName,
-    required this.title,
-    required this.accountingDate,
-    required this.transferDate,
-    required this.accountNumber,
-    required this.bankId,
-  });
-
-  BankTransfer copyWith({
-    int? transferId,
-    String? odbiorca,
-    String? tytulPrzelewu,
-    DateTime? data,
-    DateTime? dataKsiegowania,
-    String? nrRachunku,
-    int? bankId,
-  }) {
-    return BankTransfer(
-      transferId: transferId ?? this.transferId,
-      accountHolderName: odbiorca ?? accountHolderName,
-      title: tytulPrzelewu ?? title,
-      accountingDate: data ?? accountingDate,
-      transferDate: dataKsiegowania ?? transferDate,
-      accountNumber: nrRachunku ?? accountNumber,
-      bankId: bankId ?? this.bankId,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'transferId': transferId,
-      'odbiorca': accountHolderName,
-      'tytulPrzelewu': title,
-      'data': accountingDate,
-      'dataKsiegowania': transferDate,
-      'nrRachunku': accountNumber,
-      'bankId': bankId,
-    };
-  }
-
-  factory BankTransfer.fromMap(Map<String, dynamic> map) {
-    return BankTransfer(
-      transferId: map['transferId'] as int,
-      accountHolderName: map['odbiorca'] as String,
-      title: map['tytulPrzelewu'] as String,
-      accountingDate: map['data'] as DateTime,
-      transferDate: map['dataKsiegowania'] as DateTime,
-      accountNumber: map['nrRachunku'] as String,
-      bankId: map['bankId'] as int,
-    );
-  }
+  final Decimal amount;
 
   @override
   List<Object> get props =>
@@ -73,7 +21,75 @@ class BankTransfer extends Equatable {
         transferDate,
         accountNumber,
         bankId,
+        amount,
       ];
 
+//<editor-fold desc="Data Methods">
+  const BankTransfer({
+    required this.transferId,
+    required this.accountHolderName,
+    required this.title,
+    required this.accountingDate,
+    required this.transferDate,
+    required this.accountNumber,
+    required this.bankId,
+    required this.amount,
+  });
+
+
+  @override
+  String toString() {
+    return 'BankTransfer{ transferId: $transferId, accountHolderName: $accountHolderName, title: $title, accountingDate: $accountingDate, transferDate: $transferDate, accountNumber: $accountNumber, bankId: $bankId, amount: $amount,}';
+  }
+
+  BankTransfer copyWith({
+    int? transferId,
+    String? accountHolderName,
+    String? title,
+    DateTime? accountingDate,
+    DateTime? transferDate,
+    String? accountNumber,
+    int? bankId,
+    Decimal? amount,
+  }) {
+    return BankTransfer(
+      transferId: transferId ?? this.transferId,
+      accountHolderName: accountHolderName ?? this.accountHolderName,
+      title: title ?? this.title,
+      accountingDate: accountingDate ?? this.accountingDate,
+      transferDate: transferDate ?? this.transferDate,
+      accountNumber: accountNumber ?? this.accountNumber,
+      bankId: bankId ?? this.bankId,
+      amount: amount ?? this.amount,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'transferId': transferId,
+      'accountHolderName': accountHolderName,
+      'title': title,
+      'accountingDate': accountingDate,
+      'transferDate': transferDate,
+      'accountNumber': accountNumber,
+      'bankId': bankId,
+      'amount': amount,
+    };
+  }
+
+  factory BankTransfer.fromMap(Map<String, dynamic> map) {
+    return BankTransfer(
+      transferId: map['transferId'] as int,
+      accountHolderName: map['accountHolderName'] as String,
+      title: map['title'] as String,
+      accountingDate: map['accountingDate'] as DateTime,
+      transferDate: map['transferDate'] as DateTime,
+      accountNumber: map['accountNumber'] as String,
+      bankId: map['bankId'] as int,
+      amount: map['amount'] as Decimal,
+    );
+  }
+
+//</editor-fold>
 }
 
