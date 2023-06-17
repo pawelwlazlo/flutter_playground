@@ -76,6 +76,10 @@ class KwotaPrompt extends StatelessWidget {
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'^\d*,?\d*')),
             ],
+            onSubmitted: (value) {
+              final bankCubit = BlocProvider.of<BankCubit>(context);
+              bankCubit.setKwota(value);
+            },
             decoration: InputDecoration(
               labelText: 'Kwota',
               labelStyle: TextStyle(

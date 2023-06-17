@@ -127,3 +127,33 @@ class BankStateCommandPageChanged extends BankCubitState {
         bankStateModel.activeCommand,
       ];
 }
+
+class BankStateKwotaChanged extends BankCubitState {
+  const BankStateKwotaChanged({
+    required BankStateModel newModel,
+  }) : super(
+    bankStateModel: newModel,
+  );
+
+  @override
+  List<Object?> get props =>
+      [
+        ...super.props,
+        bankStateModel.kwota,
+      ];
+}
+
+class BankStateTransactionCreated extends BankCubitState {
+  const BankStateTransactionCreated({
+    required BankStateModel newModel,
+  }) : super(
+    bankStateModel: newModel,
+  );
+
+  @override
+  List<Object?> get props =>
+      [
+        ...super.props,
+        bankStateModel.kwota,
+      ];
+}

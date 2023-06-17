@@ -45,22 +45,19 @@ class BankCubit extends Cubit<BankCubitState> {
         newModel: state.bankStateModel.copyWith(blikNumber: 123456)));
   }
 
-  Future<void> makePrzelew(Decimal kwota) async {
-    emit(BankStatePrzelewRequested(
-      newModel: state.bankStateModel.copyWith(),
-    ));
-    await Future.delayed(const Duration(seconds: 3), () {});
-    debugPrint(
-        'Wysłano przelew z konta ${state..bankStateModel.activeBank?.accountNumber}');
-    emit(BankStatePrzelewSended(
-        newModel: state.bankStateModel.copyWith(kwota: kwota)));
+  Future<void> createTransaction() async {
+    if(state.bankStateModel.kwota != null && state.bankStateModel.kwota!.compareTo(Decimal.zero) > 0) {
+      emit(BankStateTransactionCreated(
+        newModel: state.bankStateModel.copyWith(),
+      ));
+    }
   }
 
   void changeBankPage(int index) {
     debugPrint('zmieniam bank na $index');
     emit(BankPageChanged(
       newModel: state.bankStateModel
-          .copyWith(activeBank: state.bankStateModel.bankAccounts?[index]),
+          .copyWith(activeBank: state.bankStateModel.bankAccounts[index]),
     ));
   }
 
@@ -68,6 +65,12 @@ class BankCubit extends Cubit<BankCubitState> {
     debugPrint('zmieniam komendę na $index');
     emit(BankStateCommandPageChanged(
       newModel: state.bankStateModel.copyWith(activeCommand: index),
+    ));
+  }
+
+  void setKwota(String kwota) {
+    emit(BankStateKwotaChanged(
+      newModel: state.bankStateModel.copyWith(kwota: Decimal.parse(kwota)),
     ));
   }
 }
