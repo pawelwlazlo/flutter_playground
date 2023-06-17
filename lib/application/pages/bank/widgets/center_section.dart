@@ -64,10 +64,11 @@ class KwotaPrompt extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Wprowadź kwotę:',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
+          Text('Wprowadź kwotę:',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.primary)),
           const SizedBox(height: 16),
           TextField(
             controller: amountController,
@@ -77,8 +78,12 @@ class KwotaPrompt extends StatelessWidget {
             ],
             decoration: InputDecoration(
               labelText: 'Kwota',
+              labelStyle: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.primary),
               border: const OutlineInputBorder(),
-              prefixIconConstraints: BoxConstraints(),
+              prefixIconConstraints: const BoxConstraints(),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(8),
                 child: FaIcon(
@@ -89,7 +94,7 @@ class KwotaPrompt extends StatelessWidget {
               ),
             ),
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: theme.textTheme.displayMedium,
           ),
         ],
       ),
