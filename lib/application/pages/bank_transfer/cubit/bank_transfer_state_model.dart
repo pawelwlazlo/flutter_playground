@@ -1,37 +1,60 @@
+import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_playground/domain/bank/entities/bank_account.dart';
 
 class BankTransferStateModel extends Equatable {
+  final String transferId;
+  final String? accountHolderName;
   final String? title;
-  final String? description;
-  final String? amount;
-  final String? recipient;
+  final DateTime? accountingDate;
+  final DateTime transferDate;
+  final String? accountNumber;
+  final Decimal amount;
+  final BankAccount fromAccount;
 
   const BankTransferStateModel({
+    required this.transferId,
+    this.accountHolderName,
     this.title,
-    this.description,
-    this.amount,
-    this.recipient,
+    this.accountingDate,
+    required this.transferDate,
+    this.accountNumber,
+    required this.amount,
+    required this.fromAccount,
   });
 
-  @override
-  List<Object?> get props => [
-        title,
-        description,
-        amount,
-        recipient,
-      ];
-
-  copyWith({
+  BankTransferStateModel copyWith({
+    String? transferId,
+    String? accountHolderName,
     String? title,
-    String? description,
-    String? amount,
-    String? recipient,
+    DateTime? accountingDate,
+    DateTime? transferDate,
+    String? accountNumber,
+    Decimal? amount,
+    BankAccount? fromAccount,
   }) {
     return BankTransferStateModel(
+      transferId: transferId ?? this.transferId,
+      accountHolderName: accountHolderName ?? this.accountHolderName,
       title: title ?? this.title,
-      description: description ?? this.description,
+      accountingDate: accountingDate ?? this.accountingDate,
+      transferDate: transferDate ?? this.transferDate,
+      accountNumber: accountNumber ?? this.accountNumber,
       amount: amount ?? this.amount,
-      recipient: recipient ?? this.recipient,
+      fromAccount: fromAccount ?? this.fromAccount,
     );
   }
+
+  @override
+  List<Object?> get props =>
+      [
+        transferId,
+        accountHolderName,
+        title,
+        accountingDate,
+        transferDate,
+        accountNumber,
+        amount,
+        fromAccount,
+      ];
 }
