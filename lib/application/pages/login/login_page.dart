@@ -33,9 +33,10 @@ class BankLoginWidget extends StatelessWidget {
             return PinWidget(state: state, theme: theme);
           } else if (state is BankPinSuccess) {
             sl<BankCubit>().logIn(
-                login: state.bankLoginStateModel.login!,
-                fullName: state.bankLoginStateModel.fullName!,
-                context: context);
+              userId: state.bankLoginStateModel.id!,
+              login: state.bankLoginStateModel.login!,
+              fullName: state.bankLoginStateModel.fullName!,
+            );
             Future.delayed(const Duration(milliseconds: 500), () {
               Navigator.pushReplacement(
                 context,

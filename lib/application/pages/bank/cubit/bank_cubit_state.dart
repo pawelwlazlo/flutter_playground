@@ -12,11 +12,19 @@ abstract class BankCubitState extends Equatable {
 }
 
 class BankInitial extends BankCubitState {
-  BankInitial.initial() : super(bankStateModel: BankStateModel.initial());
-  const BankInitial(
-      {required BankStateModel newModel, required BuildContext context})
-      : super(bankStateModel: newModel);
+  BankInitial(
+  ) : super(bankStateModel: BankStateModel.initial());
 }
+
+class BankLoggedIn extends BankCubitState {
+  const BankLoggedIn({
+    required BankStateModel newModel,
+  }) : super(bankStateModel: newModel);
+
+  @override
+  List<Object> get props => [bankStateModel];
+}
+
 
 class BankListLoaded extends BankCubitState {
   const BankListLoaded({
@@ -41,8 +49,8 @@ class BankStateBlikReceived extends BankCubitState {
   const BankStateBlikReceived({
     required BankStateModel newModel,
   }) : super(
-          bankStateModel: newModel,
-        );
+    bankStateModel: newModel,
+  );
 
   @override
   List<Object?> get props => [...super.props, bankStateModel.blikNumber];
@@ -52,8 +60,8 @@ class BankStatePrzelewSended extends BankCubitState {
   const BankStatePrzelewSended({
     required BankStateModel newModel,
   }) : super(
-          bankStateModel: newModel,
-        );
+    bankStateModel: newModel,
+  );
 
   @override
   List<Object?> get props => [...super.props, bankStateModel.kwota];
@@ -63,8 +71,8 @@ class BankStateError extends BankCubitState {
   const BankStateError({
     required BankStateModel newModel,
   }) : super(
-          bankStateModel: newModel,
-        );
+    bankStateModel: newModel,
+  );
 
   @override
   List<Object?> get props => [...super.props, bankStateModel.failure];
@@ -74,8 +82,8 @@ class BankPageChanged extends BankCubitState {
   const BankPageChanged({
     required BankStateModel newModel,
   }) : super(
-          bankStateModel: newModel,
-        );
+    bankStateModel: newModel,
+  );
 
   @override
   List<Object?> get props => [...super.props, bankStateModel.activeBank];
@@ -85,19 +93,20 @@ class BankStateLoginRequested extends BankCubitState {
   const BankStateLoginRequested({
     required BankStateModel newModel,
   }) : super(
-          bankStateModel: newModel,
-        );
+    bankStateModel: newModel,
+  );
 }
 
 class BankStateLoginSuccess extends BankCubitState {
   const BankStateLoginSuccess({
     required BankStateModel newModel,
   }) : super(
-          bankStateModel: newModel,
-        );
+    bankStateModel: newModel,
+  );
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props =>
+      [
         ...super.props,
         bankStateModel.login,
         bankStateModel.fullName,
@@ -108,11 +117,12 @@ class BankStateCommandPageChanged extends BankCubitState {
   const BankStateCommandPageChanged({
     required BankStateModel newModel,
   }) : super(
-          bankStateModel: newModel,
-        );
+    bankStateModel: newModel,
+  );
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props =>
+      [
         ...super.props,
         bankStateModel.activeCommand,
       ];

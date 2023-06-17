@@ -23,7 +23,7 @@ class Assets {
   static const String cubitBankTransferCubit =
       'lib/application/pages/transfer/cubit/bank_transfer_cubit.dart';
   static const String cubitBankTransferModel =
-      'lib/application/pages/transfer/cubit/bank_transfer_model.dart';
+      'lib/application/pages/transfer/cubit/bank_transfer_state_model.dart';
   static const String cubitBankTransferState =
       'lib/application/pages/transfer/cubit/bank_transfer_state.dart';
   static const String datasourcesBankDataSource =

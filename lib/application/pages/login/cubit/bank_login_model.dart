@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 //Model holding the state of the BankLoginCubit
 class BankLoginStateModel extends Equatable {
+  final int? id;
   final String? login;
   final String? password;
   final bool? isLoginButtonEnabled;
@@ -10,6 +11,7 @@ class BankLoginStateModel extends Equatable {
   final String? fullName;
 
   const BankLoginStateModel({
+    this.id,
     this.login,
     this.password,
     this.isLoginButtonEnabled,
@@ -18,16 +20,8 @@ class BankLoginStateModel extends Equatable {
     this.fullName,
   });
 
-  @override
-  List<Object?> get props => [
-        login,
-        password,
-        isLoginButtonEnabled,
-        error,
-        pin,
-      ];
-
-  copyWith({
+  BankLoginStateModel copyWith({
+    int? id,
     String? login,
     String? password,
     bool? isLoginButtonEnabled,
@@ -36,6 +30,7 @@ class BankLoginStateModel extends Equatable {
     String? fullName,
   }) {
     return BankLoginStateModel(
+      id: id ?? this.id,
       login: login ?? this.login,
       password: password ?? this.password,
       isLoginButtonEnabled: isLoginButtonEnabled ?? this.isLoginButtonEnabled,
@@ -44,4 +39,8 @@ class BankLoginStateModel extends Equatable {
       fullName: fullName ?? this.fullName,
     );
   }
+
+  @override
+  List<Object?> get props =>
+      [id, login, password, isLoginButtonEnabled, error, pin, fullName,];
 }

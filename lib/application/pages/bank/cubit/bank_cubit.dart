@@ -11,7 +11,7 @@ part 'bank_cubit_state.dart';
 class BankCubit extends Cubit<BankCubitState> {
   final GetBankAccountsUseCase _getBankAccountsUseCase;
 
-  BankCubit(this._getBankAccountsUseCase) : super(BankInitial.initial()) {
+  BankCubit(this._getBankAccountsUseCase) : super(BankInitial()) {
     _getBankAccountsUseCase.call().then((bankAccounts) {
       bankAccounts.fold(
           (l) => emit(BankStateError(
@@ -22,14 +22,16 @@ class BankCubit extends Cubit<BankCubitState> {
     });
   }
   Future<void> logIn(
-      {required String login,
+      {
+        required int userId,
+        required String login,
       required String fullName,
-      required BuildContext context}) async {
+      }) async {
     debugPrint('Zalogowano');
-    emit(BankInitial(
+    emit(BankLoggedIn(
         newModel:
-            state.bankStateModel.copyWith(login: login, fullName: fullName),
-        context: context));
+            state.bankStateModel.copyWith(userId: userId, login: login, fullName: fullName),
+        ));
   }
 
   Future<void> generateBlik() async {
@@ -58,7 +60,7 @@ class BankCubit extends Cubit<BankCubitState> {
     debugPrint('zmieniam bank na $index');
     emit(BankPageChanged(
       newModel: state.bankStateModel
-          .copyWith(activeBank: state.bankStateModel.bankAccounts[index]),
+          .copyWith(activeBank: state.bankStateModel.bankAccounts?[index]),
     ));
   }
 

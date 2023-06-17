@@ -15,6 +15,7 @@ class BankLoginCubit extends Cubit<BankLoginState> {
     if (login == 'admin' && password == 'admin') {
       emit(BankLoginSuccess(
           newStateModel: state.bankLoginStateModel.copyWith(
+              id: 1,
               error: null,
               login: login,
               password: password,

@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class BankTransfer extends Equatable {
+class BankTransferStateModel extends Equatable {
   final String? title;
   final String? description;
   final String? amount;
   final String? recipient;
 
-  const BankTransfer({
+  const BankTransferStateModel({
     this.title,
     this.description,
     this.amount,
@@ -27,7 +27,7 @@ class BankTransfer extends Equatable {
     String? amount,
     String? recipient,
   }) {
-    return BankTransfer(
+    return BankTransferStateModel(
       title: title ?? this.title,
       description: description ?? this.description,
       amount: amount ?? this.amount,

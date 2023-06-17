@@ -18,7 +18,7 @@ class BankCenterSection extends StatelessWidget {
             child: BlocBuilder<BankCubit, BankCubitState>(
                 builder: (context, state) {
               final stateModel = state.bankStateModel;
-              if (state is BankInitial) {
+              if (state is BankLoggedIn) {
                 return const KwotaPrompt();
               } else if (state is BankStateBlikRequested ||
                   state is BankStatePrzelewRequested) {
