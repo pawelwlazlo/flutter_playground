@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:faker_dart/faker_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/application/pages/bank/cubit/bank_state_model.dart';
 import 'package:flutter_playground/domain/bank/entities/bank_account.dart';
 import 'package:flutter_playground/domain/core/failure.dart';
 
@@ -17,17 +16,6 @@ class BankCubit extends Cubit<BankCubitState> {
   BankCubit(this._getBankAccountsUseCase) : super(BankCubitState.initial());
 
 
-/*
-    _getBankAccountsUseCase.call().then((bankAccounts) {
-      bankAccounts.fold(
-          (l) => emit(BankStateError(
-              newModel: state.copyWith(failure: l))),
-          (r) => emit(BankListLoaded(
-              newModel: state
-                  .copyWith(bankAccounts: r, activeBank: r.first))));
-    });
-  }
-*/
 
   Future<void> logIn({
     required int userId,

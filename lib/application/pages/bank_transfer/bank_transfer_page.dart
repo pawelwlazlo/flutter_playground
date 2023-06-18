@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
-import 'package:flutter_playground/application/pages/bank/cubit/bank_state_model.dart';
-import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
 import 'package:provider/provider.dart';
 
-import '../../../injection.dart';
 import '../../core/widgets/custom_app_bar.dart';
 
 class BankTrasferPage extends StatelessWidget {
