@@ -3,6 +3,7 @@ part of 'bank_login_cubit.dart';
 enum BankLoginStateEnum {
   initial,
   error,
+  loading,
   success,
   pinSuccess,
   pinError,
@@ -37,45 +38,24 @@ class BankLoginState extends Equatable {
   @override
   List<Object?> get props =>
       [status, id, login, password, error, pin, fullName,];
+
+  BankLoginState copyWith({
+    BankLoginStateEnum? status,
+    int? id,
+    String? login,
+    String? password,
+    String? error,
+    String? pin,
+    String? fullName,
+  }) {
+    return BankLoginState(
+      status: status ?? this.status,
+      id: id ?? this.id,
+      login: login ?? this.login,
+      password: password ?? this.password,
+      error: error ?? this.error,
+      pin: pin ?? this.pin,
+      fullName: fullName ?? this.fullName,
+    );
+  }
 }
-
-/*
-class BankLoginInitial extends BankLoginState {
-  const BankLoginInitial({required super.bankLoginStateModel});
-
-  @override
-  List<Object> get props => [];
-}
-
-class BankLoginError extends BankLoginState {
-  const BankLoginError({required BankLoginStateModel newStateModel})
-      : super(bankLoginStateModel: newStateModel);
-
-  @override
-  List<Object?> get props => [...super.props, bankLoginStateModel];
-}
-
-class BankLoginSuccess extends BankLoginState {
-  const BankLoginSuccess({required BankLoginStateModel newStateModel})
-      : super(bankLoginStateModel: newStateModel);
-
-  @override
-  List<Object?> get props => [...super.props, bankLoginStateModel];
-}
-
-class BankPinSuccess extends BankLoginState {
-  const BankPinSuccess({required BankLoginStateModel newStateModel})
-      : super(bankLoginStateModel: newStateModel);
-
-  @override
-  List<Object?> get props => [...super.props, bankLoginStateModel];
-}
-
-class BankPinError extends BankLoginState {
-  const BankPinError({required BankLoginStateModel newStateModel})
-      : super(bankLoginStateModel: newStateModel);
-
-  @override
-  List<Object?> get props => [...super.props, bankLoginStateModel];
-}
-*/

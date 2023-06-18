@@ -25,15 +25,19 @@ class BankLoginWidget extends StatelessWidget {
     final theme = Theme.of(context);
     return BlocBuilder<BankLoginCubit, BankLoginState>(
         builder: (context, state) {
-          if (state is BankLoginInitial || state is BankLoginError) {
+          final status = state.status;
+
+          if (status == BankLoginStateEnum.initial || status == BankLoginStateEnum.error) {
             return LoginWidget(state: state, theme: theme);
-          } else if (state is BankLoginSuccess) {
+          } else if (status == BankLoginStateEnum.success) {
             return PinWidget(state: state, theme: theme);
-          } else if (state is BankPinSuccess) {
+          } else if (status == BankLoginStateEnum.pinError) {
+            return PinWidget(state: state, theme: theme);
+          } else {
             sl<BankCubit>().logIn(
-              userId: state.bankLoginStateModel.id!,
-              login: state.bankLoginStateModel.login!,
-              fullName: state.bankLoginStateModel.fullName!,
+              userId: state.id!,
+              login: state.login!,
+              fullName: state.fullName!,
             );
             Future.delayed(const Duration(milliseconds: 500), () {
               Navigator.pushReplacement(
@@ -42,14 +46,8 @@ class BankLoginWidget extends StatelessWidget {
                     builder: (context) => const BankPage()),
               );
             });
-          } else if (state is BankPinError) {
-            return PinWidget(state: state, theme: theme);
           }
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+          return const SizedBox();
         },
     );
   }
@@ -146,7 +144,7 @@ class PinWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-                child: Text("Witaj ${state.bankLoginStateModel.fullName}")),
+                child: Text("Witaj ${state.fullName}")),
             Expanded(
               child: Column(
                 children: [
@@ -155,7 +153,7 @@ class PinWidget extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: 'PIN',
                       errorText:
-                          state is BankLoginError ? 'Nieprawidłowy PIN' : null,
+                          state.status == BankLoginStateEnum.pinError ? 'Nieprawidłowy PIN' : null,
                     ),
                     obscureText: true,
                   ),

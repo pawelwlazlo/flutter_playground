@@ -6,38 +6,43 @@ import 'package:flutter_playground/application/pages/login/cubit/bank_login_mode
 part 'bank_login_state.dart';
 
 class BankLoginCubit extends Cubit<BankLoginState> {
-  BankLoginCubit()
-      : super(
-            const BankLoginInitial(bankLoginStateModel: BankLoginStateModel()));
+  BankLoginCubit() : super(BankLoginState.initial());
 
   void logIn(String login, String password) {
-    debugPrint('login: $login, password: $password');
-    if (login == 'admin' && password == 'admin') {
-      emit(BankLoginSuccess(
-          newStateModel: state.bankLoginStateModel.copyWith(
-              id: 1,
-              error: null,
-              login: login,
-              password: password,
-              fullName: 'Adam Nowak',
-              pin: null)));
+    if (login == 'a' && password == 'a') {
+      emit(state.copyWith(
+        status: BankLoginStateEnum.success,
+        id: 1,
+        login: login,
+        password: password,
+        error: null,
+      ));
     } else {
-      emit(BankLoginError(
-          newStateModel: state.bankLoginStateModel
-              .copyWith(error: 'Nieprawidłowe dane logowania')));
+      emit(state.copyWith(
+        status: BankLoginStateEnum.error,
+        id: null,
+        login: null,
+        password: null,
+        error: 'Invalid credentials',
+      ));
     }
   }
 
   void submitPin(String pin) {
-    debugPrint('pin: $pin');
-    if (pin == '1234') {
-      emit(BankPinSuccess(
-          newStateModel:
-              state.bankLoginStateModel.copyWith(error: null, pin: pin)));
+    if (pin == '1') {
+      emit(state.copyWith(
+        status: BankLoginStateEnum.pinSuccess,
+        pin: pin,
+        fullName: 'John Doe',
+        error: null,
+      ));
     } else {
-      emit(BankLoginError(
-          newStateModel:
-              state.bankLoginStateModel.copyWith(error: 'Invalid pin')));
+      emit(state.copyWith(
+        status: BankLoginStateEnum.pinError,
+        pin: null,
+        fullName: null,
+        error: 'Invalid pin',
+      ));
     }
   }
 }
