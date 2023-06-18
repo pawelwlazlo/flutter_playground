@@ -23,32 +23,51 @@ class BankLoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocBuilder<BankLoginCubit, BankLoginState>(
-        builder: (context, state) {
-          final status = state.status;
+    return BlocConsumer<BankLoginCubit, BankLoginState>(
+      listener: (context, state) {
+        final status = state.status;
+        if (status == BankLoginStateEnum.error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Nieprawidłowy login lub hasło'),
+              backgroundColor: theme.colorScheme.error,
+            ),
+          );
+        } else if (status == BankLoginStateEnum.pinError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Nieprawidłowy PIN'),
+              backgroundColor: theme.colorScheme.error,
+            ),
+          );
+        } else if (status == BankLoginStateEnum.pinSuccess) {
 
-          if (status == BankLoginStateEnum.initial || status == BankLoginStateEnum.error) {
-            return LoginWidget(state: state, theme: theme);
-          } else if (status == BankLoginStateEnum.success) {
-            return PinWidget(state: state, theme: theme);
-          } else if (status == BankLoginStateEnum.pinError) {
-            return PinWidget(state: state, theme: theme);
-          } else {
-            sl<BankCubit>().logIn(
-              userId: state.id!,
-              login: state.login!,
-              fullName: state.fullName!,
-            );
-            Future.delayed(const Duration(milliseconds: 500), () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const BankPage()),
-              );
-            });
-          }
-          return const SizedBox();
-        },
+          sl<BankCubit>().logIn(
+            userId: state.id!,
+            login: state.login!,
+            fullName: state.fullName!,
+          );
+
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const BankPage()),
+          );
+        }
+      },
+      builder: (context, state) {
+        final status = state.status;
+
+        if (status == BankLoginStateEnum.initial ||
+            status == BankLoginStateEnum.error) {
+          return LoginWidget(state: state, theme: theme);
+        } else if (status == BankLoginStateEnum.success) {
+          return PinWidget(state: state, theme: theme);
+        } else if (status == BankLoginStateEnum.pinError) {
+          return PinWidget(state: state, theme: theme);
+        }
+        return const SizedBox();
+      },
     );
   }
 }
@@ -67,7 +86,9 @@ class LoginWidget extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.scaffoldBackgroundColor,
-      appBar:  const CustomAppBar(title: 'Easy Bank Login',),
+      appBar: const CustomAppBar(
+        title: 'Easy Bank Login',
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -137,14 +158,15 @@ class PinWidget extends StatelessWidget {
     final TextEditingController pinController = TextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const CustomAppBar(title: 'Easy Bank Login',),
+      appBar: const CustomAppBar(
+        title: 'Easy Bank Login',
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-                child: Text("Witaj ${state.fullName}")),
+            Expanded(child: Text("Witaj ${state.fullName}")),
             Expanded(
               child: Column(
                 children: [
@@ -152,8 +174,9 @@ class PinWidget extends StatelessWidget {
                     controller: pinController,
                     decoration: InputDecoration(
                       labelText: 'PIN',
-                      errorText:
-                          state.status == BankLoginStateEnum.pinError ? 'Nieprawidłowy PIN' : null,
+                      errorText: state.status == BankLoginStateEnum.pinError
+                          ? 'Nieprawidłowy PIN'
+                          : null,
                     ),
                     obscureText: true,
                   ),

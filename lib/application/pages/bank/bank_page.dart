@@ -25,29 +25,29 @@ class BankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    return BlocBuilder<BankCubit, BankCubitState>(
-        builder: (context, state) {
-          if(state is BankStateTransactionCreated) {
-            Future.delayed(const Duration(milliseconds: 500), () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const BankTrasferPageWrapperProvider()),
-              );
-            });
-          }
-          return Scaffold(
-              resizeToAvoidBottomInset: false,
-              backgroundColor: themeData.colorScheme.onPrimary,
-              appBar: const CustomAppBar(title: 'Easy Bank'),
-              body: const Center(
-                child: Column(children: <Widget>[
-                  Expanded(child: BankTopSection()),
-                  Expanded(child: BankCenterSection()),
-                  Expanded(child: BankBottomSection()),
-                ]),
-              ));
-        },
+    return BlocConsumer<BankCubit, BankCubitState>(
+      listener: (context, state) {
+        if (state is BankStateTransactionCreated) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const BankTrasferPage()),
+            );
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: themeData.colorScheme.onPrimary,
+            appBar: const CustomAppBar(title: 'Easy Bank'),
+            body: const Center(
+              child: Column(children: <Widget>[
+                Expanded(child: BankTopSection()),
+                Expanded(child: BankCenterSection()),
+                Expanded(child: BankBottomSection()),
+              ]),
+            ));
+      },
     );
   }
 }
