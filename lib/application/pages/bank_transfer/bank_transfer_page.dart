@@ -20,9 +20,17 @@ class BankTrasferPage extends StatelessWidget {
         body: Column(
           children: [
             Expanded(
+                flex: 2,
                 child: Container(
-              color: themeData.colorScheme.onPrimary,
-            )),
+                  color: themeData.colorScheme.onPrimary,
+                  child: const SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Text("Bank transfer"),
+                      ],
+                    ),
+                  ),
+                )),
             Expanded(
                 child: Container(
               color: themeData.colorScheme.onSecondary,
