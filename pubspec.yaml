@@ -27,6 +27,7 @@ dependencies:
   dynamic_color: ^1.6.5
   faker_dart: ^0.1.11
   uuid: ^3.0.7
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

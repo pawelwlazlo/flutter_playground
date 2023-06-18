@@ -1,8 +1,11 @@
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
+import 'package:faker_dart/faker_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/application/pages/bank/cubit/bank_state_model.dart';
+import 'package:flutter_playground/domain/bank/entities/bank_account.dart';
+import 'package:flutter_playground/domain/core/failure.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../domain/bank/usecases/get_bank_accounts_use_case.dart';
 
@@ -11,66 +14,66 @@ part 'bank_cubit_state.dart';
 class BankCubit extends Cubit<BankCubitState> {
   final GetBankAccountsUseCase _getBankAccountsUseCase;
 
-  BankCubit(this._getBankAccountsUseCase) : super(BankInitial()) {
+  BankCubit(this._getBankAccountsUseCase) : super(BankCubitState.initial());
+
+
+
+  Future<void> logIn({
+    required int userId,
+    required String login,
+    required String fullName,
+  }) async {
+    debugPrint('Zalogowano');
+    await loadBanks(userId: userId);
+    emit(state.copyWith(status: BankStateEnum.bankLoggedIn,
+        userId: userId,
+        login: login,
+        fullName: fullName));
+    }
+
+  Future<void> loadBanks({required int userId}) async {
     _getBankAccountsUseCase.call().then((bankAccounts) {
       bankAccounts.fold(
-          (l) => emit(BankStateError(
-              newModel: state.bankStateModel.copyWith(failure: l))),
-          (r) => emit(BankListLoaded(
-              newModel: state.bankStateModel
-                  .copyWith(bankAccounts: r, activeBank: r.first))));
+              (l) => emit(state.copyWith(failure: l)),
+              (r) =>
+              emit(state
+                  .copyWith(status: BankStateEnum.bankListLoaded,
+                  bankAccounts: r,
+                  activeBank: r.first)));
     });
   }
-  Future<void> logIn(
-      {
-        required int userId,
-        required String login,
-      required String fullName,
-      }) async {
-    debugPrint('Zalogowano');
-    emit(BankLoggedIn(
-        newModel:
-            state.bankStateModel.copyWith(userId: userId, login: login, fullName: fullName),
-        ));
-  }
+
+
 
   Future<void> generateBlik() async {
-    emit(BankStateBlikRequested(
-      newModel: state.bankStateModel.copyWith(),
-    ));
+    final Faker faker = Faker.instance;
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikRequested));
     debugPrint('Otrzymano zapytanie o BLIK');
     await Future.delayed(const Duration(seconds: 3), () {});
     debugPrint('Otrzymano kod blik');
-    emit(BankStateBlikReceived(
-        newModel: state.bankStateModel.copyWith(blikNumber: 123456)));
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikReceived, blikNumber: faker.datatype.number(min: 100000, max: 999999)));
   }
 
+
   Future<void> createTransaction() async {
-    if(state.bankStateModel.kwota != null && state.bankStateModel.kwota!.compareTo(Decimal.zero) > 0) {
-      emit(BankStateTransactionCreated(
-        newModel: state.bankStateModel.copyWith(),
-      ));
+    if (state.kwota != null && state.kwota!.compareTo(Decimal.zero) > 0) {
+      emit(state.copyWith(status: BankStateEnum.bankStateTransactionCreated));
     }
   }
 
   void changeBankPage(int index) {
     debugPrint('zmieniam bank na $index');
-    emit(BankPageChanged(
-      newModel: state.bankStateModel
-          .copyWith(activeBank: state.bankStateModel.bankAccounts[index]),
-    ));
+    emit(state.copyWith(status: BankStateEnum.bankPageChanged, activeBank: state.bankAccounts[index]));
   }
 
   void changeCommandPage(int index) {
     debugPrint('zmieniam komendę na $index');
-    emit(BankStateCommandPageChanged(
-      newModel: state.bankStateModel.copyWith(activeCommand: index),
-    ));
+    emit(state.copyWith(status: BankStateEnum.bankStateCommandPageChanged, activeCommand: index));
   }
 
   void setKwota(String kwota) {
-    emit(BankStateKwotaChanged(
-      newModel: state.bankStateModel.copyWith(kwota: Decimal.parse(kwota)),
-    ));
+    final numberFormat = NumberFormat('###.00#', 'pl_PL');
+    final kwotaParsed = numberFormat.parse(kwota);
+    emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, kwota: Decimal.parse(kwotaParsed.toString())));
   }
 }

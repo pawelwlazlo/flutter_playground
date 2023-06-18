@@ -12,9 +12,7 @@ class BankBottomSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final bankCubit = BlocProvider.of<BankCubit>(context);
     final theme = Theme.of(context);
-    return BlocProvider<BankCubit>(
-      create: (context) => sl<BankCubit>(),
-      child: BlocBuilder<BankCubit, BankCubitState>(
+    return BlocBuilder<BankCubit, BankCubitState>(
         builder: (context, state) {
           return PageView(
             onPageChanged: (index) {
@@ -48,7 +46,6 @@ class BankBottomSection extends StatelessWidget {
             ],
           );
         },
-      ),
     );
   }
 }

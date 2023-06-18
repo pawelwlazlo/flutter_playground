@@ -17,15 +17,17 @@ class BankCenterSection extends StatelessWidget {
           child: Center(
             child: BlocBuilder<BankCubit, BankCubitState>(
                 builder: (context, state) {
-              final stateModel = state.bankStateModel;
-              if (state is BankLoggedIn) {
+              final status = state.status;
+              if (status == BankStateEnum.bankLoggedIn) {
                 return const KwotaPrompt();
-              } else if (state is BankStateBlikRequested ||
-                  state is BankStatePrzelewRequested) {
+              } else if (status == BankStateEnum.bankStateBlikRequested) {
                 return CircularProgressIndicator(
                   color: themeData.colorScheme.secondary,
                 );
-              } else if (state is BankStatePrzelewSended) {
+              }
+              return const KwotaPrompt();
+
+              /*else if (state is BankStatePrzelewSended) {
                 return Text('Wysłano przelew na kwotę: ${stateModel.kwota}');
               } else if (state is BankStateBlikReceived) {
                 return Column(
@@ -43,7 +45,7 @@ class BankCenterSection extends StatelessWidget {
                 return const KwotaPrompt();
               } else {
                 return const KwotaPrompt();
-              }
+              }*/
             }),
           ),
         )

@@ -12,13 +12,15 @@ part 'bank_transfer_state.dart';
 class BankTransferCubit extends Cubit<BankTransferState> {
   final BankCubit bankCubit;
   late StreamSubscription bankCubitSubscription;
-  BankTransferCubit({required this.bankCubit}) : super(BankTransferState.initial()) {
+
+  BankTransferCubit({required this.bankCubit})
+      : super(BankTransferState.initial()) {
     bankCubitSubscription = bankCubit.stream.listen((state) {
-      if (state is BankStateTransactionCreated) {
+      if (state.status == BankStateEnum.bankStateTransactionCreated) {
         addTransaction(BankTransferStateModel(
           transferId: const Uuid().v4(),
-          amount: state.bankStateModel.kwota!,
-          fromAccount: state.bankStateModel.activeBank!,
+          amount: state.kwota!,
+          fromAccount: state.activeBank!,
           transferDate: DateTime.now(),
         ));
       }
@@ -34,7 +36,9 @@ class BankTransferCubit extends Cubit<BankTransferState> {
 
   void removeTransaction(BankTransferStateModel transaction) {
     emit(state.copyWith(
-      transactions: state.transactions.where((element) => element != transaction).toList(),
+      transactions: state.transactions
+          .where((element) => element != transaction)
+          .toList(),
     ));
   }
 
