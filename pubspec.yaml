@@ -19,6 +19,14 @@ dependencies:
   dartz: ^0.10.1
   get_it: ^7.6.0
   http: ^1.0.0
+  decimal: ^2.3.2
+  flex_color_scheme: ^7.1.2
+  font_awesome_flutter: ^10.4.0
+  flutter_secure_storage: ^8.0.0
+  flutter_svg: ^2.0.6
+  dynamic_color: ^1.6.5
+  faker_dart: ^0.1.11
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +38,7 @@ flutter:
 
 
   assets:
+    - assets/eb.png
     - assets/alior_logo.png
     - assets/ing_logo.png
     - assets/icons/blik.svg
