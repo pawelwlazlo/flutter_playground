@@ -1,14 +1,45 @@
 part of 'bank_login_cubit.dart';
 
-abstract class BankLoginState extends Equatable {
-  final BankLoginStateModel bankLoginStateModel;
-
-  const BankLoginState({required this.bankLoginStateModel});
-
-  @override
-  List<Object?> get props => [bankLoginStateModel];
+enum BankLoginStateEnum {
+  initial,
+  error,
+  success,
+  pinSuccess,
+  pinError,
 }
 
+class BankLoginState extends Equatable {
+  final BankLoginStateEnum status;
+  final int? id;
+  final String? login;
+  final String? password;
+  final String? error;
+  final String? pin;
+  final String? fullName;
+
+  const BankLoginState({
+    required this.status,
+    this.id,
+    this.login,
+    this.password,
+    this.error,
+    this.pin,
+    this.fullName,
+  });
+
+
+  factory BankLoginState.initial() {
+    return const BankLoginState(
+      status: BankLoginStateEnum.initial,
+    );
+  }
+
+  @override
+  List<Object?> get props =>
+      [status, id, login, password, error, pin, fullName,];
+}
+
+/*
 class BankLoginInitial extends BankLoginState {
   const BankLoginInitial({required super.bankLoginStateModel});
 
@@ -47,3 +78,4 @@ class BankPinError extends BankLoginState {
   @override
   List<Object?> get props => [...super.props, bankLoginStateModel];
 }
+*/
