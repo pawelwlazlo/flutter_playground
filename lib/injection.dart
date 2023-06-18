@@ -17,9 +17,11 @@ final sl = GetIt.instance;
 Future<void> init() async {
 // ! application Layer
 // ! Blocs
+/*
   sl.registerFactory(() => BankCubit(sl()));
   sl.registerFactory(() => BankLoginCubit());
   sl.registerFactory(() => BankTransferCubit(bankCubit: sl()));
+*/
 
 // ! Domain Layer
 //

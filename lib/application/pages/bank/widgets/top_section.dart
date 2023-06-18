@@ -11,8 +11,7 @@ class BankTopSection extends StatelessWidget {
     final blocProvider = BlocProvider.of<BankCubit>(context);
     final ThemeData themeData = Theme.of(context);
     return BlocBuilder<BankCubit, BankCubitState>(builder: (context, state) {
-      final stateModel = state.bankStateModel;
-      if (state is BankLoggedIn) {
+      if (state.status == BankStateEnum.initial) {
         return Container(
           color: themeData.colorScheme.secondary,
           child: Column(
@@ -33,12 +32,12 @@ class BankTopSection extends StatelessWidget {
         );
       } else {
         return PageView.builder(
-          itemCount: stateModel.bankAccounts!.length,
+          itemCount: state.bankAccounts.length,
           onPageChanged: (index) {
             blocProvider.changeBankPage(index);
           },
           itemBuilder: (context, index) {
-            final bankAccount = stateModel.bankAccounts[index];
+            final bankAccount = state.bankAccounts[index];
             return Container(
               color: themeData.colorScheme.primary,
               child: Column(

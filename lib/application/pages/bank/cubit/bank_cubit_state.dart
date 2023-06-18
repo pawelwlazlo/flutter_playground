@@ -1,159 +1,95 @@
 part of 'bank_cubit.dart';
 
-abstract class BankCubitState extends Equatable {
-  final BankStateModel bankStateModel;
+enum BankStateEnum {
+  initial,
+  bankListLoaded,
+  bankLoggedIn,
+  bankStateBlikRequested,
+  bankStateBlikReceived,
+  bankStateTransactionCreated,
+  bankPageChanged,
+  bankStateCommandPageChanged, bankStateKwotaChanged,
+}
+
+
+class BankCubitState extends Equatable {
+  final BankStateEnum status;
+  final int? userId;
+  final String? login;
+  final List<BankAccount> bankAccounts;
+  final BankAccount? activeBank;
+  final int? blikNumber;
+  final Decimal? kwota;
+  final Failure? failure;
+  final String? fullName;
+  final int? activeCommand;
 
   const BankCubitState({
-    required this.bankStateModel,
+    required this.status,
+    this.userId,
+    this.login,
+    required this.bankAccounts,
+    this.activeBank,
+    this.blikNumber,
+    this.kwota,
+    this.failure,
+    this.fullName,
+    this.activeCommand,
   });
 
-  @override
-  List<Object?> get props => [bankStateModel];
-}
+  factory BankCubitState.initial() {
+    return const BankCubitState(
+      status: BankStateEnum.initial,
+      userId: null,
+      login: null,
+      bankAccounts: [],
+      activeBank: null,
+      blikNumber: null,
+      kwota: null,
+      failure: null,
+      fullName: null,
+      activeCommand: null,
+    );
+  }
 
-class BankInitial extends BankCubitState {
-  BankInitial(
-  ) : super(bankStateModel: BankStateModel.initial());
-}
-
-class BankLoggedIn extends BankCubitState {
-  const BankLoggedIn({
-    required BankStateModel newModel,
-  }) : super(bankStateModel: newModel);
-
-  @override
-  List<Object> get props => [bankStateModel];
-}
-
-
-class BankListLoaded extends BankCubitState {
-  const BankListLoaded({
-    required BankStateModel newModel,
-  }) : super(bankStateModel: newModel);
-
-  @override
-  List<Object?> get props => [...super.props, bankStateModel.bankAccounts];
-}
-
-class BankStateBlikRequested extends BankCubitState {
-  const BankStateBlikRequested({required BankStateModel newModel})
-      : super(bankStateModel: newModel);
-}
-
-class BankStatePrzelewRequested extends BankCubitState {
-  const BankStatePrzelewRequested({required BankStateModel newModel})
-      : super(bankStateModel: newModel);
-}
-
-class BankStateBlikReceived extends BankCubitState {
-  const BankStateBlikReceived({
-    required BankStateModel newModel,
-  }) : super(
-    bankStateModel: newModel,
-  );
-
-  @override
-  List<Object?> get props => [...super.props, bankStateModel.blikNumber];
-}
-
-class BankStatePrzelewSended extends BankCubitState {
-  const BankStatePrzelewSended({
-    required BankStateModel newModel,
-  }) : super(
-    bankStateModel: newModel,
-  );
-
-  @override
-  List<Object?> get props => [...super.props, bankStateModel.kwota];
-}
-
-class BankStateError extends BankCubitState {
-  const BankStateError({
-    required BankStateModel newModel,
-  }) : super(
-    bankStateModel: newModel,
-  );
-
-  @override
-  List<Object?> get props => [...super.props, bankStateModel.failure];
-}
-
-class BankPageChanged extends BankCubitState {
-  const BankPageChanged({
-    required BankStateModel newModel,
-  }) : super(
-    bankStateModel: newModel,
-  );
-
-  @override
-  List<Object?> get props => [...super.props, bankStateModel.activeBank];
-}
-
-class BankStateLoginRequested extends BankCubitState {
-  const BankStateLoginRequested({
-    required BankStateModel newModel,
-  }) : super(
-    bankStateModel: newModel,
-  );
-}
-
-class BankStateLoginSuccess extends BankCubitState {
-  const BankStateLoginSuccess({
-    required BankStateModel newModel,
-  }) : super(
-    bankStateModel: newModel,
-  );
+  BankCubitState copyWith({
+    BankStateEnum? status,
+    int? userId,
+    String? login,
+    List<BankAccount>? bankAccounts,
+    BankAccount? activeBank,
+    int? blikNumber,
+    Decimal? kwota,
+    Failure? failure,
+    String? fullName,
+    int? activeCommand,
+  }) {
+    return BankCubitState(
+      status: status ?? this.status,
+      userId: userId ?? this.userId,
+      login: login ?? this.login,
+      bankAccounts: bankAccounts ?? this.bankAccounts,
+      activeBank: activeBank ?? this.activeBank,
+      blikNumber: blikNumber ?? this.blikNumber,
+      kwota: kwota ?? this.kwota,
+      failure: failure ?? this.failure,
+      fullName: fullName ?? this.fullName,
+      activeCommand: activeCommand ?? this.activeCommand,
+    );
+  }
 
   @override
   List<Object?> get props =>
       [
-        ...super.props,
-        bankStateModel.login,
-        bankStateModel.fullName,
-      ];
-}
-
-class BankStateCommandPageChanged extends BankCubitState {
-  const BankStateCommandPageChanged({
-    required BankStateModel newModel,
-  }) : super(
-    bankStateModel: newModel,
-  );
-
-  @override
-  List<Object?> get props =>
-      [
-        ...super.props,
-        bankStateModel.activeCommand,
-      ];
-}
-
-class BankStateKwotaChanged extends BankCubitState {
-  const BankStateKwotaChanged({
-    required BankStateModel newModel,
-  }) : super(
-    bankStateModel: newModel,
-  );
-
-  @override
-  List<Object?> get props =>
-      [
-        ...super.props,
-        bankStateModel.kwota,
-      ];
-}
-
-class BankStateTransactionCreated extends BankCubitState {
-  const BankStateTransactionCreated({
-    required BankStateModel newModel,
-  }) : super(
-    bankStateModel: newModel,
-  );
-
-  @override
-  List<Object?> get props =>
-      [
-        ...super.props,
-        bankStateModel.kwota,
+        status,
+        userId,
+        login,
+        bankAccounts,
+        activeBank,
+        blikNumber,
+        kwota,
+        failure,
+        fullName,
+        activeCommand,
       ];
 }

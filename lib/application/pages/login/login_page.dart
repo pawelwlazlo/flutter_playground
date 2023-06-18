@@ -2,20 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/core/widgets/custom_app_bar.dart';
 import 'package:flutter_playground/application/pages/bank/bank_page.dart';
-
-import 'package:flutter_playground/injection.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
+import 'package:provider/provider.dart';
+
 import 'cubit/bank_login_cubit.dart';
-
-class BankLoginWidgetProvider extends StatelessWidget {
-  const BankLoginWidgetProvider({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => sl<BankLoginCubit>(), child: BankLoginWidget());
-  }
-}
 
 class BankLoginWidget extends StatelessWidget {
   const BankLoginWidget({super.key});
@@ -42,7 +32,7 @@ class BankLoginWidget extends StatelessWidget {
           );
         } else if (status == BankLoginStateEnum.pinSuccess) {
 
-          sl<BankCubit>().logIn(
+          Provider.of<BankCubit>(context, listen: false).logIn(
             userId: state.id!,
             login: state.login!,
             fullName: state.fullName!,

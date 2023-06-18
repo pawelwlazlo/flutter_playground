@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return MultiBlocProvider(providers: [
-      BlocProvider(create: (context) => di.sl<BankCubit>()),
-      BlocProvider(create: (context) => di.sl<BankLoginCubit>()),
-      BlocProvider(create: (context) => di.sl<BankTransferCubit>()),
+      BlocProvider(create: (context) => BankCubit(di.sl())),
+      BlocProvider(create: (context) => BankLoginCubit()),
+      BlocProvider(create: (context) => BankTransferCubit(bankCubit: BlocProvider.of<BankCubit>(context))),
     ], child: Consumer<ThemeService>(builder: (context, themeService, child) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -41,13 +41,13 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case '/':
               return MaterialPageRoute(
-                  builder: (context) => const BankLoginWidgetProvider());
+                  builder: (context) => const BankLoginWidget());
             case '/bank':
               return MaterialPageRoute(
-                  builder: (context) => const BankPageWrapperProvider());
+                  builder: (context) => const BankPage());
             default:
               return MaterialPageRoute(
-                  builder: (context) => const BankLoginWidgetProvider());
+                  builder: (context) => const BankLoginWidget());
           }
         },
       );

@@ -9,16 +9,6 @@ import 'package:flutter_playground/application/pages/bank_transfer/bank_transfer
 
 import '../../../injection.dart';
 
-class BankPageWrapperProvider extends StatelessWidget {
-  const BankPageWrapperProvider({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => sl<BankCubit>(), child: const BankPage());
-  }
-}
-
 class BankPage extends StatelessWidget {
   const BankPage({super.key});
 
@@ -27,7 +17,7 @@ class BankPage extends StatelessWidget {
     var themeData = Theme.of(context);
     return BlocConsumer<BankCubit, BankCubitState>(
       listener: (context, state) {
-        if (state is BankStateTransactionCreated) {
+        if (state.status == BankStateEnum.bankStateTransactionCreated) {
             Navigator.push(
               context,
               MaterialPageRoute(
