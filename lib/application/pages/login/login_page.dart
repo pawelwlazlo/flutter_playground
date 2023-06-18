@@ -23,9 +23,7 @@ class BankLoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocProvider<BankLoginCubit>(
-      create: (context) => BankLoginCubit(),
-      child: BlocBuilder<BankLoginCubit, BankLoginState>(
+    return BlocBuilder<BankLoginCubit, BankLoginState>(
         builder: (context, state) {
           if (state is BankLoginInitial || state is BankLoginError) {
             return LoginWidget(state: state, theme: theme);
@@ -41,7 +39,7 @@ class BankLoginWidget extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const BankPageWrapperProvider()),
+                    builder: (context) => const BankPage()),
               );
             });
           } else if (state is BankPinError) {
@@ -53,7 +51,6 @@ class BankLoginWidget extends StatelessWidget {
             ),
           );
         },
-      ),
     );
   }
 }

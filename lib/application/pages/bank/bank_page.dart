@@ -25,9 +25,7 @@ class BankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    return BlocProvider(
-      create: (context) => sl<BankCubit>(),
-      child: BlocBuilder<BankCubit, BankCubitState>(
+    return BlocBuilder<BankCubit, BankCubitState>(
         builder: (context, state) {
           if(state is BankStateTransactionCreated) {
             Future.delayed(const Duration(milliseconds: 500), () {
@@ -50,7 +48,6 @@ class BankPage extends StatelessWidget {
                 ]),
               ));
         },
-      ),
     );
   }
 }
