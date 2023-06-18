@@ -20,8 +20,7 @@ class BankCenterSection extends StatelessWidget {
               final status = state.status;
               if (status == BankStateEnum.bankLoggedIn) {
                 return const KwotaPrompt();
-              } else if (status == BankStateEnum.bankStateBlikRequested ||
-                  status  == BankStateEnum.bankStateTransactionCreated) {
+              } else if (status == BankStateEnum.bankStateBlikRequested) {
                 return CircularProgressIndicator(
                   color: themeData.colorScheme.secondary,
                 );

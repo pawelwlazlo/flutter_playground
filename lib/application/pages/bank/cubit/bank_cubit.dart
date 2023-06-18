@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/domain/bank/entities/bank_account.dart';
 import 'package:flutter_playground/domain/core/failure.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../domain/bank/usecases/get_bank_accounts_use_case.dart';
 
@@ -71,6 +72,8 @@ class BankCubit extends Cubit<BankCubitState> {
   }
 
   void setKwota(String kwota) {
-    emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, kwota: Decimal.parse(kwota)));
+    final numberFormat = NumberFormat('###.00#', 'pl_PL');
+    final kwotaParsed = numberFormat.parse(kwota);
+    emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, kwota: Decimal.parse(kwotaParsed.toString())));
   }
 }
