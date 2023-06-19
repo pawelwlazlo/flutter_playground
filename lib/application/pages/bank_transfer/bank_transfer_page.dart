@@ -38,6 +38,7 @@ class BankTrasferPage extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                             Image.asset(
                               bankState.activeBank!.bank.logoUrl,
@@ -99,7 +100,7 @@ class BankTrasferPage extends StatelessWidget {
                             child: FormTextInput(
                               label: 'Tytuł przelewu',
                               hint: 'Tytuł przelewu',
-                              icon: FontAwesomeIcons.buildingColumns,
+                              icon: FontAwesomeIcons.fileSignature,
                               onChanged: (value) {},
                               validator: (value) {},
                             ),
@@ -110,7 +111,7 @@ class BankTrasferPage extends StatelessWidget {
                             child: FormTextInput(
                               label: 'Nazwa odbiorcy',
                               hint: 'Nazwa odbiorcy',
-                              icon: FontAwesomeIcons.buildingColumns,
+                              icon: FontAwesomeIcons.users,
                               onChanged: (value) {},
                               validator: (value) {},
                             ),
@@ -120,7 +121,7 @@ class BankTrasferPage extends StatelessWidget {
                             child: FormTextInput(
                               label: 'Adres odbiorcy',
                               hint: 'Adres odbiorcy',
-                              icon: FontAwesomeIcons.buildingColumns,
+                              icon: FontAwesomeIcons.addressBook,
                               onChanged: (value) {},
                               validator: (value) {},
                             ),
@@ -186,15 +187,15 @@ class FormTextInput extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary),
-        border: const OutlineInputBorder(),
+        border: const UnderlineInputBorder(), // const OutlineInputBorder(),
         prefixIconConstraints: const BoxConstraints(),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(8),
           child: FaIcon(
-            FontAwesomeIcons.buildingColumns,
+            icon,
             size: 14,
             color: theme.colorScheme.primary,
           ), // Icon(Icons.attach_money),
