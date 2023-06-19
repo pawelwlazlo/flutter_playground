@@ -38,22 +38,15 @@ class BankTrasferPage extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Center(
-                                    child: Row(
-                                  children: [
-                                    Image.asset(
-                                      bankState.activeBank!.bank.logoUrl,
-                                      width: 75,
-                                    ),
-                                    Text(
-                                      bankState.activeBank!.accountNumber,
-                                      style: themeData.textTheme.displayMedium,
-                                    ),
-                                  ],
-                                )),
+                            Image.asset(
+                              bankState.activeBank!.bank.logoUrl,
+                              width: 75,
+                            ),
+                            Text(
+                              bankState.activeBank!.accountNumber,
+                              style: themeData.textTheme.displayMedium,
+                            ),
                               ],
                             ),
                           ),
