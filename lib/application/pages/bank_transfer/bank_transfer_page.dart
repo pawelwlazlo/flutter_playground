@@ -73,19 +73,21 @@ class BankTrasferPage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text('Kwota: ',
+                                const Text('Kwota:',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                                 Text(
                                   '$kwota PLN',
-                                  style: themeData.textTheme.displayLarge,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20, color: themeData.colorScheme.primary),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 14.0, horizontal: 8.0),
+                                vertical: 12.0, horizontal: 8.0),
                             child: FormTextInput(
                               label: 'Na rachunek',
                               hint: 'Na rachunek',
@@ -96,7 +98,7 @@ class BankTrasferPage extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 14.0, horizontal: 8.0),
+                                vertical: 12.0, horizontal: 8.0),
                             child: FormTextInput(
                               label: 'Tytuł przelewu',
                               hint: 'Tytuł przelewu',
@@ -107,7 +109,7 @@ class BankTrasferPage extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 14.0, horizontal: 8.0),
+                                vertical: 12.0, horizontal: 8.0),
                             child: FormTextInput(
                               label: 'Nazwa odbiorcy',
                               hint: 'Nazwa odbiorcy',
@@ -117,7 +119,7 @@ class BankTrasferPage extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal:  8.0),
                             child: FormTextInput(
                               label: 'Adres odbiorcy',
                               hint: 'Adres odbiorcy',
