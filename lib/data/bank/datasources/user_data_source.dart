@@ -20,13 +20,13 @@ class UserDataSourceImpl implements UserDataSource {
           login: 'a',
           fullName: 'Adam Nowak',
           password: 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb',
-          pin: '1234'),
+          pin: '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4'),
       const UserModel(
           id: 2,
-          login: 'b',
+          login: 'zofia@gmail.com',
           fullName: 'Zofia Kowalska',
-          password: 'b',
-          pin: '1234'),
+          password: '51b40b024b929e2ee82436073993b1e9da075683eb9dc9d3f491e82bc1c79f86',
+          pin: '0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c'),
     ];
 
     var sha256 = ShaUtil.getSha256(password);
