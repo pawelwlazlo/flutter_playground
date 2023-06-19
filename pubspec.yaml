@@ -29,6 +29,8 @@ dependencies:
   uuid: ^3.0.7
   intl: ^0.18.1
   crypto: ^3.0.3
+  extended_masked_text: ^2.3.1
+  formz: ^0.6.0
 
 dev_dependencies:
   flutter_test:

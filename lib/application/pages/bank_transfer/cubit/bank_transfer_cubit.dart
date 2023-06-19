@@ -1,11 +1,15 @@
 import 'dart:async';
 
+import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
 import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_state_model.dart';
+import 'package:formz/formz.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../../domain/bank/entities/bank_account.dart';
 
 part 'bank_transfer_state.dart';
 
@@ -48,9 +52,94 @@ class BankTransferCubit extends Cubit<BankTransferState> {
     ));
   }
 
+  void setAccountHolderName(String accountHolderName) {
+    final accountHolderNameInput = AccountHolderName.dirty(accountHolderName);
+
+    emit(state.copyWith(
+      formzStatus: Formz.validate([
+        state.accountNumber,
+        state.title,
+        accountHolderNameInput,
+        state.recipientAddress,
+      ]),
+      accountHolderName: accountHolderNameInput.isValid
+          ? AccountHolderName.pure(accountHolderName)
+          : accountHolderNameInput,
+    ));
+  }
+
+  void setTitle(String title) {
+    final titleInput = Title.dirty(title);
+    emit(state.copyWith(
+      formzStatus: Formz.validate([
+        state.accountNumber,
+        titleInput,
+        state.accountHolderName,
+        state.recipientAddress,
+      ]),
+      title: titleInput.isValid ? Title.pure(title) : titleInput,
+    ));
+  }
+
+  void setRecipientAccountNumber(String accountNumber) {
+    final recipientAccountNumberInput = AccountNumber.dirty(accountNumber);
+    emit(state.copyWith(
+      formzStatus: Formz.validate([
+        recipientAccountNumberInput,
+        state.title,
+        state.accountHolderName,
+        state.recipientAddress,
+      ]),
+      accountNumber: recipientAccountNumberInput.isValid
+          ? AccountNumber.pure(accountNumber)
+          : recipientAccountNumberInput,
+    ));
+  }
+
+  void setRecipientAddress(String recipientAddress) {
+    final recipientAddressInput = RecipientAddress.dirty(recipientAddress);
+    emit(state.copyWith(
+      formzStatus: Formz.validate([
+        state.accountNumber,
+        state.title,
+        state.accountHolderName,
+        recipientAddressInput,
+      ]),
+      recipientAddress: recipientAddressInput.isValid
+          ? RecipientAddress.pure(recipientAddress)
+          : recipientAddressInput,
+    ));
+  }
+
+
   @override
   Future<void> close() {
     bankCubitSubscription.cancel();
     return super.close();
   }
+
+
+  void transfer() {
+    emit(state.copyWith(
+      status: BankTransferStateEnum.bankTransferStateTransferInProgress,
+    ));
+    final BankTransferStateModel transaction = BankTransferStateModel(
+      transferId: const Uuid().v4(),
+      amount: state.amount!,
+      fromAccount: state.fromAccount!,
+      transferDate: DateTime.now(),
+      title: state.title.value,
+      accountHolderName: state.accountHolderName.value,
+      recipientAddress: state.recipientAddress.value,
+    );
+    Future.delayed(const Duration(seconds: 2), () {
+      emit(state.copyWith(
+        status: BankTransferStateEnum.bankTransferStateTransferCompleted,
+      ));
+    });
+  }
+
+
+
+
 }

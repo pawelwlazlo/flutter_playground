@@ -17,13 +17,25 @@ class BankLoginCubit extends Cubit<BankLoginState> {
 }) : super(BankLoginState.initial());
 
   void logIn(String login, String password) async {
+    if(login.isEmpty || password.isEmpty) {
+      emit(state.copyWith(
+        status: BankLoginStateEnum.error,
+        id: null,
+        login: login,
+        password: password,
+        fullName: null,
+        pin: null,
+        error: 'Invalid credentials',
+      ));
+      return;
+    }
     getUserUseCase.call(login: login, password: password).then((value) {
       value.fold(
         (failure) => emit(state.copyWith(
           status: BankLoginStateEnum.error,
           id: null,
-          login: null,
-          password: null,
+          login: login,
+          password: password,
           fullName: null,
           pin: null,
           error: failure.message,

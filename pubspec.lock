@@ -105,6 +105,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
+  extended_masked_text:
+    dependency: "direct main"
+    description:
+      name: extended_masked_text
+      sha256: dba132fffa2b931e8cdd005e0509dfac359d3f98a175eca18c0ac71605247b6b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
   fake_async:
     dependency: transitive
     description:
@@ -248,6 +256,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.4.0"
+  formz:
+    dependency: "direct main"
+    description:
+      name: formz
+      sha256: b2b4cb99b228020d2c7185500eed1c02ca290dd4cc19edaf42df17f5dc546d5a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   get_it:
     dependency: "direct main"
     description:

@@ -99,11 +99,17 @@ class LoginWidget extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                TextField(
+                TextFormField(
                   controller: _loginController,
                   decoration: const InputDecoration(
                     labelText: 'Login',
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Pole nie może być puste';
+                    }
+                    return null;
+                  },
                 ),
                 TextField(
                   controller: _passwordController,

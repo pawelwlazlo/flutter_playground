@@ -11,6 +11,7 @@ class BankTransferStateModel extends Equatable {
   final String? accountNumber;
   final Decimal amount;
   final BankAccount fromAccount;
+  final String recipientAddress;
 
   const BankTransferStateModel({
     required this.transferId,
@@ -21,6 +22,7 @@ class BankTransferStateModel extends Equatable {
     this.accountNumber,
     required this.amount,
     required this.fromAccount,
+    this.recipientAddress = '',
   });
 
   BankTransferStateModel copyWith({
@@ -32,6 +34,7 @@ class BankTransferStateModel extends Equatable {
     String? accountNumber,
     Decimal? amount,
     BankAccount? fromAccount,
+    String? recipientAddress,
   }) {
     return BankTransferStateModel(
       transferId: transferId ?? this.transferId,
@@ -42,6 +45,7 @@ class BankTransferStateModel extends Equatable {
       accountNumber: accountNumber ?? this.accountNumber,
       amount: amount ?? this.amount,
       fromAccount: fromAccount ?? this.fromAccount,
+      recipientAddress: recipientAddress ?? this.recipientAddress,
     );
   }
 
@@ -56,5 +60,6 @@ class BankTransferStateModel extends Equatable {
         accountNumber,
         amount,
         fromAccount,
+        recipientAddress
       ];
 }

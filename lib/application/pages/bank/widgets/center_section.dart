@@ -61,6 +61,7 @@ class KwotaPrompt extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final TextEditingController amountController = TextEditingController();
+    final bankCubit = BlocProvider.of<BankCubit>(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -85,7 +86,6 @@ class KwotaPrompt extends StatelessWidget {
             },
 */
             onChanged: (value) {
-              final bankCubit = BlocProvider.of<BankCubit>(context);
               bankCubit.setKwota(amountController.text);
             },
             decoration: InputDecoration(
