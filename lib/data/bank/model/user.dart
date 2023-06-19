@@ -7,7 +7,7 @@ class UserModel extends Equatable {
   final String login;
   final String fullName;
   final String password;
-  final int pin;
+  final String pin;
 
   const UserModel({
     required this.id,
@@ -37,7 +37,7 @@ class UserModel extends Equatable {
       login: map['login'] as String,
       fullName: map['fullName'] as String,
       password: map['password'] as String,
-      pin: map['pin'] as int,
+      pin: map['pin'],
     );
   }
 
@@ -46,7 +46,7 @@ class UserModel extends Equatable {
     String? login,
     String? fullName,
     String? password,
-    int? pin,
+    String? pin,
   }) {
     return UserModel(
       id: id ?? this.id,

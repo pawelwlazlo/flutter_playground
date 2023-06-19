@@ -16,18 +16,23 @@ class UserDataSourceImpl implements UserDataSource {
       {required String login, required String password}) {
     final users = [
       const UserModel(
-          id: 1, login: 'a', fullName: 'Adam Nowak', password: 'a', pin: 1234),
+          id: 1,
+          login: 'a',
+          fullName: 'Adam Nowak',
+          password: 'a',
+          pin: '1234'),
       const UserModel(
           id: 2,
           login: 'b',
           fullName: 'Zofia Kowalska',
           password: 'b',
-          pin: 1234),
+          pin: '1234'),
     ];
 
-    var foundUser = users.firstWhere(
-        (user) => user.login == login && user.password == ShaUtil.getSha256(password),
-        orElse: () => throw Exception('User not found'));
+    var sha256 = ShaUtil.getSha256(password);
+    var foundUser = users.firstWhere((user) {
+      return user.login == login && user.password == sha256;
+    }, orElse: () => throw Exception('User not found'));
 
     return Future.delayed(const Duration(seconds: 1), () => foundUser);
   }

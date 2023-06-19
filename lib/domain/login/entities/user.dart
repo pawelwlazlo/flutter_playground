@@ -5,7 +5,7 @@ class User extends Equatable {
   final String login;
   final String fullName;
   final String password;
-  final int pin;
+  final String pin;
 
   const User({
     required this.id,
@@ -20,7 +20,7 @@ class User extends Equatable {
     String? login,
     String? fullName,
     String? password,
-    int? pin,
+    String? pin,
   }) {
     return User(
       id: id ?? this.id,
@@ -50,7 +50,7 @@ class User extends Equatable {
       login: map['login'] as String,
       fullName: map['fullName'] as String,
       password: map['password'] as String,
-      pin: map['pin'] as int,
+      pin: map['pin'],
     );
   }
 }
