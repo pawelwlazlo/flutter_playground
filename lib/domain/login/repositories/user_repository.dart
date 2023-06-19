@@ -4,5 +4,6 @@ import '../../core/failure.dart';
 import '../entities/user.dart';
 
 abstract class UserRepository {
-  Future<Either<Failure, User>> getUserById({required int id});
+  Future<Either<Failure, User>> getUserByLoginAndPassword(
+      {required String login, required String password});
 }
