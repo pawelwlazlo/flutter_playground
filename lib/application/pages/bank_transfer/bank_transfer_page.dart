@@ -32,7 +32,7 @@ class BankTrasferPage extends StatelessWidget {
                   color: themeData.colorScheme.onPrimary,
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
                           Padding(
@@ -48,25 +48,12 @@ class BankTrasferPage extends StatelessWidget {
                                       bankState.activeBank!.bank.logoUrl,
                                       width: 75,
                                     ),
-                                  ],
-                                )),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                const Text('Z konta: ',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                                Expanded(
-                                    flex: 2,
-                                    child: Text(
+                                    Text(
                                       bankState.activeBank!.accountNumber,
                                       style: themeData.textTheme.displayMedium,
-                                    )),
+                                    ),
+                                  ],
+                                )),
                               ],
                             ),
                           ),
