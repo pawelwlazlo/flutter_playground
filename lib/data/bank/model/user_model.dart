@@ -67,4 +67,13 @@ class UserModel extends Equatable {
     );
   }
 
+  factory UserModel.fromUser(User user) {
+    return UserModel(
+      id: user.id,
+      login: user.login,
+      fullName: user.fullName,
+      password: user.password,
+      pin: user.pin,
+    );
+  }
 }

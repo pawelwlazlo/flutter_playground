@@ -10,6 +10,8 @@ import 'package:flutter_playground/domain/bank_transfer/usecases/get_transfers_u
 import 'package:flutter_playground/domain/login/repositories/user_repository.dart';
 import 'package:flutter_playground/domain/login/usecases/check_user_pin_use_case.dart';
 import 'package:flutter_playground/domain/login/usecases/get_user_use_case.dart';
+import 'package:flutter_playground/domain/login/usecases/read_user_use_case.dart';
+import 'package:flutter_playground/domain/login/usecases/save_user_use_case.dart';
 import 'package:get_it/get_it.dart';
 
 import 'data/bank/datasources/bank_transfer_data_source.dart';
@@ -32,6 +34,8 @@ Future<void> init() async {
   sl.registerFactory(() => GetBankTransfersUseCase(sl()));
   sl.registerFactory(() => GetUserUseCase(sl()));
   sl.registerFactory(() => CheckUserPinUseCase());
+  sl.registerFactory(() => ReadUserUseCase(sl()));
+  sl.registerFactory(() => SaveUserUseCase(sl()));
 
 // ! Repositories
   sl.registerFactory<BankAccountRepository>(
