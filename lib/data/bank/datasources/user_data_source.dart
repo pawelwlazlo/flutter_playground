@@ -19,7 +19,7 @@ class UserDataSourceImpl implements UserDataSource {
           id: 1,
           login: 'a',
           fullName: 'Adam Nowak',
-          password: 'a',
+          password: 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb',
           pin: '1234'),
       const UserModel(
           id: 2,

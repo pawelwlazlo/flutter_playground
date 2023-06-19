@@ -15,7 +15,26 @@ class BankLoginCubit extends Cubit<BankLoginState> {
     required this.checkUserPinUseCase,
 }) : super(BankLoginState.initial());
 
-  void logIn(String login, String password) {
+  void logIn(String login, String password) async {
+    getUserUseCase.call(login: login, password: password).then((value) {
+      value.fold(
+        (failure) => emit(state.copyWith(
+          status: BankLoginStateEnum.error,
+          id: null,
+          login: null,
+          password: null,
+          error: failure.message,
+        )),
+        (user) => emit(state.copyWith(
+          status: BankLoginStateEnum.success,
+          id: user.id,
+          login: user.login,
+          password: user.password,
+          error: null,
+        )),
+      );
+    });
+/*
     if (login == 'a' && password == 'a') {
       emit(state.copyWith(
         status: BankLoginStateEnum.success,
@@ -33,6 +52,7 @@ class BankLoginCubit extends Cubit<BankLoginState> {
         error: 'Invalid credentials',
       ));
     }
+*/
   }
 
   void submitPin(String pin) {
