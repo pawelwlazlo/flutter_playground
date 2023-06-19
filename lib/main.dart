@@ -26,36 +26,38 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return MultiBlocProvider(providers: [
-      BlocProvider(create: (context) => BankCubit(di.sl())),
-      BlocProvider(create: (context) => BankLoginCubit()),
-      BlocProvider(create: (context) => BankTransferCubit(bankCubit: BlocProvider.of<BankCubit>(context))),
-    ], child: Consumer<ThemeService>(builder: (context, themeService, child) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        themeMode: themeService.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        initialRoute: '/',
-        onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case '/':
-              return MaterialPageRoute(
-                  builder: (context) => const BankLoginWidget());
-            case '/bank':
-              return MaterialPageRoute(
-                  builder: (context) => const BankPage());
-            default:
-              return MaterialPageRoute(
-                  builder: (context) => const BankLoginWidget());
-          }
-        },
-      );
-    })
-    );
-      
-      
-      
-
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => BankCubit(di.sl())),
+          BlocProvider(
+              create: (context) => BankLoginCubit(
+                  getUserUseCase: di.sl(), checkUserPinUseCase: di.sl())),
+          BlocProvider(
+              create: (context) => BankTransferCubit(
+                  bankCubit: BlocProvider.of<BankCubit>(context))),
+        ],
+        child: Consumer<ThemeService>(builder: (context, themeService, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            themeMode:
+                themeService.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            initialRoute: '/',
+            onGenerateRoute: (settings) {
+              switch (settings.name) {
+                case '/':
+                  return MaterialPageRoute(
+                      builder: (context) => const BankLoginWidget());
+                case '/bank':
+                  return MaterialPageRoute(
+                      builder: (context) => const BankPage());
+                default:
+                  return MaterialPageRoute(
+                      builder: (context) => const BankLoginWidget());
+              }
+            },
+          );
+        }));
   }
 }

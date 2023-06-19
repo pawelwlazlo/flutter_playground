@@ -1,10 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/login/usecases/check_user_pin_use_case.dart';
+import '../../../../domain/login/usecases/get_user_use_case.dart';
+
 part 'bank_login_state.dart';
 
 class BankLoginCubit extends Cubit<BankLoginState> {
-  BankLoginCubit() : super(BankLoginState.initial());
+  final GetUserUseCase getUserUseCase;
+  final CheckUserPinUseCase checkUserPinUseCase;
+
+  BankLoginCubit({
+    required this.getUserUseCase,
+    required this.checkUserPinUseCase,
+}) : super(BankLoginState.initial());
 
   void logIn(String login, String password) {
     if (login == 'a' && password == 'a') {
