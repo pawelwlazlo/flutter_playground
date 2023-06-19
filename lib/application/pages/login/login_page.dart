@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/core/widgets/custom_app_bar.dart';
 import 'package:flutter_playground/application/pages/bank/bank_page.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'cubit/bank_login_cubit.dart';
@@ -85,9 +86,10 @@ class LoginWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: Image.asset(
-                'assets/eb.png',
-                fit: BoxFit.contain,
+              child: SvgPicture.asset(
+                'assets/eb.svg',
+                fit: BoxFit.fitWidth,
+                width: 1200,
               ),
             ),
             Expanded(

@@ -39,7 +39,7 @@ flutter:
 
 
   assets:
-    - assets/eb.png
+    - assets/eb.svg
     - assets/alior_logo.png
     - assets/ing_logo.png
     - assets/icons/blik.svg
