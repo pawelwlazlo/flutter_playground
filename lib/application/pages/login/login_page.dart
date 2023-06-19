@@ -86,10 +86,12 @@ class LoginWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: SvgPicture.asset(
-                'assets/eb.svg',
-                fit: BoxFit.fitWidth,
-                width: 1200,
+              child: Center(
+                child: SvgPicture.asset(
+                  'assets/eb2.svg',
+                  fit: BoxFit.fitWidth,
+                  width: 1200,
+                ),
               ),
             ),
             Expanded(
