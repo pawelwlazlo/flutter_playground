@@ -23,6 +23,7 @@ class BankLoginCubit extends Cubit<BankLoginState> {
           id: null,
           login: null,
           password: null,
+          fullName: null,
           error: failure.message,
         )),
         (user) => emit(state.copyWith(
@@ -30,6 +31,7 @@ class BankLoginCubit extends Cubit<BankLoginState> {
           id: user.id,
           login: user.login,
           password: user.password,
+          fullName: user.fullName,
           error: null,
         )),
       );
