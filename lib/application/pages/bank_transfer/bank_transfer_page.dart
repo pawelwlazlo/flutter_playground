@@ -95,7 +95,7 @@ class BankTrasferPage extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      vertical: 12.0, horizontal: 8.0),
+                                      vertical: 8.0, horizontal: 8.0),
                                   child: TextFormField(
                                     decoration: InputDecoration(
                                       labelText: 'Rachunek odbiorcy',
@@ -114,12 +114,12 @@ class BankTrasferPage extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      vertical: 12.0, horizontal: 8.0),
+                                      vertical: 8.0, horizontal: 8.0),
                                   child: TextFormField(
                                     decoration: InputDecoration(
                                       labelText: 'Tytuł przelewu',
                                       hintText: 'Tytuł przelewu',
-                                      icon: const Icon(FontAwesomeIcons.anchor),
+                                      icon: const Icon(FontAwesomeIcons.pen),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(4.0),
                                       ),
@@ -132,7 +132,7 @@ class BankTrasferPage extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      vertical: 12.0, horizontal: 8.0),
+                                      vertical: 8.0, horizontal: 8.0),
                                   child: TextFormField(
                                     decoration: InputDecoration(
                                       labelText: 'Nazwa odbiorcy',
@@ -150,7 +150,7 @@ class BankTrasferPage extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      vertical: 12.0, horizontal: 8.0),
+                                      vertical: 8.0, horizontal: 8.0),
                                   child: TextFormField(
                                     decoration: InputDecoration(
                                       labelText: 'Adres odbiorcy',
