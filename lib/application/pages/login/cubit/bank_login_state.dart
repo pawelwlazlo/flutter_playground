@@ -17,6 +17,7 @@ class BankLoginState extends Equatable {
   final String? error;
   final String? pin;
   final String? fullName;
+  final bool privateMode;
 
   const BankLoginState({
     required this.status,
@@ -26,18 +27,19 @@ class BankLoginState extends Equatable {
     this.error,
     this.pin,
     this.fullName,
+    this.privateMode = false,
   });
 
 
   factory BankLoginState.initial() {
     return const BankLoginState(
-      status: BankLoginStateEnum.initial,
+      status: BankLoginStateEnum.loading,
     );
   }
 
   @override
   List<Object?> get props =>
-      [status, id, login, password, error, pin, fullName,];
+      [status, id, login, password, error, pin, fullName, privateMode];
 
   BankLoginState copyWith({
     BankLoginStateEnum? status,
@@ -47,6 +49,7 @@ class BankLoginState extends Equatable {
     String? error,
     String? pin,
     String? fullName,
+    bool? privateMode,
   }) {
     return BankLoginState(
       status: status ?? this.status,
@@ -56,6 +59,7 @@ class BankLoginState extends Equatable {
       error: error ?? this.error,
       pin: pin ?? this.pin,
       fullName: fullName ?? this.fullName,
+      privateMode: privateMode ?? this.privateMode,
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart'
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/services/theme_service.dart';
 import 'cubit/bank_login_cubit.dart';
 
 class BankLoginWidget extends StatelessWidget {
@@ -48,7 +49,65 @@ class BankLoginWidget extends StatelessWidget {
         final status = state.status;
 
         final Widget activeWidget;
-        if (status == BankLoginStateEnum.initial ||
+        if (status == BankLoginStateEnum.loading) {
+          activeWidget = Container(
+            color: theme.colorScheme.primary,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
+                    color: theme.colorScheme.primary,
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/eb2.svg',
+                            height: 140,
+                          ),
+                          const SizedBox(height: 16),
+                          Text('Z nami bankowość to łatwizna', style: theme.textTheme.displayLarge!.copyWith(color: theme.colorScheme.onPrimary)),
+                        ],
+                      )),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 8.0),
+                    child: Column(
+                      children: [
+                        Text('Tryb prywatny', style: theme.textTheme.displayLarge!.copyWith(color: theme.colorScheme.onPrimary, fontSize: 18)),
+                        SizedBox(
+                          width: 100,
+                          height: 80,
+                          child: FittedBox(
+                            fit: BoxFit.fill,
+                            child: Switch(
+                                activeColor: theme.colorScheme.primary,
+                                activeTrackColor: theme.colorScheme.onPrimary,
+                                inactiveThumbColor: theme.colorScheme.onPrimary,
+                                inactiveTrackColor: theme.colorScheme.primary,
+                                value: context.read<BankLoginCubit>().state.privateMode,
+                                onChanged: (value) {
+                                  context.read<BankLoginCubit>().setPrivateMode(value);
+                                }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else if (status == BankLoginStateEnum.initial ||
             status == BankLoginStateEnum.error) {
           activeWidget = LoginWidget(state: state, theme: theme);
         } else if (status == BankLoginStateEnum.success ||

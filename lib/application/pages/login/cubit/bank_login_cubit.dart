@@ -91,4 +91,10 @@ class BankLoginCubit extends Cubit<BankLoginState> {
       ));
     }
   }
+
+  void setPrivateMode(bool value) {
+    emit(state.copyWith(
+      privateMode: value,
+    ));
+  }
 }
