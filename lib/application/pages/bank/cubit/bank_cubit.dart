@@ -23,7 +23,7 @@ class BankCubit extends Cubit<BankCubitState> {
   BankCubit({required this.getBankAccountsUseCase, required this.bankTransferCubit}) : super(BankCubitState.initial()) {
     bankTransferCubitSubscription = bankTransferCubit.stream.listen((BankTransferState state) {
         if (state.status == BankTransferStateEnum.bankTransferStateTransferEnded) {
-          emit(this.state.copyWith(status: BankStateEnum.transactionEnded, kwota: null));
+          emit(this.state.copyWith(status: BankStateEnum.transactionEnded, amountFieldValue: null));
         }
     });
   }
@@ -70,17 +70,19 @@ class BankCubit extends Cubit<BankCubitState> {
       return;
     }
     await Future.delayed(const Duration(seconds: 3), () {});
-    emit(state.copyWith(status: BankStateEnum.bankStateBlikServiceRequested));
+    var generatedBlikAmount = faker.datatype.number(min: 300, max: 600);
+    var generatedBlikAmountDec = Decimal.parse(generatedBlikAmount.toString());
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikServiceRequested, blikAmount: generatedBlikAmountDec));
     // emit(state.copyWith(status: BankStateEnum.bankStateBlikConfirmed));
   }
 
 
   Future<void> createTransaction() async {
-    if(state.kwota == null) {
+    if(state.amountFieldValue == null) {
       return;
     }
 
-    final kwota = state.kwota!;
+    final kwota = state.amountFieldValue!;
     final numberFormat = NumberFormat('###.00#', 'pl_PL');
     final kwotaParsed = numberFormat.parse(kwota);
     final decimalKwota = Decimal.parse(kwotaParsed.toString());
@@ -101,11 +103,11 @@ class BankCubit extends Cubit<BankCubitState> {
   }
 
   Future<void> setKwota(String inputKwota) async {
-    emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, kwota: inputKwota));
+    emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, amountFieldValue: inputKwota));
   }
 
   void completeTransfer() {
-    emit(state.copyWith(status: BankStateEnum.bankStateTransferCompleted, kwota: null));
+    emit(state.copyWith(status: BankStateEnum.bankStateTransferCompleted, amountFieldValue: null));
   }
 
   void setBlikConfirmed(value) {
