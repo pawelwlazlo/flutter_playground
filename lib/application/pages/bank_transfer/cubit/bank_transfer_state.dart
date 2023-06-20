@@ -4,7 +4,11 @@ enum BankTransferStateEnum {
   bankTransferStateInitial,
   bankTransferStateTransactionCreated,
   bankTransferStateTransferInProgress,
-  bankTransferStateTransferCompleted, bankTransferEnded, bankTransferStateTransferFailed, bankTransferStateTransferEnded,
+  bankTransferStateTransferCompleted,
+  bankTransferEnded,
+  bankTransferStateTransferFailed,
+  bankTransferStateTransferEnded,
+  bankTransferStateFormError,
 }
 
 enum BankTransferStateErrorEnum {
