@@ -41,7 +41,7 @@ class BankTransferCubit extends Cubit<BankTransferState> {
   }
 
   void setAccountHolderName(String accountHolderName) {
-    final accountHolderNameInput = AccountHolderName.dirty(accountHolderName);
+    final accountHolderNameInput = RecipientName.dirty(accountHolderName);
 
     emit(state.copyWith(
       formzStatus: Formz.validate([
@@ -50,8 +50,8 @@ class BankTransferCubit extends Cubit<BankTransferState> {
         accountHolderNameInput,
         state.recipientAddress,
       ]),
-      accountHolderName: accountHolderNameInput.isValid
-          ? AccountHolderName.pure(accountHolderName)
+      recipientName: accountHolderNameInput.isValid
+          ? RecipientName.pure(accountHolderName)
           : accountHolderNameInput,
     ));
   }
@@ -112,6 +112,7 @@ class BankTransferCubit extends Cubit<BankTransferState> {
       accountHolderName: state.recipientName.value,
       recipientAddress: state.recipientAddress.value,
     );
+    addTransaction(transaction);
     await Future.delayed(const Duration(seconds: 2), () {
       emit(state.copyWith(
         status: BankTransferStateEnum.bankTransferStateTransferInProgress,
@@ -120,6 +121,7 @@ class BankTransferCubit extends Cubit<BankTransferState> {
     await Future.delayed(const Duration(seconds: 2), () {
       emit(state.copyWith(
         status: BankTransferStateEnum.bankTransferStateTransferCompleted,
+
       ));
     });
   }
@@ -139,6 +141,10 @@ class BankTransferCubit extends Cubit<BankTransferState> {
   void completeTransfer() {
     emit(state.copyWith(
       status: BankTransferStateEnum.bankTransferStateTransferEnded,
+      title: const Title.pure(''),
+      accountNumber: const AccountNumber.pure(''),
+      recipientAddress: const RecipientAddress.pure(''),
+      recipientName: const RecipientName.pure(''),
     ));
   }
 }

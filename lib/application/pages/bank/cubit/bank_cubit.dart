@@ -77,7 +77,8 @@ class BankCubit extends Cubit<BankCubitState> {
     final kwotaParsed = numberFormat.parse(kwota);
     final decimalKwota = Decimal.parse(kwotaParsed.toString());
     if (decimalKwota.compareTo(Decimal.zero) > 0) {
-      emit(state.copyWith(status: BankStateEnum.bankStateTransactionCreated, amount: decimalKwota));
+      emit(state.copyWith(status: BankStateEnum.bankStateTransactionCreated,
+          amount: decimalKwota));
     }
   }
 

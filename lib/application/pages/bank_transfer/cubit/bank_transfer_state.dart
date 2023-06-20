@@ -28,10 +28,10 @@ class AccountNumber extends FormzInput<String, BankTransferStateErrorEnum> {
   }
 }
 
-class AccountHolderName extends FormzInput<String, BankTransferStateErrorEnum> {
-  const AccountHolderName.dirty([String value = '']) : super.dirty(value);
+class RecipientName extends FormzInput<String, BankTransferStateErrorEnum> {
+  const RecipientName.dirty([String value = '']) : super.dirty(value);
 
-  const AccountHolderName.pure([String value = '']) : super.pure(value);
+  const RecipientName.pure([String value = '']) : super.pure(value);
 
   @override
   BankTransferStateErrorEnum? validator(String value) {
@@ -72,7 +72,7 @@ class BankTransferState extends Equatable {
   final BankTransferStateEnum status;
 
   final List<BankTransferStateModel> transactions;
-  final AccountHolderName recipientName;
+  final RecipientName recipientName;
   final Title title;
   final DateTime? accountingDate;
   final AccountNumber accountNumber;
@@ -94,7 +94,7 @@ class BankTransferState extends Equatable {
     required this.status,
     required this.transactions,
     required this.formzStatus,
-    this.recipientName = const AccountHolderName.pure(''),
+    this.recipientName = const RecipientName.pure(''),
     this.title = const Title.pure(''),
     this.accountingDate,
     this.accountNumber = const AccountNumber.pure(''),
@@ -121,7 +121,7 @@ class BankTransferState extends Equatable {
   BankTransferState copyWith({
     BankTransferStateEnum? status,
     List<BankTransferStateModel>? transactions,
-    AccountHolderName? accountHolderName,
+    RecipientName? recipientName,
     Title? title,
     DateTime? accountingDate,
     AccountNumber? accountNumber,
@@ -133,7 +133,7 @@ class BankTransferState extends Equatable {
     return BankTransferState(
       status: status ?? this.status,
       transactions: transactions ?? this.transactions,
-      recipientName: accountHolderName ?? this.recipientName,
+      recipientName: recipientName ?? this.recipientName,
       title: title ?? this.title,
       accountingDate: accountingDate ?? this.accountingDate,
       accountNumber: accountNumber ?? this.accountNumber,
