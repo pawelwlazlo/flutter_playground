@@ -44,7 +44,7 @@ class AccountNumber extends FormzInput<String, BankTransferStateErrorEnum> {
 
   @override
   BankTransferStateErrorEnum? validator(String value) {
-    return value.length == 26
+    return value.length == 29
         ? null
         : BankTransferStateErrorEnum.bankTransferStateErrorInvalidAccountNumber;
   }

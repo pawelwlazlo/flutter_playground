@@ -49,7 +49,8 @@ class BankTrasferPage extends StatelessWidget {
             } else if (state.status == BankTransferStateEnum.bankTransferStateTransferCompleted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: const Text('Przelew zakończony'),
+                  content: Text('Przelew zakończony sukcesem', style: themeData.textTheme.displayLarge?.copyWith(color: themeData.colorScheme.onPrimary)),
+                  duration: const Duration(days: 1),
                   action: SnackBarAction(
                     label: 'OK',
                     onPressed: () {
