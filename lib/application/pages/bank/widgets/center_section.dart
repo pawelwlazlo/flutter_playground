@@ -24,11 +24,32 @@ class BankCenterSection extends StatelessWidget {
                 showDialog(
                     context: context,
                     builder: (BuildContext buildContext) =>
-                        const ConfirmationDialog()).then(
-                    (value) =>
+                    const ConfirmationDialog()).then(
+                        (value) =>
                         context.read<BankCubit>().setBlikConfirmed(value),
                     onError: (error) =>
                         context.read<BankCubit>().setBlikConfirmed(false));
+              } else if (state.status == BankStateEnum.bankStateBlikConfirmed) {
+                final textTheme = theme.textTheme.displayLarge?.copyWith(color: theme.colorScheme.onPrimary);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Column(
+                        children: [
+                          Text('Przelew na kwotę', style: textTheme),
+                          Text('${state.blikAmount}', style: textTheme!.copyWith(fontWeight: FontWeight.bold, fontSize: 24)),
+                          Text('zakończony sukcesem', style: textTheme),
+                        ],
+                      ),
+                      duration: const Duration(days: 1),
+                      action: SnackBarAction(
+                        label: 'OK',
+                        onPressed: () {
+                          context.read<BankCubit>().confirmBlik();
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        },
+                      )
+                  ),
+                );
               }
             }, builder: (context, state) {
               final status = state.status;

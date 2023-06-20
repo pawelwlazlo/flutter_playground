@@ -113,4 +113,8 @@ class BankCubit extends Cubit<BankCubitState> {
   void setBlikConfirmed(value) {
     emit(state.copyWith(status: BankStateEnum.bankStateBlikConfirmed));
   }
+
+  Future<void> confirmBlik() async {
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikConfirmed, blikNumber: null, blikAmount: null));
+  }
 }
