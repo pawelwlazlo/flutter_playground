@@ -156,7 +156,7 @@ class LoginWidget extends StatelessWidget {
               child: SvgPicture.asset(
                 'assets/eb2.svg',
                 fit: BoxFit.fitWidth,
-                width: 1200,
+                width: 200,
               ),
             ),
           ),
@@ -226,7 +226,19 @@ class PinWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(child: Text("Witaj ${state.fullName}")),
+          Expanded(child:Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Witaj"),
+              const SizedBox(height: 16.0),
+              Text("${state.fullName}", style: theme.textTheme.displayLarge,),
+              SvgPicture.asset(
+                'assets/eb2.svg',
+                fit: BoxFit.fitWidth,
+                width: 200,
+              ),
+            ],
+          ), ),
           Expanded(
             child: Column(
               children: [
