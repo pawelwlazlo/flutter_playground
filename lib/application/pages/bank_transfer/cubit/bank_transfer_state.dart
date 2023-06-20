@@ -4,14 +4,15 @@ enum BankTransferStateEnum {
   bankTransferStateInitial,
   bankTransferStateTransactionCreated,
   bankTransferStateTransferInProgress,
-  bankTransferStateTransferCompleted,
+  bankTransferStateTransferCompleted, bankTransferEnded, bankTransferStateTransferFailed, bankTransferStateTransferEnded,
 }
 
 enum BankTransferStateErrorEnum {
   bankTransferStateErrorInvalidAccountNumber,
   bankTransferStateErrorInvalidAmount,
   bankTransferStateErrorInvalidTitle,
-  bankTransferStateErrorInvalidAccountHolderName, bankTransferStateErrorInvalidRecipientAddress,
+  bankTransferStateErrorInvalidAccountHolderName,
+  bankTransferStateErrorInvalidRecipientAddress,
 }
 
 class AccountNumber extends FormzInput<String, BankTransferStateErrorEnum> {

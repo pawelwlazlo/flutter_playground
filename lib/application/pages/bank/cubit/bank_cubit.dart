@@ -82,4 +82,8 @@ class BankCubit extends Cubit<BankCubitState> {
   Future<void> setKwota(String inputKwota) async {
     emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, kwota: inputKwota));
   }
+
+  void completeTransfer() {
+    emit(state.copyWith(status: BankStateEnum.bankStateTransferCompleted, kwota: null));
+  }
 }

@@ -111,15 +111,13 @@ class BankTransferCubit extends Cubit<BankTransferState> {
     ));
   }
 
-
   @override
   Future<void> close() {
     bankCubitSubscription.cancel();
     return super.close();
   }
 
-
-  void transfer() {
+  void transfer() async {
     emit(state.copyWith(
       status: BankTransferStateEnum.bankTransferStateTransferInProgress,
     ));
@@ -132,7 +130,12 @@ class BankTransferCubit extends Cubit<BankTransferState> {
       accountHolderName: state.recipientName.value,
       recipientAddress: state.recipientAddress.value,
     );
-    Future.delayed(const Duration(seconds: 2), () {
+    await Future.delayed(const Duration(seconds: 2), () {
+      emit(state.copyWith(
+        status: BankTransferStateEnum.bankTransferStateTransferInProgress,
+      ));
+    });
+    await Future.delayed(const Duration(seconds: 2), () {
       emit(state.copyWith(
         status: BankTransferStateEnum.bankTransferStateTransferCompleted,
       ));
@@ -151,7 +154,9 @@ class BankTransferCubit extends Cubit<BankTransferState> {
     ));
   }
 
-
-
-
+  void completeTransfer() {
+    emit(state.copyWith(
+      status: BankTransferStateEnum.bankTransferStateTransferEnded,
+    ));
+  }
 }

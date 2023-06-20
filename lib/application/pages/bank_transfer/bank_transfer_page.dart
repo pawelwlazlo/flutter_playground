@@ -16,17 +16,56 @@ class BankTrasferPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    final bankState = context.watch<BankCubit>().state;
+    var bankCubit = context.watch<BankCubit>();
+    final bankState = bankCubit.state;
     final bankTransferCubit = Provider.of<BankTransferCubit>(context);
     var numberFormat = NumberFormat('#.00##', 'pl_PL');
     final kwota = numberFormat.format(bankState.amount?.toDouble());
+    bankTransferCubit.setKwota(bankState.amount!);
+    bankTransferCubit.setFromAccount(bankState.activeBank!);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: const CustomAppBar(
           title: 'Bank transfer',
         ),
-        body: BlocBuilder<BankTransferCubit, BankTransferState>(
+        body: BlocConsumer<BankTransferCubit, BankTransferState>(
+          listener: (context, state) {
+            if (state.status == BankTransferStateEnum.bankTransferStateTransferEnded) {
+              Navigator.pop(context);
+            } else if (state.status == BankTransferStateEnum.bankTransferStateTransferInProgress) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      Text('Wykonuję przelew...'),
+                    ],
+                  ),
+                ),
+              );
+            } else if (state.status == BankTransferStateEnum.bankTransferStateTransferCompleted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Przelew zakończony'),
+                  action: SnackBarAction(
+                    label: 'OK',
+                    onPressed: () {
+                      bankTransferCubit.completeTransfer();
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    },
+                  )
+                ),
+              );
+            } else if (state.status == BankTransferStateEnum.bankTransferStateTransferFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Przelew nieudany'),
+                ),
+              );
+            }
+          },
           builder: (context, state) {
             return Column(
               children: [

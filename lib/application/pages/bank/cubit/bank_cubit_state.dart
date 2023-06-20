@@ -9,7 +9,7 @@ enum BankStateEnum {
   bankStateTransactionCreated,
   bankPageChanged,
   bankStateCommandPageChanged,
-  bankStateKwotaChanged,
+  bankStateKwotaChanged, bankStateTransferCompleted,
 }
 
 
