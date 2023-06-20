@@ -12,13 +12,13 @@ class BankAccountDataSourceImpl implements BankAccountDataSource {
     return [
       const BankAccountModel(
           bank: BankModel(name: 'ING', logoUrl: 'assets/ing_logo.png', backgroundColor: 0xFFFFF3E0),
-          accountNumber: '12345678901234567890123456',
+          accountNumber: '1090 1014 0000 0712 1981 2874',
           cardNumber: '1234 5678 9012 3456',
-          balance: 20000.60
+          balance: 304.60
       ),
       const BankAccountModel(
           bank: BankModel(name: 'Alior Bank', logoUrl: 'assets/alior_logo.png', backgroundColor: 0xFFF3E5F5),
-          accountNumber: '23456789012345678901234567',
+          accountNumber: '2345 1124 4322 0333 1981 2874',
           cardNumber: '2345 6789 0123 4567',
           balance: 23000.36
       ),

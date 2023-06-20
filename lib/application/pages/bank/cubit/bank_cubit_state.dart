@@ -8,7 +8,8 @@ enum BankStateEnum {
   bankStateBlikReceived,
   bankStateTransactionCreated,
   bankPageChanged,
-  bankStateCommandPageChanged, bankStateKwotaChanged,
+  bankStateCommandPageChanged,
+  bankStateKwotaChanged, bankStateTransferCompleted, transactionEnded, bankStateBlikExpired, bankStateBlikServiceRequested, bankStateBlikConfirmed,
 }
 
 
@@ -19,10 +20,12 @@ class BankCubitState extends Equatable {
   final List<BankAccount> bankAccounts;
   final BankAccount? activeBank;
   final int? blikNumber;
-  final Decimal? kwota;
+  final String? amountFieldValue;
   final Failure? failure;
   final String? fullName;
   final int? activeCommand;
+  final Decimal? amount;
+  final Decimal? blikAmount;
 
   const BankCubitState({
     required this.status,
@@ -31,10 +34,12 @@ class BankCubitState extends Equatable {
     required this.bankAccounts,
     this.activeBank,
     this.blikNumber,
-    this.kwota,
+    this.amountFieldValue,
     this.failure,
     this.fullName,
     this.activeCommand,
+    required this.amount,
+    this.blikAmount,
   });
 
   factory BankCubitState.initial() {
@@ -45,10 +50,12 @@ class BankCubitState extends Equatable {
       bankAccounts: [],
       activeBank: null,
       blikNumber: null,
-      kwota: null,
+      amountFieldValue: null,
       failure: null,
       fullName: null,
       activeCommand: null,
+      amount: null,
+      blikAmount: null,
     );
   }
 
@@ -59,10 +66,12 @@ class BankCubitState extends Equatable {
     List<BankAccount>? bankAccounts,
     BankAccount? activeBank,
     int? blikNumber,
-    Decimal? kwota,
+    String? amountFieldValue,
     Failure? failure,
     String? fullName,
     int? activeCommand,
+    Decimal? amount,
+    Decimal? blikAmount,
   }) {
     return BankCubitState(
       status: status ?? this.status,
@@ -71,10 +80,12 @@ class BankCubitState extends Equatable {
       bankAccounts: bankAccounts ?? this.bankAccounts,
       activeBank: activeBank ?? this.activeBank,
       blikNumber: blikNumber ?? this.blikNumber,
-      kwota: kwota ?? this.kwota,
+      amountFieldValue: amountFieldValue ?? this.amountFieldValue,
       failure: failure ?? this.failure,
       fullName: fullName ?? this.fullName,
       activeCommand: activeCommand ?? this.activeCommand,
+      amount: amount ?? this.amount,
+      blikAmount: blikAmount ?? this.blikAmount,
     );
   }
 
@@ -87,9 +98,10 @@ class BankCubitState extends Equatable {
         bankAccounts,
         activeBank,
         blikNumber,
-        kwota,
+        amountFieldValue,
         failure,
         fullName,
         activeCommand,
+        amount,
       ];
 }

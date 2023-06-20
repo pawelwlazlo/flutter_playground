@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:faker_dart/faker_dart.dart';
@@ -8,13 +10,23 @@ import 'package:flutter_playground/domain/core/failure.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../domain/bank/usecases/get_bank_accounts_use_case.dart';
+import '../../bank_transfer/cubit/bank_transfer_cubit.dart';
 
 part 'bank_cubit_state.dart';
 
 class BankCubit extends Cubit<BankCubitState> {
-  final GetBankAccountsUseCase _getBankAccountsUseCase;
+  final GetBankAccountsUseCase getBankAccountsUseCase;
+  final BankTransferCubit bankTransferCubit;
+  late StreamSubscription bankTransferCubitSubscription;
 
-  BankCubit(this._getBankAccountsUseCase) : super(BankCubitState.initial());
+
+  BankCubit({required this.getBankAccountsUseCase, required this.bankTransferCubit}) : super(BankCubitState.initial()) {
+    bankTransferCubitSubscription = bankTransferCubit.stream.listen((BankTransferState state) {
+        if (state.status == BankTransferStateEnum.bankTransferStateTransferEnded) {
+          emit(this.state.copyWith(status: BankStateEnum.transactionEnded, amountFieldValue: null));
+        }
+    });
+  }
 
 
 
@@ -32,7 +44,7 @@ class BankCubit extends Cubit<BankCubitState> {
     }
 
   Future<void> loadBanks({required int userId}) async {
-    _getBankAccountsUseCase.call().then((bankAccounts) {
+    getBankAccountsUseCase.call().then((bankAccounts) {
       bankAccounts.fold(
               (l) => emit(state.copyWith(failure: l)),
               (r) =>
@@ -51,29 +63,54 @@ class BankCubit extends Cubit<BankCubitState> {
     debugPrint('Otrzymano zapytanie o BLIK');
     await Future.delayed(const Duration(seconds: 3), () {});
     debugPrint('Otrzymano kod blik');
-    emit(state.copyWith(status: BankStateEnum.bankStateBlikReceived, blikNumber: faker.datatype.number(min: 100000, max: 999999)));
+    var generatedNumber = faker.datatype.number(min: 100000, max: 999999);
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikReceived, blikNumber: generatedNumber));
+    if(generatedNumber % 2 == 0) {
+      emit(state.copyWith(status: BankStateEnum.bankStateBlikExpired));
+      return;
+    }
+    await Future.delayed(const Duration(seconds: 3), () {});
+    var generatedBlikAmount = faker.datatype.number(min: 300, max: 600);
+    var generatedBlikAmountDec = Decimal.parse(generatedBlikAmount.toString());
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikServiceRequested, blikAmount: generatedBlikAmountDec));
+    // emit(state.copyWith(status: BankStateEnum.bankStateBlikConfirmed));
   }
 
 
   Future<void> createTransaction() async {
-    if (state.kwota != null && state.kwota!.compareTo(Decimal.zero) > 0) {
-      emit(state.copyWith(status: BankStateEnum.bankStateTransactionCreated));
+    if(state.amountFieldValue == null) {
+      return;
+    }
+
+    final kwota = state.amountFieldValue!;
+    final numberFormat = NumberFormat('###.00#', 'pl_PL');
+    final kwotaParsed = numberFormat.parse(kwota);
+    final decimalKwota = Decimal.parse(kwotaParsed.toString());
+    if (decimalKwota.compareTo(Decimal.zero) > 0) {
+      emit(state.copyWith(status: BankStateEnum.bankStateTransactionCreated,
+          amount: decimalKwota));
     }
   }
 
-  void changeBankPage(int index) {
+  Future<void> changeBankPage(int index) async {
     debugPrint('zmieniam bank na $index');
     emit(state.copyWith(status: BankStateEnum.bankPageChanged, activeBank: state.bankAccounts[index]));
   }
 
-  void changeCommandPage(int index) {
+  Future<void> changeCommandPage(int index) async {
     debugPrint('zmieniam komendę na $index');
     emit(state.copyWith(status: BankStateEnum.bankStateCommandPageChanged, activeCommand: index));
   }
 
-  void setKwota(String kwota) {
-    final numberFormat = NumberFormat('###.00#', 'pl_PL');
-    final kwotaParsed = numberFormat.parse(kwota);
-    emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, kwota: Decimal.parse(kwotaParsed.toString())));
+  Future<void> setKwota(String inputKwota) async {
+    emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, amountFieldValue: inputKwota));
+  }
+
+  void completeTransfer() {
+    emit(state.copyWith(status: BankStateEnum.bankStateTransferCompleted, amountFieldValue: null));
+  }
+
+  void setBlikConfirmed(value) {
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikConfirmed));
   }
 }
