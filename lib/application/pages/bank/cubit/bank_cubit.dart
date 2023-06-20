@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:faker_dart/faker_dart.dart';
@@ -8,13 +10,23 @@ import 'package:flutter_playground/domain/core/failure.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../domain/bank/usecases/get_bank_accounts_use_case.dart';
+import '../../bank_transfer/cubit/bank_transfer_cubit.dart';
 
 part 'bank_cubit_state.dart';
 
 class BankCubit extends Cubit<BankCubitState> {
-  final GetBankAccountsUseCase _getBankAccountsUseCase;
+  final GetBankAccountsUseCase getBankAccountsUseCase;
+  final BankTransferCubit bankTransferCubit;
+  late StreamSubscription bankTransferCubitSubscription;
 
-  BankCubit(this._getBankAccountsUseCase) : super(BankCubitState.initial());
+
+  BankCubit({required this.getBankAccountsUseCase, required this.bankTransferCubit}) : super(BankCubitState.initial()) {
+    bankTransferCubitSubscription = bankTransferCubit.stream.listen((BankTransferState state) {
+        if (state.status == BankTransferStateEnum.bankTransferStateTransferEnded) {
+          emit(this.state.copyWith(status: BankStateEnum.transactionEnded, kwota: null));
+        }
+    });
+  }
 
 
 
@@ -32,7 +44,7 @@ class BankCubit extends Cubit<BankCubitState> {
     }
 
   Future<void> loadBanks({required int userId}) async {
-    _getBankAccountsUseCase.call().then((bankAccounts) {
+    getBankAccountsUseCase.call().then((bankAccounts) {
       bankAccounts.fold(
               (l) => emit(state.copyWith(failure: l)),
               (r) =>

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../cubit/bank_cubit.dart';
@@ -23,6 +24,9 @@ class BankCenterSection extends StatelessWidget {
                 return CircularProgressIndicator(
                   color: theme.colorScheme.secondary,
                 );
+              }
+              if(status == BankStateEnum.transactionEnded) {
+                amountController.clear();
               }
               // return const KwotaPrompt();
               return Column(
@@ -63,26 +67,6 @@ class BankCenterSection extends StatelessWidget {
                   ),
                 ],
               );
-
-              /*else if (state is BankStatePrzelewSended) {
-                return Text('Wysłano przelew na kwotę: ${stateModel.kwota}');
-              } else if (state is BankStateBlikReceived) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Text('Otrzymano kod blik: ${stateModel.blikNumber}'),
-                        Text('Dla konta: ${stateModel.activeBank?.cardNumber}'),
-                      ],
-                    ),
-                  ],
-                );
-              } else if (state is BankStateCommandPageChanged) {
-                return const KwotaPrompt();
-              } else {
-                return const KwotaPrompt();
-              }*/
             }),
           ),
         )

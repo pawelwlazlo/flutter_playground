@@ -4,7 +4,6 @@ import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
 import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_state_model.dart';
 import 'package:formz/formz.dart';
 import 'package:uuid/uuid.dart';
@@ -14,22 +13,11 @@ import '../../../../domain/bank/entities/bank_account.dart';
 part 'bank_transfer_state.dart';
 
 class BankTransferCubit extends Cubit<BankTransferState> {
-  final BankCubit bankCubit;
-  late StreamSubscription bankCubitSubscription;
 
-  BankTransferCubit({required this.bankCubit})
-      : super(BankTransferState.initial()) {
-    bankCubitSubscription = bankCubit.stream.listen((state) {
-      if (state.status == BankStateEnum.bankStateTransactionCreated) {
-        addTransaction(BankTransferStateModel(
-          transferId: const Uuid().v4(),
-          amount: state.amount!,
-          fromAccount: state.activeBank!,
-          transferDate: DateTime.now(),
-        ));
-      }
-    });
-  }
+  BankTransferCubit()
+      : super(BankTransferState.initial());
+
+
 
   void addTransaction(BankTransferStateModel transaction) {
     emit(state.copyWith(
@@ -109,12 +97,6 @@ class BankTransferCubit extends Cubit<BankTransferState> {
           ? RecipientAddress.pure(recipientAddress)
           : recipientAddressInput,
     ));
-  }
-
-  @override
-  Future<void> close() {
-    bankCubitSubscription.cancel();
-    return super.close();
   }
 
   void transfer() async {

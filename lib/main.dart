@@ -28,13 +28,17 @@ class MyApp extends StatelessWidget {
     final theme = Theme.of(context);
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => BankCubit(di.sl())),
+          BlocProvider(lazy: false, create: (context) => BankTransferCubit()),
           BlocProvider(
+              lazy: false,
+              create: (context) => BankCubit(
+                  getBankAccountsUseCase: di.sl(),
+                  bankTransferCubit:
+                      BlocProvider.of<BankTransferCubit>(context))),
+          BlocProvider(
+              lazy: false,
               create: (context) => BankLoginCubit(
                   getUserUseCase: di.sl(), checkUserPinUseCase: di.sl())),
-          BlocProvider(
-              create: (context) => BankTransferCubit(
-                  bankCubit: BlocProvider.of<BankCubit>(context))),
         ],
         child: Consumer<ThemeService>(builder: (context, themeService, child) {
           return MaterialApp(
