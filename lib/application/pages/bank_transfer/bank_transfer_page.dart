@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
 import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:formz/formz.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -140,6 +141,7 @@ class BankTrasferPage extends StatelessWidget {
                                       labelText: 'Rachunek odbiorcy',
                                       hintText: 'Rachunek odbiorcy',
                                       icon: const Icon(FontAwesomeIcons.buildingColumns),
+                                      errorText: makeErrorText(cubit: bankTransferCubit, formzField: state.accountNumber),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(4.0),
                                       ),
@@ -159,6 +161,7 @@ class BankTrasferPage extends StatelessWidget {
                                       labelText: 'Tytuł przelewu',
                                       hintText: 'Tytuł przelewu',
                                       icon: const Icon(FontAwesomeIcons.pen),
+                                      errorText: makeErrorText(cubit: bankTransferCubit, formzField: state.title),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(4.0),
                                       ),
@@ -177,6 +180,7 @@ class BankTrasferPage extends StatelessWidget {
                                       labelText: 'Nazwa odbiorcy',
                                       hintText: 'Nazwa odbiorcy',
                                       icon: const Icon(FontAwesomeIcons.user),
+                                      errorText: makeErrorText(cubit: bankTransferCubit, formzField: state.recipientName),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(4.0),
                                       ),
@@ -195,6 +199,7 @@ class BankTrasferPage extends StatelessWidget {
                                       labelText: 'Adres odbiorcy',
                                       hintText: 'Adres odbiorcy',
                                       icon: const Icon(FontAwesomeIcons.addressBook),
+                                      errorText: makeErrorText(cubit: bankTransferCubit, formzField: state.recipientAddress),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(4.0),
                                       ),
@@ -238,6 +243,26 @@ class BankTrasferPage extends StatelessWidget {
       ),
     );
   }
+
+  makeErrorText({required FormzInput formzField, required BankTransferCubit cubit}) {
+    if(cubit.state.status != BankTransferStateEnum.bankTransferStateFormError) {
+      return null;
+    }
+    if (formzField.isNotValid) {
+      final BankTransferStateErrorEnum error = formzField.error;
+      return switch(error) {
+        BankTransferStateErrorEnum.bankTransferStateErrorInvalidAccountNumber => 'Nieprawidłowy numer konta',
+        BankTransferStateErrorEnum.bankTransferStateErrorInvalidTitle => 'Nieprawidłowy tytuł przelewu',
+        BankTransferStateErrorEnum.bankTransferStateErrorInvalidAccountHolderName => 'Nieprawidłowy odbiorca przelewu',
+        BankTransferStateErrorEnum.bankTransferStateErrorInvalidRecipientAddress => 'Nieprawidłowy adres odbiorcy',
+        _ => 'Nieprawidłowe dane',
+      };
+    } else {
+      return null;
+    }
+  }
+
+
 }
 
 class FormTextInput extends StatelessWidget {

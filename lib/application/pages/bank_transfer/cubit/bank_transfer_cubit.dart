@@ -100,6 +100,12 @@ class BankTransferCubit extends Cubit<BankTransferState> {
   }
 
   void transfer() async {
+    if(!state.formzStatus) {
+      emit(state.copyWith(
+        status: BankTransferStateEnum.bankTransferStateFormError,
+      ));
+      return;
+    }
     emit(state.copyWith(
       status: BankTransferStateEnum.bankTransferStateTransferInProgress,
     ));

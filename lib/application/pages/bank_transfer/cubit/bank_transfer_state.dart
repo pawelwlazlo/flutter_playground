@@ -19,6 +19,24 @@ enum BankTransferStateErrorEnum {
   bankTransferStateErrorInvalidRecipientAddress,
 }
 
+extension on BankTransferStateErrorEnum {
+String text() {
+    switch (this) {
+      case BankTransferStateErrorEnum.bankTransferStateErrorInvalidAccountNumber:
+        return 'Invalid account number';
+      case BankTransferStateErrorEnum.bankTransferStateErrorInvalidAmount:
+        return 'Invalid amount';
+      case BankTransferStateErrorEnum.bankTransferStateErrorInvalidTitle:
+        return 'Invalid title';
+      case BankTransferStateErrorEnum.bankTransferStateErrorInvalidAccountHolderName:
+        return 'Invalid account holder name';
+      case BankTransferStateErrorEnum.bankTransferStateErrorInvalidRecipientAddress:
+        return 'Invalid recipient address';
+      default:
+        return '';
+    }
+  }
+}
 class AccountNumber extends FormzInput<String, BankTransferStateErrorEnum> {
   const AccountNumber.dirty([String value = '']) : super.dirty(value);
 
