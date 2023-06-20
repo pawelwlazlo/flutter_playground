@@ -74,7 +74,7 @@ class BankTransferCubit extends Cubit<BankTransferState> {
       formzStatus: Formz.validate([
         state.accountNumber,
         titleInput,
-        state.accountHolderName,
+        state.recipientName,
         state.recipientAddress,
       ]),
       title: titleInput.isValid ? Title.pure(title) : titleInput,
@@ -87,7 +87,7 @@ class BankTransferCubit extends Cubit<BankTransferState> {
       formzStatus: Formz.validate([
         recipientAccountNumberInput,
         state.title,
-        state.accountHolderName,
+        state.recipientName,
         state.recipientAddress,
       ]),
       accountNumber: recipientAccountNumberInput.isValid
@@ -102,7 +102,7 @@ class BankTransferCubit extends Cubit<BankTransferState> {
       formzStatus: Formz.validate([
         state.accountNumber,
         state.title,
-        state.accountHolderName,
+        state.recipientName,
         recipientAddressInput,
       ]),
       recipientAddress: recipientAddressInput.isValid
@@ -129,7 +129,7 @@ class BankTransferCubit extends Cubit<BankTransferState> {
       fromAccount: state.fromAccount!,
       transferDate: DateTime.now(),
       title: state.title.value,
-      accountHolderName: state.accountHolderName.value,
+      accountHolderName: state.recipientName.value,
       recipientAddress: state.recipientAddress.value,
     );
     Future.delayed(const Duration(seconds: 2), () {

@@ -71,7 +71,7 @@ class BankTransferState extends Equatable {
   final BankTransferStateEnum status;
 
   final List<BankTransferStateModel> transactions;
-  final AccountHolderName accountHolderName;
+  final AccountHolderName recipientName;
   final Title title;
   final DateTime? accountingDate;
   final AccountNumber accountNumber;
@@ -93,7 +93,7 @@ class BankTransferState extends Equatable {
     required this.status,
     required this.transactions,
     required this.formzStatus,
-    this.accountHolderName = const AccountHolderName.pure(''),
+    this.recipientName = const AccountHolderName.pure(''),
     this.title = const Title.pure(''),
     this.accountingDate,
     this.accountNumber = const AccountNumber.pure(''),
@@ -107,7 +107,7 @@ class BankTransferState extends Equatable {
       [
         status,
         transactions,
-        accountHolderName,
+        recipientName,
         title,
         accountingDate,
         accountNumber,
@@ -132,7 +132,7 @@ class BankTransferState extends Equatable {
     return BankTransferState(
       status: status ?? this.status,
       transactions: transactions ?? this.transactions,
-      accountHolderName: accountHolderName ?? this.accountHolderName,
+      recipientName: accountHolderName ?? this.recipientName,
       title: title ?? this.title,
       accountingDate: accountingDate ?? this.accountingDate,
       accountNumber: accountNumber ?? this.accountNumber,

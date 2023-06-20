@@ -96,89 +96,73 @@ class BankTrasferPage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 12.0, horizontal: 8.0),
-                                  child: FormTextInput(
-                                    label: 'Na rachunek',
-                                    hint: 'Na rachunek',
-                                    icon: FontAwesomeIcons.buildingColumns,
-                                    keyboardType: const TextInputType.numberWithOptions(
-                                        decimal: true, signed: true),
-                                    onChanged: (value) {
-                                       bankTransferCubit.setRecipientAccountNumber(value);
-                                    },
-                                   /* validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Pole nie może być puste';
-                                      }
-                                      if (value.length < 26) {
-                                        return 'Nieprawidłowy numer konta';
-                                      }
-
-                                      return null;
-                                    },*/
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: 'Rachunek odbiorcy',
+                                      hintText: 'Rachunek odbiorcy',
+                                      icon: const Icon(FontAwesomeIcons.buildingColumns),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(4.0),
+                                      ),
+                                    ),
                                     controller: MaskedTextController(
                                         mask: '0000 0000 0000 0000 0000 0000', text: bankTransferCubit.state.accountNumber.value),
+                                    onChanged: (value) {
+                                      bankTransferCubit.setRecipientAccountNumber(value);
+                                    },
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 12.0, horizontal: 8.0),
-                                  child: FormTextInput(
-                                    label: 'Tytuł przelewu',
-                                    hint: 'Tytuł przelewu',
-                                    icon: FontAwesomeIcons.fileSignature,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: 'Tytuł przelewu',
+                                      hintText: 'Tytuł przelewu',
+                                      icon: const Icon(FontAwesomeIcons.anchor),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(4.0),
+                                      ),
+                                    ),
+                                    initialValue: bankTransferCubit.state.title.value,
                                     onChanged: (value) {
                                       bankTransferCubit.setTitle(value);
                                     },
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Pole nie może być puste';
-                                      }
-                                      if (value.length < 3) {
-                                        return 'Tytuł przelewu musi zawierać minimum 3 znaki';
-                                      }
-                                      return null;
-                                    },
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 12.0, horizontal: 8.0),
-                                  child: FormTextInput(
-                                    label: 'Nazwa odbiorcy',
-                                    hint: 'Nazwa odbiorcy',
-                                    icon: FontAwesomeIcons.users,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: 'Nazwa odbiorcy',
+                                      hintText: 'Nazwa odbiorcy',
+                                      icon: const Icon(FontAwesomeIcons.user),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(4.0),
+                                      ),
+                                    ),
+                                    initialValue: bankTransferCubit.state.recipientName.value,
                                     onChanged: (value) {
                                       bankTransferCubit.setAccountHolderName(value);
                                     },
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Pole nie może być puste';
-                                      }
-                                      if (value.length < 3) {
-                                        return 'Nazwa odbiorcy musi zawierać minimum 3 znaki';
-                                      }
-                                      return null;
-                                    },
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 12.0, horizontal: 8.0),
-                                  child: FormTextInput(
-                                    label: 'Adres odbiorcy',
-                                    hint: 'Adres odbiorcy',
-                                    icon: FontAwesomeIcons.addressBook,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: 'Adres odbiorcy',
+                                      hintText: 'Adres odbiorcy',
+                                      icon: const Icon(FontAwesomeIcons.addressBook),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(4.0),
+                                      ),
+                                    ),
+                                    initialValue: bankTransferCubit.state.recipientAddress.value,
                                     onChanged: (value) {
                                       bankTransferCubit.setRecipientAddress(value);
-                                    },
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Pole nie może być puste';
-                                      }
-                                      if (value.length < 3) {
-                                        return 'Adres odbiorcy musi zawierać minimum 3 znaki';
-                                      }
-                                      return null;
                                     },
                                   ),
                                 ),
@@ -223,7 +207,7 @@ class FormTextInput extends StatelessWidget {
   final IconData? icon;
   final Function? onChanged;
   final Function? validator;
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final List<TextInputFormatter>? inputFormatters;
   final String? initialValue;
   final TextInputType keyboardType;
@@ -236,21 +220,20 @@ class FormTextInput extends StatelessWidget {
       this.onChanged,
       this.validator,
       this.inputFormatters,
-      this.controller,
+      required this.controller,
       this.initialValue,
       this.keyboardType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textController = controller ?? TextEditingController();
     return TextField(
-      controller: textController,
+      controller: controller,
       keyboardType: keyboardType, // const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
         labelText: label,
-        errorText: validator != null ? validator!(textController.text) : null,
+        errorText: validator != null ? validator!(controller.text) : null,
         labelStyle: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.normal,
