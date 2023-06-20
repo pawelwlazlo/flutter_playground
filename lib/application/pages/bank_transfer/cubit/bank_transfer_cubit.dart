@@ -139,6 +139,18 @@ class BankTransferCubit extends Cubit<BankTransferState> {
     });
   }
 
+  void setKwota(Decimal kwota) {
+    emit(state.copyWith(
+      amount: kwota,
+    ));
+  }
+
+  void setFromAccount(BankAccount bankAccount) {
+    emit(state.copyWith(
+      fromAccount: bankAccount,
+    ));
+  }
+
 
 
 
