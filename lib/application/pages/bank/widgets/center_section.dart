@@ -72,8 +72,21 @@ class BankCenterSection extends StatelessWidget {
               }
               // wybieramy BLIK
               if (state.activeCommand == 1) {
-                return SvgPicture.asset(
-                  'assets/icons/blik.svg',
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/blik.svg',
+                    ),
+                    const SizedBox(height: 36),
+                    Text('Naciśnij by wygenerować kod BLIK',
+                        style: theme.textTheme.displayMedium),
+                    FaIcon(
+                      FontAwesomeIcons.arrowDown,
+                      size: 32,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ],
                 );
               }
               // wybieramy przelew
@@ -125,66 +138,6 @@ class BankCenterSection extends StatelessWidget {
   }
 }
 
-class KwotaPrompt extends StatelessWidget {
-  const KwotaPrompt({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final TextEditingController amountController = TextEditingController();
-    final bankCubit = context.watch<BankCubit>();
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Wprowadź kwotę:',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.primary)),
-          const SizedBox(height: 16),
-          TextField(
-            controller: amountController,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'^\d*,?\d*')),
-            ],
-/*
-            onSubmitted: (value) {
-              final bankCubit = BlocProvider.of<BankCubit>(context);
-              bankCubit.setKwota(value);
-            },
-*/
-            onChanged: (value) {
-              bankCubit.setKwota(amountController.text);
-            },
-            decoration: InputDecoration(
-              labelText: 'Kwota',
-              labelStyle: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.primary),
-              border: const OutlineInputBorder(),
-              prefixIconConstraints: const BoxConstraints(),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(8),
-                child: FaIcon(
-                  FontAwesomeIcons.buildingColumns,
-                  size: 14,
-                  color: theme.colorScheme.primary,
-                ), // Icon(Icons.attach_money),
-              ),
-            ),
-            textAlign: TextAlign.center,
-            style: theme.textTheme.displayMedium,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class ConfirmationDialog extends StatelessWidget {
   const ConfirmationDialog({super.key});
 
@@ -196,17 +149,15 @@ class ConfirmationDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            // Tutaj możesz dodać logikę po naciśnięciu przycisku "Tak"
             Navigator.of(context)
-                .pop(true); // Zamknij dialog i zwróć wartość true
+                .pop(true);
           },
           child: const Text('Tak'),
         ),
         TextButton(
           onPressed: () {
-            // Tutaj możesz dodać logikę po naciśnięciu przycisku "Nie"
             Navigator.of(context)
-                .pop(false); // Zamknij dialog i zwróć wartość false
+                .pop(false);
           },
           child: const Text('Nie'),
         ),
