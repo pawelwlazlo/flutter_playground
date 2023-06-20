@@ -50,6 +50,7 @@ class BankLoginWidget extends StatelessWidget {
 
         final Widget activeWidget;
         if (status == BankLoginStateEnum.loading) {
+          Provider.of<BankLoginCubit>(context, listen: false).getLoginData();
           activeWidget = Container(
             color: theme.colorScheme.primary,
             child: Column(
@@ -58,9 +59,13 @@ class BankLoginWidget extends StatelessWidget {
                 Expanded(
                   child: Container(
                     color: theme.colorScheme.primary,
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(
+                          color: theme.colorScheme.onPrimary,
+                        ),
+                      ],
                     ),
                   ),
                 ),

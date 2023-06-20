@@ -97,4 +97,11 @@ class BankLoginCubit extends Cubit<BankLoginState> {
       privateMode: value,
     ));
   }
+
+  Future<void> getLoginData() async {
+    await Future.delayed(const Duration(seconds: 10), () {
+      emit(state.copyWith(
+        status: BankLoginStateEnum.initial));
+    });
+  }
 }
