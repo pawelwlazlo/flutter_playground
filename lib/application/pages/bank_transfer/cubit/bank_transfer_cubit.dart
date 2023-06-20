@@ -127,7 +127,10 @@ class BankTransferCubit extends Cubit<BankTransferState> {
     await Future.delayed(const Duration(seconds: 2), () {
       emit(state.copyWith(
         status: BankTransferStateEnum.bankTransferStateTransferCompleted,
-
+        accountNumber: const AccountNumber.pure(''),
+        title: const Title.pure(''),
+        recipientAddress: const RecipientAddress.pure(''),
+        recipientName: const RecipientName.pure(''),
       ));
     });
   }

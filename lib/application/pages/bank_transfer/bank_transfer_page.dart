@@ -36,12 +36,12 @@ class BankTrasferPage extends StatelessWidget {
               Navigator.pop(context);
             } else if (state.status == BankTransferStateEnum.bankTransferStateTransferInProgress) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircularProgressIndicator(),
-                      Text('Wykonuję przelew...'),
+                      const CircularProgressIndicator(strokeWidth: 5),
+                      Text('Wykonuję przelew...', style: themeData.textTheme.displayLarge?.copyWith(color: themeData.colorScheme.onPrimary)),
                     ],
                   ),
                 ),
