@@ -56,24 +56,30 @@ class BankCubit extends Cubit<BankCubitState> {
 
 
   Future<void> createTransaction() async {
-    if (state.kwota != null && state.kwota!.compareTo(Decimal.zero) > 0) {
-      emit(state.copyWith(status: BankStateEnum.bankStateTransactionCreated));
+    if(state.kwota == null) {
+      return;
+    }
+
+    final kwota = state.kwota!;
+    final numberFormat = NumberFormat('###.00#', 'pl_PL');
+    final kwotaParsed = numberFormat.parse(kwota);
+    final decimalKwota = Decimal.parse(kwotaParsed.toString());
+    if (decimalKwota.compareTo(Decimal.zero) > 0) {
+      emit(state.copyWith(status: BankStateEnum.bankStateTransactionCreated, amount: decimalKwota));
     }
   }
 
-  void changeBankPage(int index) {
+  Future<void> changeBankPage(int index) async {
     debugPrint('zmieniam bank na $index');
     emit(state.copyWith(status: BankStateEnum.bankPageChanged, activeBank: state.bankAccounts[index]));
   }
 
-  void changeCommandPage(int index) {
+  Future<void> changeCommandPage(int index) async {
     debugPrint('zmieniam komendę na $index');
     emit(state.copyWith(status: BankStateEnum.bankStateCommandPageChanged, activeCommand: index));
   }
 
-  void setKwota(String kwota) {
-    final numberFormat = NumberFormat('###.00#', 'pl_PL');
-    final kwotaParsed = numberFormat.parse(kwota);
-    emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, kwota: Decimal.parse(kwotaParsed.toString())));
+  Future<void> setKwota(String inputKwota) async {
+    emit(state.copyWith(status: BankStateEnum.bankStateKwotaChanged, kwota: inputKwota));
   }
 }

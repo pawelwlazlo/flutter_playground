@@ -10,7 +10,8 @@ class BankCenterSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    final ThemeData theme = Theme.of(context);
+    final TextEditingController amountController = TextEditingController();
     return Column(
       children: [
         Expanded(
@@ -18,14 +19,50 @@ class BankCenterSection extends StatelessWidget {
             child: BlocBuilder<BankCubit, BankCubitState>(
                 builder: (context, state) {
               final status = state.status;
-              if (status == BankStateEnum.bankLoggedIn) {
-                return const KwotaPrompt();
-              } else if (status == BankStateEnum.bankStateBlikRequested) {
+              if (status == BankStateEnum.bankStateBlikRequested) {
                 return CircularProgressIndicator(
-                  color: themeData.colorScheme.secondary,
+                  color: theme.colorScheme.secondary,
                 );
               }
-              return const KwotaPrompt();
+              // return const KwotaPrompt();
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: amountController,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^\d+,?\d*')),
+                      ],
+                      onChanged: (value) {
+                        context.read<BankCubit>().setKwota(amountController.text);
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Kwota',
+                        labelStyle: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.primary),
+                        border: const OutlineInputBorder(),
+                        prefixIconConstraints: const BoxConstraints(),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: FaIcon(
+                            FontAwesomeIcons.buildingColumns,
+                            size: 14,
+                            color: theme.colorScheme.primary,
+                          ), // Icon(Icons.attach_money),
+                        ),
+                      ),
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.displayMedium,
+                    ),
+                  ),
+                ],
+              );
 
               /*else if (state is BankStatePrzelewSended) {
                 return Text('Wysłano przelew na kwotę: ${stateModel.kwota}');
@@ -61,7 +98,7 @@ class KwotaPrompt extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final TextEditingController amountController = TextEditingController();
-    final bankCubit = BlocProvider.of<BankCubit>(context);
+    final bankCubit = context.watch<BankCubit>();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(

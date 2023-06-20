@@ -18,10 +18,8 @@ class BankTrasferPage extends StatelessWidget {
     final themeData = Theme.of(context);
     final bankState = context.watch<BankCubit>().state;
     final bankTransferCubit = Provider.of<BankTransferCubit>(context);
-    bankTransferCubit.setKwota(bankState.kwota!);
-    bankTransferCubit.setFromAccount(bankState.activeBank!);
     var numberFormat = NumberFormat('#.00##', 'pl_PL');
-    final kwota = numberFormat.format(bankState.kwota?.toDouble());
+    final kwota = numberFormat.format(bankState.amount?.toDouble());
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

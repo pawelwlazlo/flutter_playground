@@ -8,7 +8,8 @@ enum BankStateEnum {
   bankStateBlikReceived,
   bankStateTransactionCreated,
   bankPageChanged,
-  bankStateCommandPageChanged, bankStateKwotaChanged,
+  bankStateCommandPageChanged,
+  bankStateKwotaChanged,
 }
 
 
@@ -19,10 +20,11 @@ class BankCubitState extends Equatable {
   final List<BankAccount> bankAccounts;
   final BankAccount? activeBank;
   final int? blikNumber;
-  final Decimal? kwota;
+  final String? kwota;
   final Failure? failure;
   final String? fullName;
   final int? activeCommand;
+  final Decimal? amount;
 
   const BankCubitState({
     required this.status,
@@ -34,7 +36,7 @@ class BankCubitState extends Equatable {
     this.kwota,
     this.failure,
     this.fullName,
-    this.activeCommand,
+    this.activeCommand, required this.amount,
   });
 
   factory BankCubitState.initial() {
@@ -49,6 +51,7 @@ class BankCubitState extends Equatable {
       failure: null,
       fullName: null,
       activeCommand: null,
+      amount: null,
     );
   }
 
@@ -59,10 +62,11 @@ class BankCubitState extends Equatable {
     List<BankAccount>? bankAccounts,
     BankAccount? activeBank,
     int? blikNumber,
-    Decimal? kwota,
+    String? kwota,
     Failure? failure,
     String? fullName,
     int? activeCommand,
+    Decimal? amount,
   }) {
     return BankCubitState(
       status: status ?? this.status,
@@ -75,6 +79,7 @@ class BankCubitState extends Equatable {
       failure: failure ?? this.failure,
       fullName: fullName ?? this.fullName,
       activeCommand: activeCommand ?? this.activeCommand,
+      amount: amount ?? this.amount,
     );
   }
 
@@ -91,5 +96,6 @@ class BankCubitState extends Equatable {
         failure,
         fullName,
         activeCommand,
+        amount,
       ];
 }

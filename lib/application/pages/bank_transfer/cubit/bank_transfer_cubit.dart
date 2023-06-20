@@ -23,7 +23,7 @@ class BankTransferCubit extends Cubit<BankTransferState> {
       if (state.status == BankStateEnum.bankStateTransactionCreated) {
         addTransaction(BankTransferStateModel(
           transferId: const Uuid().v4(),
-          amount: state.kwota!,
+          amount: state.amount!,
           fromAccount: state.activeBank!,
           transferDate: DateTime.now(),
         ));
