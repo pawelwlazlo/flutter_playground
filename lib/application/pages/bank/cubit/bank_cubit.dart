@@ -63,7 +63,15 @@ class BankCubit extends Cubit<BankCubitState> {
     debugPrint('Otrzymano zapytanie o BLIK');
     await Future.delayed(const Duration(seconds: 3), () {});
     debugPrint('Otrzymano kod blik');
-    emit(state.copyWith(status: BankStateEnum.bankStateBlikReceived, blikNumber: faker.datatype.number(min: 100000, max: 999999)));
+    var generatedNumber = faker.datatype.number(min: 100000, max: 999999);
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikReceived, blikNumber: generatedNumber));
+    if(generatedNumber % 2 == 0) {
+      emit(state.copyWith(status: BankStateEnum.bankStateBlikExpired));
+      return;
+    }
+    await Future.delayed(const Duration(seconds: 3), () {});
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikServiceRequested));
+    // emit(state.copyWith(status: BankStateEnum.bankStateBlikConfirmed));
   }
 
 
@@ -98,5 +106,9 @@ class BankCubit extends Cubit<BankCubitState> {
 
   void completeTransfer() {
     emit(state.copyWith(status: BankStateEnum.bankStateTransferCompleted, kwota: null));
+  }
+
+  void setBlikConfirmed(value) {
+    emit(state.copyWith(status: BankStateEnum.bankStateBlikConfirmed));
   }
 }

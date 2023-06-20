@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../cubit/bank_cubit.dart';
@@ -17,18 +18,65 @@ class BankCenterSection extends StatelessWidget {
       children: [
         Expanded(
           child: Center(
-            child: BlocBuilder<BankCubit, BankCubitState>(
-                builder: (context, state) {
+            child: BlocConsumer<BankCubit, BankCubitState>(
+                listener: (context, state) {
+              if (state.status == BankStateEnum.bankStateBlikServiceRequested) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext buildContext) =>
+                        const ConfirmationDialog()).then(
+                    (value) =>
+                        context.read<BankCubit>().setBlikConfirmed(value),
+                    onError: (error) =>
+                        context.read<BankCubit>().setBlikConfirmed(false));
+              }
+            }, builder: (context, state) {
               final status = state.status;
               if (status == BankStateEnum.bankStateBlikRequested) {
                 return CircularProgressIndicator(
                   color: theme.colorScheme.secondary,
                 );
               }
-              if(status == BankStateEnum.transactionEnded) {
+              if (status == BankStateEnum.transactionEnded) {
                 amountController.clear();
               }
-              // return const KwotaPrompt();
+              if (status == BankStateEnum.bankStateBlikReceived) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Twój kod BLIK to:',
+                        style: theme.textTheme.displayMedium),
+                    const SizedBox(height: 16),
+                    Text('${state.blikNumber}',
+                        style: theme.textTheme.displayLarge?.copyWith(
+                            color: theme.colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 32)),
+                  ],
+                );
+              }
+              if (status == BankStateEnum.bankStateBlikExpired) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Kod BLIK wygasł:',
+                        style: theme.textTheme.displayMedium),
+                    const SizedBox(height: 16),
+                    Text('${state.blikNumber}',
+                        style: theme.textTheme.displayLarge?.copyWith(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 32)),
+                  ],
+                );
+              }
+              // wybieramy BLIK
+              if (state.activeCommand == 1) {
+                return SvgPicture.asset(
+                  'assets/icons/blik.svg',
+                );
+              }
+              // wybieramy przelew
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -42,7 +90,9 @@ class BankCenterSection extends StatelessWidget {
                         FilteringTextInputFormatter.allow(RegExp(r'^\d+,?\d*')),
                       ],
                       onChanged: (value) {
-                        context.read<BankCubit>().setKwota(amountController.text);
+                        context
+                            .read<BankCubit>()
+                            .setKwota(amountController.text);
                       },
                       decoration: InputDecoration(
                         labelText: 'Kwota',
@@ -131,6 +181,36 @@ class KwotaPrompt extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ConfirmationDialog extends StatelessWidget {
+  const ConfirmationDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Potwierdź transakcję'),
+      content: const Text('Czy na pewno chcesz zrealizować tę transakcję?'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            // Tutaj możesz dodać logikę po naciśnięciu przycisku "Tak"
+            Navigator.of(context)
+                .pop(true); // Zamknij dialog i zwróć wartość true
+          },
+          child: const Text('Tak'),
+        ),
+        TextButton(
+          onPressed: () {
+            // Tutaj możesz dodać logikę po naciśnięciu przycisku "Nie"
+            Navigator.of(context)
+                .pop(false); // Zamknij dialog i zwróć wartość false
+          },
+          child: const Text('Nie'),
+        ),
+      ],
     );
   }
 }
