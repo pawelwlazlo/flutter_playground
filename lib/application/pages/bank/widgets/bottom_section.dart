@@ -1,11 +1,8 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_playground/application/core/widgets/help_moving.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
 import 'package:flutter_playground/application/pages/bank/widgets/bank_action_button.dart';
-import 'package:flutter_playground/injection.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BankBottomSection extends StatelessWidget {
   const BankBottomSection({Key? key}) : super(key: key);
@@ -31,7 +28,9 @@ class BankBottomSection extends StatelessWidget {
                         return bankCubit.createTransaction();
                       },
                       buttonText: 'Przelew'),
-                  // const HelpMovingWidget()
+                  const HelpMovingWidget(
+                    left: true,
+                  )
                 ],
               ),
             ),
@@ -43,6 +42,9 @@ class BankBottomSection extends StatelessWidget {
                   BankActionButton(
                       bankEvent: () => bankCubit.generateBlik(),
                       buttonText: 'BLIK'),
+                  const HelpMovingWidget(
+                    left: false,
+                  )
                 ],
               ),
             ),
