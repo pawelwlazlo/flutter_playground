@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_playground/application/core/services/theme_service.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
+import '../../../core/widgets/help_moving.dart';
 import '../cubit/bank_cubit.dart';
 
 class BankTopSection extends StatelessWidget {
@@ -11,6 +14,7 @@ class BankTopSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final blocProvider = BlocProvider.of<BankCubit>(context);
     final ThemeData themeData = Theme.of(context);
+    final themeProvider = Provider.of<ThemeService>(context);
     return BlocBuilder<BankCubit, BankCubitState>(builder: (context, state) {
       if (state.status == BankStateEnum.initial) {
         return Container(
@@ -48,6 +52,7 @@ class BankTopSection extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // const HelpMovingWidget(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -61,7 +66,9 @@ class BankTopSection extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
-                      bankAccount.bank.logoUrl,
+                      themeProvider.isDarkModeOn
+                          ? 'assets/${state.activeBank!.bank.logoUrl}_dark.png'
+                          : 'assets/${state.activeBank!.bank.logoUrl}.png',
                       height: 80,
                     ),
                   ),

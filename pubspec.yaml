@@ -45,6 +45,8 @@ flutter:
     - assets/eb.svg
     - assets/eb2.svg
     - assets/eb-color.svg
-    - assets/alior_logo.png
-    - assets/ing_logo.png
+    - assets/alior.png
+    - assets/alior_dark.png
+    - assets/ing.png
+    - assets/ing_dark.png
     - assets/icons/blik.svg

@@ -31,7 +31,7 @@ class BankBottomSection extends StatelessWidget {
                         return bankCubit.createTransaction();
                       },
                       buttonText: 'Przelew'),
-                  const HelpMovingWidget()
+                  // const HelpMovingWidget()
                 ],
               ),
             ),
