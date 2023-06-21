@@ -14,10 +14,10 @@ class BankLoginCubit extends Cubit<BankLoginState> {
   BankLoginCubit({
     required this.getUserUseCase,
     required this.checkUserPinUseCase,
-}) : super(BankLoginState.initial());
+  }) : super(BankLoginState.initial());
 
   void logIn(String login, String password) async {
-    if(login.isEmpty || password.isEmpty) {
+    if (login.isEmpty || password.isEmpty) {
       emit(state.copyWith(
         status: BankLoginStateEnum.error,
         id: null,
@@ -73,11 +73,14 @@ class BankLoginCubit extends Cubit<BankLoginState> {
   }
 
   void submitPin(String pin) async {
-    final result = await checkUserPinUseCase.execute(pin: pin, user: User(id: state.id!,
-        login: state.login!,
-        fullName: state.fullName!,
-        password: state.password!,
-        pin: state.pin!));
+    final result = await checkUserPinUseCase.execute(
+        pin: pin,
+        user: User(
+            id: state.id!,
+            login: state.login!,
+            fullName: state.fullName!,
+            password: state.password!,
+            pin: state.pin!));
     if (result) {
       emit(state.copyWith(
         status: BankLoginStateEnum.pinSuccess,
@@ -99,9 +102,8 @@ class BankLoginCubit extends Cubit<BankLoginState> {
   }
 
   Future<void> getLoginData() async {
-    await Future.delayed(const Duration(seconds: 10), () {
-      emit(state.copyWith(
-        status: BankLoginStateEnum.initial));
+    await Future.delayed(const Duration(days: 10), () {
+      emit(state.copyWith(status: BankLoginStateEnum.initial));
     });
   }
 }
