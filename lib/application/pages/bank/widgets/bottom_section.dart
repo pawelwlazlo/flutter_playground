@@ -1,9 +1,11 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_playground/application/core/widgets/help_moving.dart';
 import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
 import 'package:flutter_playground/application/pages/bank/widgets/bank_action_button.dart';
 import 'package:flutter_playground/injection.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BankBottomSection extends StatelessWidget {
   const BankBottomSection({Key? key}) : super(key: key);
@@ -13,39 +15,40 @@ class BankBottomSection extends StatelessWidget {
     final bankCubit = BlocProvider.of<BankCubit>(context);
     final theme = Theme.of(context);
     return BlocBuilder<BankCubit, BankCubitState>(
-        builder: (context, state) {
-          return PageView(
-            onPageChanged: (index) {
-              bankCubit.changeCommandPage(index);
-            },
-            children: <Widget>[
-              Container(
-                color: theme.colorScheme.primary,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    BankActionButton(
-                        bankEvent: () {
-                          return bankCubit.createTransaction();
-                        },
-                        buttonText: 'Przelew')
-                  ],
-                ),
+      builder: (context, state) {
+        return PageView(
+          onPageChanged: (index) {
+            bankCubit.changeCommandPage(index);
+          },
+          children: <Widget>[
+            Container(
+              color: theme.colorScheme.primary,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BankActionButton(
+                      bankEvent: () {
+                        return bankCubit.createTransaction();
+                      },
+                      buttonText: 'Przelew'),
+                  const HelpMovingWidget()
+                ],
               ),
-              Container(
-                color: theme.colorScheme.primary,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    BankActionButton(
-                        bankEvent: () => bankCubit.generateBlik(),
-                        buttonText: 'BLIK')
-                  ],
-                ),
+            ),
+            Container(
+              color: theme.colorScheme.primary,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BankActionButton(
+                      bankEvent: () => bankCubit.generateBlik(),
+                      buttonText: 'BLIK'),
+                ],
               ),
-            ],
-          );
-        },
+            ),
+          ],
+        );
+      },
     );
   }
 }
