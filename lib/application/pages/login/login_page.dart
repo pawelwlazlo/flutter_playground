@@ -164,7 +164,7 @@ class LoginWidget extends StatelessWidget {
           Expanded(
             child: Center(
               child: SvgPicture.asset(
-                'assets/eb2.svg',
+                'assets/eb-color.svg',
                 fit: BoxFit.fitWidth,
                 width: 200,
               ),
@@ -247,7 +247,7 @@ class PinWidget extends StatelessWidget {
                   style: theme.textTheme.displayLarge,
                 ),
                 SvgPicture.asset(
-                  'assets/eb2.svg',
+                  'assets/eb-color.svg',
                   fit: BoxFit.fitWidth,
                   width: 200,
                 ),
