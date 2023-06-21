@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/application/core/widgets/help_moving.dart';
-import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
-import 'package:flutter_playground/application/pages/bank/widgets/bank_action_button.dart';
+import 'package:easy_bank/application/core/widgets/help_moving.dart';
+import 'package:easy_bank/application/pages/bank/cubit/bank_cubit.dart';
+import 'package:easy_bank/application/pages/bank/widgets/bank_action_button.dart';
 
 class BankBottomSection extends StatelessWidget {
   const BankBottomSection({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_playground/data/bank/datasources/user_data_source.dart';
-import 'package:flutter_playground/domain/core/failure.dart';
-import 'package:flutter_playground/domain/login/entities/login_error.dart';
-import 'package:flutter_playground/domain/login/entities/user.dart';
-import 'package:flutter_playground/domain/login/repositories/user_repository.dart';
+import 'package:easy_bank/data/bank/datasources/user_data_source.dart';
+import 'package:easy_bank/domain/core/failure.dart';
+import 'package:easy_bank/domain/login/entities/login_error.dart';
+import 'package:easy_bank/domain/login/entities/user.dart';
+import 'package:easy_bank/domain/login/repositories/user_repository.dart';
 
 import '../model/user_model.dart';
 

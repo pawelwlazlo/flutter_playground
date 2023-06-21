@@ -1,4 +1,4 @@
-package dev.wlazlo.flutter_playground
+package dev.wlazlo.easy_bank
 
 import io.flutter.embedding.android.FlutterActivity
 

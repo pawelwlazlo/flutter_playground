@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/application/pages/bank/bank_page.dart';
-import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
-import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
-import 'package:flutter_playground/application/pages/login/cubit/bank_login_cubit.dart';
-import 'package:flutter_playground/application/pages/login/login_page.dart';
-import 'package:flutter_playground/theme.dart';
+import 'package:easy_bank/application/pages/bank/bank_page.dart';
+import 'package:easy_bank/application/pages/bank/cubit/bank_cubit.dart';
+import 'package:easy_bank/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
+import 'package:easy_bank/application/pages/login/cubit/bank_login_cubit.dart';
+import 'package:easy_bank/application/pages/login/login_page.dart';
+import 'package:easy_bank/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'application/core/services/theme_service.dart';

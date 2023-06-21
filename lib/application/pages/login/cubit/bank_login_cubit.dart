@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/domain/login/entities/user.dart';
+import 'package:easy_bank/domain/login/entities/user.dart';
 
 import '../../../../domain/login/usecases/check_user_pin_use_case.dart';
 import '../../../../domain/login/usecases/get_user_use_case.dart';

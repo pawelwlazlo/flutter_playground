@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:faker_dart/faker_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/domain/bank/entities/bank_account.dart';
-import 'package:flutter_playground/domain/core/failure.dart';
+import 'package:easy_bank/domain/bank/entities/bank_account.dart';
+import 'package:easy_bank/domain/core/failure.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../domain/bank/usecases/get_bank_accounts_use_case.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter_playground/data/bank/model/bank_account.dart';
+import 'package:easy_bank/data/bank/model/bank_account.dart';
 
 abstract class BankAccountDataSource {
   Future<List<BankAccountModel>> getAccounts();

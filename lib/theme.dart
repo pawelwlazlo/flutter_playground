@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/color_schemes.g.dart';
+import 'package:easy_bank/color_schemes.g.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {

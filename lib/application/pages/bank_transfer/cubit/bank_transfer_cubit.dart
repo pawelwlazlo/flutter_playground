@@ -4,7 +4,7 @@ import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_state_model.dart';
+import 'package:easy_bank/application/pages/bank_transfer/cubit/bank_transfer_state_model.dart';
 import 'package:formz/formz.dart';
 import 'package:uuid/uuid.dart';
 

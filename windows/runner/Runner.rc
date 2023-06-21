@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "dev.wlazlo" "\0"
-            VALUE "FileDescription", "flutter_playground" "\0"
+            VALUE "FileDescription", "easy_bank" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "flutter_playground" "\0"
+            VALUE "InternalName", "easy_bank" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 dev.wlazlo. All rights reserved." "\0"
-            VALUE "OriginalFilename", "flutter_playground.exe" "\0"
-            VALUE "ProductName", "flutter_playground" "\0"
+            VALUE "OriginalFilename", "easy_bank.exe" "\0"
+            VALUE "ProductName", "easy_bank" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

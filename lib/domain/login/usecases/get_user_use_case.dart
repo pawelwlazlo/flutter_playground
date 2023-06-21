@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_playground/domain/core/failure.dart';
+import 'package:easy_bank/domain/core/failure.dart';
 
 import '../entities/user.dart';
 import '../repositories/user_repository.dart';
