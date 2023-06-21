@@ -1,4 +1,4 @@
-name: flutter_playground
+name: easy_bank
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -44,6 +44,9 @@ flutter:
   assets:
     - assets/eb.svg
     - assets/eb2.svg
-    - assets/alior_logo.png
-    - assets/ing_logo.png
+    - assets/eb-color.svg
+    - assets/alior.png
+    - assets/alior_dark.png
+    - assets/ing.png
+    - assets/ing_dark.png
     - assets/icons/blik.svg

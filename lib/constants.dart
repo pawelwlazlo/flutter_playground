@@ -1,4 +1,4 @@
-const ingLogo = 'assets/images/ing_logo.png';
-const aliorLogo = 'assets/images/alior_logo.png';
+const ingLogo = 'assets/images/ing_dark.png';
+const aliorLogo = 'assets/images/alior.png';
 const blik = 'assets/images/blik.png';
 const blikPhone = 'assets/images/blik_phone.png';

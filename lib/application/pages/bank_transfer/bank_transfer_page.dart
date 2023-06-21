@@ -2,8 +2,8 @@ import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/application/pages/bank/cubit/bank_cubit.dart';
-import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
+import 'package:easy_bank/application/pages/bank/cubit/bank_cubit.dart';
+import 'package:easy_bank/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:intl/intl.dart';
@@ -32,34 +32,42 @@ class BankTrasferPage extends StatelessWidget {
         ),
         body: BlocConsumer<BankTransferCubit, BankTransferState>(
           listener: (context, state) {
-            if (state.status == BankTransferStateEnum.bankTransferStateTransferEnded) {
+            if (state.status ==
+                BankTransferStateEnum.bankTransferStateTransferEnded) {
               Navigator.pop(context);
-            } else if (state.status == BankTransferStateEnum.bankTransferStateTransferInProgress) {
+            } else if (state.status ==
+                BankTransferStateEnum.bankTransferStateTransferInProgress) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircularProgressIndicator(),
-                      Text('Wykonuję przelew...'),
+                      const CircularProgressIndicator(strokeWidth: 5),
+                      Text('Wykonuję przelew...',
+                          style: themeData.textTheme.displayLarge?.copyWith(
+                              color: themeData.colorScheme.onPrimary)),
                     ],
                   ),
                 ),
               );
-            } else if (state.status == BankTransferStateEnum.bankTransferStateTransferCompleted) {
+            } else if (state.status ==
+                BankTransferStateEnum.bankTransferStateTransferCompleted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: const Text('Przelew zakończony'),
-                  action: SnackBarAction(
-                    label: 'OK',
-                    onPressed: () {
-                      bankTransferCubit.completeTransfer();
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    },
-                  )
-                ),
+                    content: Text('Przelew zakończony sukcesem',
+                        style: themeData.textTheme.displayLarge
+                            ?.copyWith(color: themeData.colorScheme.onPrimary)),
+                    duration: const Duration(days: 1),
+                    action: SnackBarAction(
+                      label: 'OK',
+                      onPressed: () {
+                        bankTransferCubit.completeTransfer();
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      },
+                    )),
               );
-            } else if (state.status == BankTransferStateEnum.bankTransferStateTransferFailed) {
+            } else if (state.status ==
+                BankTransferStateEnum.bankTransferStateTransferFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Przelew nieudany'),
@@ -75,7 +83,7 @@ class BankTrasferPage extends StatelessWidget {
                     child: Container(
                       color: themeData.colorScheme.onPrimary,
                       child: SingleChildScrollView(
-                        child: Form (
+                        child: Form(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -86,12 +94,16 @@ class BankTrasferPage extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Image.asset(
-                                        bankState.activeBank!.bank.logoUrl,
+                                        'assets/${bankState.activeBank!.bank.logoUrl}.png',
                                         width: 75,
+                                      ),
+                                      const SizedBox(
+                                        width: 16,
                                       ),
                                       Text(
                                         bankState.activeBank!.accountNumber,
-                                        style: themeData.textTheme.displayMedium,
+                                        style:
+                                            themeData.textTheme.displayMedium,
                                       ),
                                     ],
                                   ),
@@ -108,8 +120,8 @@ class BankTrasferPage extends StatelessWidget {
                                           flex: 2,
                                           child: Text(
                                             bankState.activeBank!.cardNumber,
-                                            style:
-                                                themeData.textTheme.displayMedium,
+                                            style: themeData
+                                                .textTheme.displayMedium,
                                           )),
                                     ],
                                   ),
@@ -128,7 +140,8 @@ class BankTrasferPage extends StatelessWidget {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,
-                                            color: themeData.colorScheme.primary),
+                                            color:
+                                                themeData.colorScheme.primary),
                                       ),
                                     ],
                                   ),
@@ -140,16 +153,23 @@ class BankTrasferPage extends StatelessWidget {
                                     decoration: InputDecoration(
                                       labelText: 'Rachunek odbiorcy',
                                       hintText: 'Rachunek odbiorcy',
-                                      icon: const Icon(FontAwesomeIcons.buildingColumns),
-                                      errorText: makeErrorText(cubit: bankTransferCubit, formzField: state.accountNumber),
+                                      icon: const Icon(
+                                          FontAwesomeIcons.buildingColumns),
+                                      errorText: makeErrorText(
+                                          cubit: bankTransferCubit,
+                                          formzField: state.accountNumber),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(4.0),
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
                                       ),
                                     ),
                                     controller: MaskedTextController(
-                                        mask: '0000 0000 0000 0000 0000 0000', text: bankTransferCubit.state.accountNumber.value),
+                                        mask: '0000 0000 0000 0000 0000 0000',
+                                        text: bankTransferCubit
+                                            .state.accountNumber.value),
                                     onChanged: (value) {
-                                      bankTransferCubit.setRecipientAccountNumber(value);
+                                      bankTransferCubit
+                                          .setRecipientAccountNumber(value);
                                     },
                                   ),
                                 ),
@@ -161,12 +181,16 @@ class BankTrasferPage extends StatelessWidget {
                                       labelText: 'Tytuł przelewu',
                                       hintText: 'Tytuł przelewu',
                                       icon: const Icon(FontAwesomeIcons.pen),
-                                      errorText: makeErrorText(cubit: bankTransferCubit, formzField: state.title),
+                                      errorText: makeErrorText(
+                                          cubit: bankTransferCubit,
+                                          formzField: state.title),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(4.0),
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
                                       ),
                                     ),
-                                    initialValue: bankTransferCubit.state.title.value,
+                                    initialValue:
+                                        bankTransferCubit.state.title.value,
                                     onChanged: (value) {
                                       bankTransferCubit.setTitle(value);
                                     },
@@ -180,14 +204,19 @@ class BankTrasferPage extends StatelessWidget {
                                       labelText: 'Nazwa odbiorcy',
                                       hintText: 'Nazwa odbiorcy',
                                       icon: const Icon(FontAwesomeIcons.user),
-                                      errorText: makeErrorText(cubit: bankTransferCubit, formzField: state.recipientName),
+                                      errorText: makeErrorText(
+                                          cubit: bankTransferCubit,
+                                          formzField: state.recipientName),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(4.0),
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
                                       ),
                                     ),
-                                    initialValue: bankTransferCubit.state.recipientName.value,
+                                    initialValue: bankTransferCubit
+                                        .state.recipientName.value,
                                     onChanged: (value) {
-                                      bankTransferCubit.setAccountHolderName(value);
+                                      bankTransferCubit
+                                          .setAccountHolderName(value);
                                     },
                                   ),
                                 ),
@@ -198,15 +227,21 @@ class BankTrasferPage extends StatelessWidget {
                                     decoration: InputDecoration(
                                       labelText: 'Adres odbiorcy',
                                       hintText: 'Adres odbiorcy',
-                                      icon: const Icon(FontAwesomeIcons.addressBook),
-                                      errorText: makeErrorText(cubit: bankTransferCubit, formzField: state.recipientAddress),
+                                      icon: const Icon(
+                                          FontAwesomeIcons.addressBook),
+                                      errorText: makeErrorText(
+                                          cubit: bankTransferCubit,
+                                          formzField: state.recipientAddress),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(4.0),
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
                                       ),
                                     ),
-                                    initialValue: bankTransferCubit.state.recipientAddress.value,
+                                    initialValue: bankTransferCubit
+                                        .state.recipientAddress.value,
                                     onChanged: (value) {
-                                      bankTransferCubit.setRecipientAddress(value);
+                                      bankTransferCubit
+                                          .setRecipientAddress(value);
                                     },
                                   ),
                                 ),
@@ -244,25 +279,31 @@ class BankTrasferPage extends StatelessWidget {
     );
   }
 
-  makeErrorText({required FormzInput formzField, required BankTransferCubit cubit}) {
-    if(cubit.state.status != BankTransferStateEnum.bankTransferStateFormError) {
+  makeErrorText(
+      {required FormzInput formzField, required BankTransferCubit cubit}) {
+    if (cubit.state.status !=
+        BankTransferStateEnum.bankTransferStateFormError) {
       return null;
     }
     if (formzField.isNotValid) {
       final BankTransferStateErrorEnum error = formzField.error;
-      return switch(error) {
-        BankTransferStateErrorEnum.bankTransferStateErrorInvalidAccountNumber => 'Nieprawidłowy numer konta',
-        BankTransferStateErrorEnum.bankTransferStateErrorInvalidTitle => 'Nieprawidłowy tytuł przelewu',
-        BankTransferStateErrorEnum.bankTransferStateErrorInvalidAccountHolderName => 'Nieprawidłowy odbiorca przelewu',
-        BankTransferStateErrorEnum.bankTransferStateErrorInvalidRecipientAddress => 'Nieprawidłowy adres odbiorcy',
+      return switch (error) {
+        BankTransferStateErrorEnum.bankTransferStateErrorInvalidAccountNumber =>
+          'Nieprawidłowy numer konta',
+        BankTransferStateErrorEnum.bankTransferStateErrorInvalidTitle =>
+          'Nieprawidłowy tytuł przelewu',
+        BankTransferStateErrorEnum
+              .bankTransferStateErrorInvalidAccountHolderName =>
+          'Nieprawidłowy odbiorca przelewu',
+        BankTransferStateErrorEnum
+              .bankTransferStateErrorInvalidRecipientAddress =>
+          'Nieprawidłowy adres odbiorcy',
         _ => 'Nieprawidłowe dane',
       };
     } else {
       return null;
     }
   }
-
-
 }
 
 class FormTextInput extends StatelessWidget {
@@ -293,7 +334,8 @@ class FormTextInput extends StatelessWidget {
     final theme = Theme.of(context);
     return TextField(
       controller: controller,
-      keyboardType: keyboardType, // const TextInputType.numberWithOptions(decimal: true),
+      keyboardType:
+          keyboardType, // const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
         labelText: label,

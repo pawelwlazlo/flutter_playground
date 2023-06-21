@@ -1,6 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_playground/domain/bank/entities/bank_account.dart';
+import 'package:easy_bank/domain/bank/entities/bank_account.dart';
 
 class BankTransferStateModel extends Equatable {
   final String transferId;

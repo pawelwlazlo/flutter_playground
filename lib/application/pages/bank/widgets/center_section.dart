@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/application/pages/bank_transfer/cubit/bank_transfer_cubit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -29,6 +28,29 @@ class BankCenterSection extends StatelessWidget {
                         context.read<BankCubit>().setBlikConfirmed(value),
                     onError: (error) =>
                         context.read<BankCubit>().setBlikConfirmed(false));
+              } else if (state.status == BankStateEnum.bankStateBlikConfirmed) {
+                final textTheme = theme.textTheme.displayLarge
+                    ?.copyWith(color: theme.colorScheme.onPrimary);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Column(
+                        children: [
+                          Text('Przelew na kwotę', style: textTheme),
+                          Text('${state.blikAmount}',
+                              style: textTheme!.copyWith(
+                                  fontWeight: FontWeight.bold, fontSize: 24)),
+                          Text('zakończony sukcesem', style: textTheme),
+                        ],
+                      ),
+                      duration: const Duration(days: 1),
+                      action: SnackBarAction(
+                        label: 'OK',
+                        onPressed: () {
+                          context.read<BankCubit>().confirmBlik();
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        },
+                      )),
+                );
               }
             }, builder: (context, state) {
               final status = state.status;
@@ -95,37 +117,52 @@ class BankCenterSection extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: amountController,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'^\d+,?\d*')),
-                      ],
-                      onChanged: (value) {
-                        context
-                            .read<BankCubit>()
-                            .setKwota(amountController.text);
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Kwota',
-                        labelStyle: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.primary),
-                        border: const OutlineInputBorder(),
-                        prefixIconConstraints: const BoxConstraints(),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: FaIcon(
-                            FontAwesomeIcons.buildingColumns,
-                            size: 14,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Wykonaj szybki przelew',
+                          style: TextStyle(
+                            fontSize:
+                                16 * 1.2, // Ustawiamy czcionkę o 20% większą
+                            fontWeight: FontWeight.w500,
                             color: theme.colorScheme.primary,
-                          ), // Icon(Icons.attach_money),
+                          ),
                         ),
-                      ),
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.displayMedium,
+                        const SizedBox(height: 16),
+                        TextField(
+                          controller: amountController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+,?\d*')),
+                          ],
+                          onChanged: (value) {
+                            context
+                                .read<BankCubit>()
+                                .setKwota(amountController.text);
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Kwota',
+                            labelStyle: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.primary),
+                            border: const OutlineInputBorder(),
+                            prefixIconConstraints: const BoxConstraints(),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: FaIcon(
+                                FontAwesomeIcons.buildingColumns,
+                                size: 14,
+                                color: theme.colorScheme.primary,
+                              ), // Icon(Icons.attach_money),
+                            ),
+                          ),
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.displayMedium,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -149,15 +186,13 @@ class ConfirmationDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context)
-                .pop(true);
+            Navigator.of(context).pop(true);
           },
           child: const Text('Tak'),
         ),
         TextButton(
           onPressed: () {
-            Navigator.of(context)
-                .pop(false);
+            Navigator.of(context).pop(false);
           },
           child: const Text('Nie'),
         ),

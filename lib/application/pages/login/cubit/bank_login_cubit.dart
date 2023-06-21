@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_playground/domain/login/entities/user.dart';
+import 'package:easy_bank/domain/login/entities/user.dart';
 
 import '../../../../domain/login/usecases/check_user_pin_use_case.dart';
 import '../../../../domain/login/usecases/get_user_use_case.dart';
@@ -14,10 +14,10 @@ class BankLoginCubit extends Cubit<BankLoginState> {
   BankLoginCubit({
     required this.getUserUseCase,
     required this.checkUserPinUseCase,
-}) : super(BankLoginState.initial());
+  }) : super(BankLoginState.initial());
 
   void logIn(String login, String password) async {
-    if(login.isEmpty || password.isEmpty) {
+    if (login.isEmpty || password.isEmpty) {
       emit(state.copyWith(
         status: BankLoginStateEnum.error,
         id: null,
@@ -73,11 +73,14 @@ class BankLoginCubit extends Cubit<BankLoginState> {
   }
 
   void submitPin(String pin) async {
-    final result = await checkUserPinUseCase.execute(pin: pin, user: User(id: state.id!,
-        login: state.login!,
-        fullName: state.fullName!,
-        password: state.password!,
-        pin: state.pin!));
+    final result = await checkUserPinUseCase.execute(
+        pin: pin,
+        user: User(
+            id: state.id!,
+            login: state.login!,
+            fullName: state.fullName!,
+            password: state.password!,
+            pin: state.pin!));
     if (result) {
       emit(state.copyWith(
         status: BankLoginStateEnum.pinSuccess,
@@ -90,5 +93,17 @@ class BankLoginCubit extends Cubit<BankLoginState> {
         error: 'Invalid pin',
       ));
     }
+  }
+
+  void setPrivateMode(bool value) {
+    emit(state.copyWith(
+      privateMode: value,
+    ));
+  }
+
+  Future<void> getLoginData() async {
+    await Future.delayed(const Duration(seconds: 10), () {
+      emit(state.copyWith(status: BankLoginStateEnum.initial));
+    });
   }
 }

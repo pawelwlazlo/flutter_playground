@@ -1,5 +1,5 @@
-import 'package:flutter_playground/domain/bank/entities/bank_account.dart';
-import 'package:flutter_playground/domain/bank/repositories/bank_account_repository.dart';
+import 'package:easy_bank/domain/bank/entities/bank_account.dart';
+import 'package:easy_bank/domain/bank/repositories/bank_account_repository.dart';
 
 import '../datasources/bank_data_source.dart';
 

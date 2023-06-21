@@ -1,4 +1,4 @@
-# flutter_playground
+# easy_bank
 
 A new Flutter project.
 

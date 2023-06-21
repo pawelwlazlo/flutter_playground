@@ -2,9 +2,9 @@
 class Assets {
   Assets._();
 
-  static const String assetsAliorLogo = 'assets/alior_logo.png';
+  static const String assetsAliorLogo = 'assets/alior.png';
   static const String assetsEb = 'assets/eb.png';
-  static const String assetsIngLogo = 'assets/ing_logo.png';
+  static const String assetsIngLogo = 'assets/ing_dark.png';
   static const String bankBankPage =
       'lib/application/pages/bank/bank_page.dart';
   static const String coreFailure = 'lib/domain/core/failure.dart';

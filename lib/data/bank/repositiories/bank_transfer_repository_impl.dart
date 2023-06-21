@@ -1,5 +1,5 @@
-import 'package:flutter_playground/domain/bank_transfer/entities/bank_transfer.dart';
-import 'package:flutter_playground/domain/bank_transfer/repositories/bank_transfer_repository.dart';
+import 'package:easy_bank/domain/bank_transfer/entities/bank_transfer.dart';
+import 'package:easy_bank/domain/bank_transfer/repositories/bank_transfer_repository.dart';
 
 import '../datasources/bank_transfer_data_source.dart';
 
@@ -14,5 +14,4 @@ class BankTransferRepositoryImpl implements BankTransferRepository {
   Stream<BankTransfer> getBankTransfers() {
     return bankTransferDataSource.getBankTransfers();
   }
-
 }

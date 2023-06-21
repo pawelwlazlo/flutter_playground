@@ -1,6 +1,6 @@
 {
-    "name": "flutter_playground",
-    "short_name": "flutter_playground",
+    "name": "easy_bank",
+    "short_name": "easy_bank",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:flutter_playground/application/core/utils/sha_util.dart';
+import 'package:easy_bank/application/core/utils/sha_util.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import '../model/user_model.dart';
