@@ -22,9 +22,7 @@ Future<void> init() async {
 // ! application Layer
 // ! Blocs
 /*
-  sl.registerFactory(() => BankCubit(sl()));
-  sl.registerFactory(() => BankLoginCubit());
-  sl.registerFactory(() => BankTransferCubit(bankCubit: sl()));
+ obsługiwane bezpośrednio w Multi providerze w pliku main.dart
 */
 
 // ! Domain Layer
